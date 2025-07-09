@@ -38,9 +38,9 @@ namespace BH.Engine.Serialiser
 
             if (bson.IsBsonDocument)
             {
-                BsonDocument doc = bson.AsBsonDocument;
-                double real = doc["Real"].AsDouble;
-                double imaginary = doc["Imaginary"].AsDouble;
+                BsonDocument value = bson.AsBsonDocument.GetValue("_v") as BsonDocument;
+                double real = value["Real"].AsDouble;
+                double imaginary = value["Imaginary"].AsDouble;
                 return new Complex(real, imaginary);
             }
 

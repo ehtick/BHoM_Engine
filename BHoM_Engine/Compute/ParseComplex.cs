@@ -45,7 +45,7 @@ namespace BH.Engine.Base
             }
 
             text = text.ToLower().Trim().Replace(" ", "");
-            text = NormalizeOperators(text);
+            text = NormaliseOperators(text);
             if (text == null)
             {
                 RecordError("Invalid operator sequence in Complex number.");
@@ -118,8 +118,8 @@ namespace BH.Engine.Base
             return null;
         }
 
-        // Normalizes operator sequences (e.g., 1++2i -> 1+2i, 1--2i -> 1+2i, 1+-2i -> 1-2i, etc.)
-        private static string NormalizeOperators(string text)
+        // Normalises operator sequences (e.g., 1++2i -> 1+2i, 1--2i -> 1+2i, 1+-2i -> 1-2i, etc.)
+        private static string NormaliseOperators(string text)
         {
             if (string.IsNullOrEmpty(text))
                 return text;

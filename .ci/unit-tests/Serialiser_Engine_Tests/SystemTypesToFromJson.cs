@@ -35,6 +35,7 @@ using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Data;
 using System.Linq;
+using System.Numerics;
 
 namespace BH.Tests.Engine.Serialiser
 {
@@ -349,6 +350,21 @@ namespace BH.Tests.Engine.Serialiser
         public void SystemTypesToFromJsonDateTimeProperty()
         {
             SystemTypesToFromJsonCustomDataProperty(System.DateTime.Parse("2023-05-10 14:40:52.531").ToUniversalTime());
+        }
+
+        /***************************************************/
+
+        [Test]
+        [Description("Helper method to test serialisation and deserialisation of various types as properties of CustomData.")]
+        public void SystemTypesToFromJsonComplex()
+        {
+            Complex complex = new Complex(1, 2);
+
+            string json = BH.Engine.Serialiser.Convert.ToJson(complex);
+            Assert.IsNotNull(json);
+
+            object ret = BH.Engine.Serialiser.Convert.FromJson(json);
+            Assert.IsNotNull(ret);
         }
 
         /***************************************************/

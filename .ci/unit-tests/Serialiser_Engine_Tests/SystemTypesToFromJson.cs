@@ -36,6 +36,7 @@ using System.Text.RegularExpressions;
 using System.Data;
 using System.Linq;
 using System.Numerics;
+using BH.oM.Geometry;
 
 namespace BH.Tests.Engine.Serialiser
 {
@@ -355,7 +356,7 @@ namespace BH.Tests.Engine.Serialiser
         /***************************************************/
 
         [Test]
-        [Description("Helper method to test serialisation and deserialisation of various types as properties of CustomData.")]
+        [Description("Helper method to test serialisation and deserialisation of Complex number objects.")]
         public void SystemTypesToFromJsonComplex()
         {
             Complex complex = new Complex(1, 2);
@@ -365,6 +366,11 @@ namespace BH.Tests.Engine.Serialiser
 
             object ret = BH.Engine.Serialiser.Convert.FromJson(json);
             Assert.IsNotNull(ret);
+            Assert.IsInstanceOf<Complex>(ret);
+
+            Complex deserialised = (Complex)ret;
+            Assert.That(deserialised.Real, Is.EqualTo(complex.Real).Within(Tolerance.MicroDistance));
+            Assert.That(deserialised.Imaginary, Is.EqualTo(complex.Imaginary).Within(Tolerance.MicroDistance));
         }
 
         /***************************************************/

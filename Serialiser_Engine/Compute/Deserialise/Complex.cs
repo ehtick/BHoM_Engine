@@ -39,12 +39,22 @@ namespace BH.Engine.Serialiser
             if (bson.IsBsonDocument)
             {
                 BsonDocument value = bson.AsBsonDocument.GetValue("_v") as BsonDocument;
-                double real = value["Real"].AsDouble;
-                double imaginary = value["Imaginary"].AsDouble;
+                double real = 0;
+                double imaginary = 0;
+                if(value.Contains("Real"))
+                    real = value.Contains("Real") ? value["Real"].AsDouble : 0;
+                else
+                    Base.Compute.RecordWarning("Real property not found in the BsonDocument when deserialising Complex.");
+
+                if (value.Contains("Imaginary"))
+                    imaginary = value.Contains("Imaginary") ? value["Imaginary"].AsDouble : 0;
+                else
+                    Base.Compute.RecordWarning("Imaginary property not found in the BsonDocument when deserialising Complex.");
+
                 return new Complex(real, imaginary);
             }
 
-            BH.Engine.Base.Compute.RecordError("Failed to deserialise Complex number from " + bson.ToString());
+            Base.Compute.RecordError("Failed to deserialise Complex number from " + bson.ToString());
             return default(Complex);
         }
     }

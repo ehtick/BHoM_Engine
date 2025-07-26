@@ -48,7 +48,10 @@ namespace BH.Engine.Graphics
             if (gradient is SteppedGradient)
                 return gradient as SteppedGradient;
             if (steps == -1)
-                return new SteppedGradient{Markers = new SortedDictionary<decimal, System.Drawing.Color>(gradient.Markers)};
+                return new SteppedGradient
+                {
+                    Markers = new SortedDictionary<decimal, System.Drawing.Color>(gradient.Markers)
+                };
             else if (steps > 0)
             {
                 decimal stepSize = 1.0m / (decimal)(steps + 1);

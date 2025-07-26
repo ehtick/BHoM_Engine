@@ -58,7 +58,8 @@ namespace BH.Engine.Analytical
         [Input("edges", "A list of IElement1Ds which all should be of a type of Edge accepted by the IPanel or Geometrical ICurve. \n" + "ICurve will default the outlines properties.")]
         [Output("panel", "The IPanel with updated ExternalEdges.")]
         public static IPanel<TEdge, TOpening> SetOutlineElements1D<TEdge, TOpening>(this IPanel<TEdge, TOpening> panel, IEnumerable<IElement1D> edges)
-            where TEdge : IEdge where TOpening : IOpening<TEdge>
+            where TEdge : IEdge
+            where TOpening : IOpening<TEdge>
         {
             IPanel<TEdge, TOpening> pp = panel.ShallowClone();
             pp.ExternalEdges = ConvertToEdges<TEdge>(edges);

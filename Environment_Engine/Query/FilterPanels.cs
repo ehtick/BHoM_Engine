@@ -196,7 +196,11 @@ namespace BH.Engine.Environment
         [PreviousInputNames("types", "type")]
         public static Output<List<Panel>, List<Panel>> FilterPanelsByType(this List<Panel> panels, List<PanelType> types)
         {
-            return new Output<List<Panel>, List<Panel>>{Item1 = panels.Where(x => types.Contains(x.Type)).ToList(), Item2 = panels.Where(x => !types.Contains(x.Type)).ToList(), };
+            return new Output<List<Panel>, List<Panel>>
+            {
+                Item1 = panels.Where(x => types.Contains(x.Type)).ToList(),
+                Item2 = panels.Where(x => !types.Contains(x.Type)).ToList()
+            };
         }
 
         /***************************************************/

@@ -124,14 +124,26 @@ namespace BH.Engine.Base
             try
             {
                 if (func == null)
-                    return new Output<bool, object>{Item1 = false, Item2 = null};
+                    return new Output<bool, object>
+                    {
+                        Item1 = false,
+                        Item2 = null
+                    };
                 else
-                    return new Output<bool, object>{Item1 = true, Item2 = await (func(parameters) as dynamic)};
+                    return new Output<bool, object>
+                    {
+                        Item1 = true,
+                        Item2 = await (func(parameters) as dynamic)
+                    };
             }
             catch (Exception e)
             {
                 BH.Engine.Base.Compute.RecordError($"Failed to run {methodName} extension method.\nError: {e.Message}");
-                return new Output<bool, object>{Item1 = false, Item2 = null};
+                return new Output<bool, object>
+                {
+                    Item1 = false,
+                    Item2 = null
+                };
             }
         }
 

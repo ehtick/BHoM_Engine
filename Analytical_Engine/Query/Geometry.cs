@@ -79,7 +79,8 @@ namespace BH.Engine.Analytical
         [Input("panel", "IPanel to get the planar surface geometry from.")]
         [Output("surface", "The geometry of the analytical IPanel at its centre.")]
         public static PlanarSurface Geometry<TEdge, TOpening>(this IPanel<TEdge, TOpening> panel)
-            where TEdge : IEdge where TOpening : IOpening<TEdge>
+            where TEdge : IEdge
+            where TOpening : IOpening<TEdge>
         {
             return Engine.Geometry.Create.PlanarSurface(Engine.Geometry.Compute.IJoin(panel?.ExternalEdges?.Select(x => x?.Curve).ToList()).FirstOrDefault(), panel?.Openings.SelectMany(x => Engine.Geometry.Compute.IJoin(x?.Edges.Select(y => y?.Curve).ToList())).Cast<ICurve>().ToList());
         }
@@ -112,7 +113,8 @@ namespace BH.Engine.Analytical
         [Input("mesh", "Analytical IMesh to get the mesh geometry from.")]
         [Output("mesh", "The geometry of the IMesh as a geometrical Mesh.")]
         public static Mesh Geometry<TNode, TFace>(this IMesh<TNode, TFace> mesh)
-            where TNode : INode where TFace : IFace
+            where TNode : INode
+            where TFace : IFace
         {
             Mesh geoMesh = new Mesh();
             geoMesh.Vertices = mesh?.Nodes?.Select(x => x?.Position).ToList();

@@ -40,7 +40,11 @@ namespace BH.Engine.Geometry
         [Output("plane", "The created Plane.")]
         public static Plane Plane(Point origin, Vector normal)
         {
-            return new Plane{Origin = origin, Normal = normal};
+            return new Plane
+            {
+                Origin = origin,
+                Normal = normal
+            };
         }
 
         /***************************************************/
@@ -52,7 +56,11 @@ namespace BH.Engine.Geometry
         public static Plane Plane(Point p1, Point p2, Point p3)
         {
             Vector normal = Query.CrossProduct(p2 - p1, p3 - p1).Normalise();
-            return new Plane{Origin = p1, Normal = normal};
+            return new Plane
+            {
+                Origin = p1,
+                Normal = normal
+            };
         }
 
         /***************************************************/
@@ -77,7 +85,11 @@ namespace BH.Engine.Geometry
         [Output("plane", "The generated random Plane.")]
         public static Plane RandomPlane(Random rnd, BoundingBox box = null)
         {
-            return new Plane{Origin = RandomPoint(rnd, box), Normal = RandomVector(rnd).Normalise()};
+            return new Plane
+            {
+                Origin = RandomPoint(rnd, box),
+                Normal = RandomVector(rnd).Normalise()
+            };
         }
     /***************************************************/
     }

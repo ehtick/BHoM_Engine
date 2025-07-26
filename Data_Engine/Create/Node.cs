@@ -51,7 +51,10 @@ namespace BH.Engine.Data
             Func<IEnumerable<TNode>, IEnumerable<IEnumerable<TNode>>> partitionMethod = (data) =>
             {
                 List<List<TNode>> subLists = new List<List<TNode>>()
-                {data.ToList()};
+                {
+                    data.ToList()
+                };
+                
                 while (subLists.Count < treeDegree)
                 {
                     // Find the one with the most items

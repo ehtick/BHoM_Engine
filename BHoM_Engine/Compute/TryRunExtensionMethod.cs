@@ -38,7 +38,9 @@ namespace BH.Engine.Base
         /****               Public Methods              ****/
         /***************************************************/
 
-        [Description("Looks for an extension method applicable to the input object with the provided `methodName` and, if found, invokes it.\n" + "Extension methods are searched using Reflection through all BHoM assemblies.\n" + "If no method is found, this returns `false`, and the `result` is null.")]
+        [Description("Looks for an extension method applicable to the input object with the provided `methodName` and, if found, invokes it.\n" +
+            "Extension methods are searched using Reflection through all BHoM assemblies.\n" +
+            "If no method is found, this returns `false`, and the `result` is null.")]
         [Input("obj", "Object whose extension method is to be found, and to which the method will be applied in order to obtain the result.")]
         [Input("methodName", "Name of the extension method defined for the input object that is to be found in any of the BHoM assemblies.")]
         [Input("result", "Result of the method invocation, if the method had been invoked. If no method is found this is null.")]
@@ -50,7 +52,9 @@ namespace BH.Engine.Base
 
         /***************************************************/
 
-        [Description("Looks for an extension method applicable to the input object with the provided `methodName` and, if found, invokes it.\n" + "Extension methods are searched using Reflection through all BHoM assemblies.\n" + "If no method is found, this returns `false`, and the `result` is null.")]
+        [Description("Looks for an extension method applicable to the input object with the provided `methodName` and, if found, invokes it.\n" +
+            "Extension methods are searched using Reflection through all BHoM assemblies.\n" +
+            "If no method is found, this returns `false`, and the `result` is null.")]
         [Input("obj", "Object whose extension method is to be found, and to which the method will be applied in order to obtain the result.")]
         [Input("methodName", "Name of the extension method defined for the input object that is to be found in any of the BHoM assemblies.")]
         [Input("parameters", "The additional arguments for the method call, excluding the first argument provided by 'obj'.")]
@@ -63,7 +67,9 @@ namespace BH.Engine.Base
 
         /***************************************************/
 
-        [Description("Looks for an extension method applicable to the input object with the provided `methodName` and, if found, invokes it asynchronously.\n" + "Extension methods are searched using Reflection through all BHoM assemblies.\n" + "If no method is found, this returns `false`, and the `result` is null.")]
+        [Description("Looks for an extension method applicable to the input object with the provided `methodName` and, if found, invokes it asynchronously.\n" +
+            "Extension methods are searched using Reflection through all BHoM assemblies.\n" +
+            "If no method is found, this returns `false`, and the `result` is null.")]
         [Input("obj", "Object whose extension method is to be found, and to which the method will be applied in order to obtain the result.")]
         [Input("methodName", "Name of the extension method defined for the input object that is to be found in any of the BHoM assemblies.")]
         [Output("First output: true if a method was found and an invocation was attempted. False otherwise." + "\nSecond output: result of the call if an attempt was made.")]
@@ -74,7 +80,9 @@ namespace BH.Engine.Base
 
         /***************************************************/
 
-        [Description("Looks for an extension method applicable to the input object with the provided `methodName` and, if found, invokes it asynchronously.\n" + "Extension methods are searched using Reflection through all BHoM assemblies.\n" + "If no method is found, this returns `false`, and the `result` is null.")]
+        [Description("Looks for an extension method applicable to the input object with the provided `methodName` and, if found, invokes it asynchronously.\n" +
+            "Extension methods are searched using Reflection through all BHoM assemblies.\n" +
+            "If no method is found, this returns `false`, and the `result` is null.")]
         [Input("obj", "Object whose extension method is to be found, and to which the method will be applied in order to obtain the result.")]
         [Input("methodName", "Name of the extension method defined for the input object that is to be found in any of the BHoM assemblies.")]
         [Input("parameters", "The additional arguments of the call to the method, skipping the first argument provided by 'target'.")]

@@ -60,7 +60,10 @@ namespace BH.Engine.Analytical
         public static Line Geometry<TNode>(this ILink<TNode> link)
             where TNode : INode
         {
-            return new Line{Start = link?.Start?.Position, End = link?.End?.Position};
+            return new Line
+            {
+                Start = link?.Start?.Position, End = link?.End?.Position
+            };
         }
 
         /***************************************************/
@@ -82,7 +85,11 @@ namespace BH.Engine.Analytical
             where TEdge : IEdge
             where TOpening : IOpening<TEdge>
         {
-            return Engine.Geometry.Create.PlanarSurface(Engine.Geometry.Compute.IJoin(panel?.ExternalEdges?.Select(x => x?.Curve).ToList()).FirstOrDefault(), panel?.Openings.SelectMany(x => Engine.Geometry.Compute.IJoin(x?.Edges.Select(y => y?.Curve).ToList())).Cast<ICurve>().ToList());
+            return Engine.Geometry.Create.PlanarSurface(
+                Engine.Geometry.Compute.IJoin(panel?.ExternalEdges?
+                    .Select(x => x?.Curve).ToList()).FirstOrDefault(), panel?.Openings
+                    .SelectMany(x => Engine.Geometry.Compute.IJoin(x?.Edges.Select(y => y?.Curve).ToList()))
+                    .Cast<ICurve>().ToList());
         }
 
         /***************************************************/
@@ -93,7 +100,10 @@ namespace BH.Engine.Analytical
         public static PolyCurve Geometry<TEdge>(this IOpening<TEdge> opening)
             where TEdge : IEdge
         {
-            return new PolyCurve{Curves = opening?.Edges?.Select(x => x?.Curve).ToList()};
+            return new PolyCurve
+            {
+                Curves = opening?.Edges?.Select(x => x?.Curve).ToList()
+            };
         }
 
         /***************************************************/
@@ -216,7 +226,10 @@ namespace BH.Engine.Analytical
             geometries.AddRange(element0DGeoms.Values); //Add Points representing IElement0Ds to the list
             if (relNoGeom) //Raise warning if relations that could not be displayed was found
                 Base.Compute.RecordWarning("Geometry is only displayed for Relations that either have their Curve set or span between entities that are IElement0D.");
-            return new CompositeGeometry{Elements = geometries};
+            return new CompositeGeometry
+            {
+                Elements = geometries
+            };
         }
 
         /***************************************************/

@@ -37,10 +37,12 @@ namespace BH.Engine.Data
         /****               Public Methods              ****/
         /***************************************************/
 
-        [Description("Passes the data down through the tree to the leaves and creates the parent nodes on the way back up. " + "i.e. The data will be stored in the leaves and the parent node can be defined through its children.")]
+        [Description("Passes the data down through the tree to the leaves and creates the parent nodes on the way back up.\n" + 
+        "i.e. The data will be stored in the leaves and the parent node can be defined through its children.")]
         [Input("dataItems", "The data to store in the Node tree, formatted as leaf nodes.")]
         [Input("splitDataMethod", "Method clustering a collection of leaves into two collections based on their data.")]
-        [Input("setChildrenToNode", "Method which creates a parent node of the provided nodes and assigns them as children. " + "Called last, any data assigned within to the parent will be available for use on the children it operates on due to recursion.")]
+        [Input("setChildrenToNode", "Method which creates a parent node of the provided nodes and assigns them as children.\n" + 
+            "Called last, any data assigned within to the parent will be available for use on the children it operates on due to recursion.")]
         [Input("treeDegree", "The number of child nodes for each node.")]
         [Input("leafSize", "The number of siblings a leaf node can have.")]
         [Output("node", "Root node for a data tree with all the data in its leaves and with nodes defined by their children.")]
@@ -54,7 +56,7 @@ namespace BH.Engine.Data
                 {
                     data.ToList()
                 };
-                
+
                 while (subLists.Count < treeDegree)
                 {
                     // Find the one with the most items
@@ -88,10 +90,13 @@ namespace BH.Engine.Data
 
         /***************************************************/
 
-        [Description("Passes the data down through the tree to the leaves and creates the parent nodes on the way back up. " + "i.e. The data will be stored in the leaves and the parent node can be defined through its children.")]
+        [Description("Passes the data down through the tree to the leaves and creates the parent nodes on the way back up.\n" + 
+            "i.e. The data will be stored in the leaves and the parent node can be defined through its children.")]
         [Input("dataItems", "The data to store in the Node tree, formatted as leaf nodes.")]
-        [Input("partitionMethod", "Method to separate a flat collection of data into the data collections for the child nodes. " + "Number of collections returned will be the degree of the tree. Breaks the recursion when it only returns a single collection.")]
-        [Input("setChildrenToNode", "Method which creates a parent node of the provided nodes and assigns them. " + "Called last, any data assigned within to the parent will be available for use on the children it operates on due to recursion.")]
+        [Input("partitionMethod", "Method to separate a flat collection of data into the data collections for the child nodes.\n" + 
+            "Number of collections returned will be the degree of the tree. Breaks the recursion when it only returns a single collection.")]
+        [Input("setChildrenToNode", "Method which creates a parent node of the provided nodes and assigns them.\n" + 
+            "Called last, any data assigned within to the parent will be available for use on the children it operates on due to recursion.")]
         [Input("leafSize", "The number of siblings a leaf node can have.")]
         [Output("node", "Root node for a data tree with all the data in its leaves and with nodes defined by their children.")]
         public static TNode Node<TNode, T>(IEnumerable<TNode> dataItems, Func<IEnumerable<TNode>, IEnumerable<IEnumerable<TNode>>> partitionMethod, Func<IEnumerable<TNode>, TNode> setChildrenToNode, int leafSize = 16)

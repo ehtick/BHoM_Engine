@@ -42,14 +42,14 @@ namespace BH.Engine.Serialiser
                 double real = 0;
                 double imaginary = 0;
                 if(value.Contains("Real"))
-                    real = value.Contains("Real") ? value["Real"].AsDouble : 0;
+                    real = value["Real"].AsDouble;
                 else
-                    Base.Compute.RecordWarning("Real property not found in the BsonDocument when deserialising Complex.");
+                    Base.Compute.RecordWarning("Real property not found in the BsonDocument when deserialising Complex, default value set to 0.");
 
                 if (value.Contains("Imaginary"))
-                    imaginary = value.Contains("Imaginary") ? value["Imaginary"].AsDouble : 0;
+                    imaginary = value["Imaginary"].AsDouble;
                 else
-                    Base.Compute.RecordWarning("Imaginary property not found in the BsonDocument when deserialising Complex.");
+                    Base.Compute.RecordWarning("Imaginary property not found in the BsonDocument when deserialising Complex, default value set to 0.");
 
                 return new Complex(real, imaginary);
             }

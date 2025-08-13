@@ -21,8 +21,11 @@
  */
 
 using BH.oM.Geometry;
+using BH.oM.Base.Attributes;
+using BH.oM.Quantities.Attributes;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace BH.Engine.Geometry
@@ -33,6 +36,9 @@ namespace BH.Engine.Geometry
         /**** Public Methods - Curves                   ****/
         /***************************************************/
 
+        [Description("Gets the end Point of an Arc.")]
+        [Input("arc", "The Arc to get the end point of.")]
+        [Output("point", "The end Point of the Arc.")]
         public static Point EndPoint(this Arc arc)
         {
             Vector locSt = arc.CoordinateSystem.X * arc.Radius;
@@ -41,6 +47,9 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Gets the end Point of a Circle, which is the same as the start point for closed curves.")]
+        [Input("circle", "The Circle to get the end point of.")]
+        [Output("point", "The end Point of the Circle.")]
         public static Point EndPoint(this Circle circle)
         {
             return circle.StartPoint();
@@ -48,6 +57,9 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Gets the end Point of an Ellipse, which is the same as the start point for closed curves.")]
+        [Input("ellipse", "The Ellipse to get the end point of.")]
+        [Output("point", "The end Point of the Ellipse.")]
         public static Point EndPoint(this Ellipse ellipse)
         {
             return ellipse.StartPoint();
@@ -55,6 +67,9 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Gets the end Point of a Line.")]
+        [Input("line", "The Line to get the end point of.")]
+        [Output("point", "The end Point of the Line.")]
         public static Point EndPoint(this Line line)
         {
             return line.End;
@@ -62,6 +77,9 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Gets the end Point of a NurbsCurve. For non-periodic curves, returns the last control point.")]
+        [Input("curve", "The NurbsCurve to get the end point of.")]
+        [Output("point", "The end Point of the NurbsCurve.")]
         public static Point EndPoint(this NurbsCurve curve)
         {
             //TODO: This should be based on the basis function?
@@ -76,6 +94,9 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Gets the end Point of a PolyCurve.")]
+        [Input("curve", "The PolyCurve to get the end point of.")]
+        [Output("point", "The end Point of the PolyCurve.")]
         public static Point EndPoint(this PolyCurve curve)
         {
             List<ICurve> curves = curve.Curves;
@@ -92,6 +113,9 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Gets the end Point of a Polyline.")]
+        [Input("curve", "The Polyline to get the end point of.")]
+        [Output("point", "The end Point of the Polyline.")]
         public static Point EndPoint(this Polyline curve)
         {
             List<Point> pts = curve.ControlPoints;
@@ -106,6 +130,9 @@ namespace BH.Engine.Geometry
         /**** Public Methods - Interfaces               ****/
         /***************************************************/
 
+        [Description("Gets the end Point of any ICurve.")]
+        [Input("curve", "The ICurve to get the end point of.")]
+        [Output("point", "The end Point of the curve.")]
         public static Point IEndPoint(this ICurve curve)
         {
             return EndPoint(curve as dynamic);

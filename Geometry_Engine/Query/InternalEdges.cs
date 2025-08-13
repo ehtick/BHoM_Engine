@@ -22,7 +22,10 @@
 
 using BH.Engine.Base;
 using BH.oM.Geometry;
+using BH.oM.Base.Attributes;
+using BH.oM.Quantities.Attributes;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace BH.Engine.Geometry
@@ -33,6 +36,9 @@ namespace BH.Engine.Geometry
         /**** Public Methods - Surfaces                 ****/
         /***************************************************/
 
+        [Description("Gets the internal edges of an Extrusion surface.")]
+        [Input("surface", "The Extrusion to get internal edges from.")]
+        [Output("edges", "The internal edges of the Extrusion.")]
         public static List<ICurve> InternalEdges(this Extrusion surface)
         {
             ICurve curve = surface.Curve;
@@ -62,6 +68,9 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Gets the internal edges of a Pipe surface.")]
+        [Input("surface", "The Pipe to get internal edges from.")]
+        [Output("edges", "The internal edges of the Pipe.")]
         public static List<ICurve> InternalEdges(this Pipe surface)
         {
             if (surface.Capped)
@@ -81,6 +90,9 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Gets the internal edges of a PlanarSurface.")]
+        [Input("surface", "The PlanarSurface to get internal edges from.")]
+        [Output("edges", "The internal edges of the PlanarSurface.")]
         public static List<ICurve> InternalEdges(this PlanarSurface surface)
         {
             return surface.InternalBoundaries;
@@ -88,6 +100,9 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Gets the internal edges of a PolySurface.")]
+        [Input("surface", "The PolySurface to get internal edges from.")]
+        [Output("edges", "The internal edges of the PolySurface.")]
         public static List<ICurve> InternalEdges(this PolySurface surface)
         {
             return surface.Surfaces.SelectMany(x => x.IInternalEdges()).ToList();
@@ -98,6 +113,9 @@ namespace BH.Engine.Geometry
         /**** Public Methods - Interfaces               ****/
         /***************************************************/
 
+        [Description("Gets the internal edges of any ISurface.")]
+        [Input("surface", "The ISurface to get internal edges from.")]
+        [Output("edges", "The internal edges of the surface.")]
         public static List<ICurve> IInternalEdges(this ISurface surface)
         {
             return InternalEdges(surface as dynamic);

@@ -21,6 +21,9 @@
  */
 
 using BH.oM.Geometry;
+using BH.oM.Base.Attributes;
+using BH.oM.Quantities.Attributes;
+using System.ComponentModel;
 
 namespace BH.Engine.Geometry
 {
@@ -30,6 +33,10 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
+        [Description("Calculates the dot product (scalar product) of two Vectors.")]
+        [Input("a", "The first Vector.")]
+        [Input("b", "The second Vector.")]
+        [Output("product", "The dot product of the two Vectors.")]
         public static double DotProduct(this Vector a, Vector b)
         {
             if (a == null || b == null)
@@ -43,6 +50,10 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Calculates the cross product (vector product) of two Vectors.")]
+        [Input("a", "The first Vector.")]
+        [Input("b", "The second Vector.")]
+        [Output("product", "The cross product Vector perpendicular to both input Vectors.")]
         public static Vector CrossProduct(this Vector a, Vector b)
         {
             if (a == null || b == null)
@@ -56,6 +67,10 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Calculates the cross product of two Points treated as position vectors.")]
+        [Input("a", "The first Point.")]
+        [Input("b", "The second Point.")]
+        [Output("product", "The cross product Vector perpendicular to both position vectors.")]
         public static Vector CrossProduct(this Point a, Point b)
         {
             if (a == null || b == null)
@@ -69,6 +84,10 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Calculates the product (multiplication) of two Quaternions.")]
+        [Input("q1", "The first Quaternion.")]
+        [Input("q2", "The second Quaternion.")]
+        [Output("product", "The product of the two Quaternions.")]
         public static Quaternion Product(this Quaternion q1, Quaternion q2)
         {
             if (q1 == null || q2 == null)

@@ -22,8 +22,11 @@
 
 using BH.Engine.Base;
 using BH.oM.Geometry;
+using BH.oM.Base.Attributes;
+using BH.oM.Quantities.Attributes;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace BH.Engine.Geometry
@@ -34,6 +37,10 @@ namespace BH.Engine.Geometry
         /**** public Methods - Vector                   ****/
         /***************************************************/
 
+        [Description("Checks if a collection of Points are coplanar within the given tolerance.")]
+        [Input("points", "The collection of Points to check.")]
+        [Input("tolerance", "The distance tolerance for the coplanarity check.", typeof(Length))]
+        [Output("result", "True if all Points are coplanar, false otherwise.")]
         public static bool IsCoplanar(this List<Point> points, double tolerance = Tolerance.Distance)
         {
             if (points.Count < 4)
@@ -50,6 +57,12 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Checks if two Planes are coplanar within the given tolerances.")]
+        [Input("plane1", "The first Plane to check.")]
+        [Input("plane2", "The second Plane to check.")]
+        [Input("distanceTolerance", "The distance tolerance for the coplanarity check.", typeof(Length))]
+        [Input("angleTolerance", "The angle tolerance for checking normal alignment.", typeof(Angle))]
+        [Output("result", "True if the Planes are coplanar, false otherwise.")]
         public static bool IsCoplanar(this Plane plane1, Plane plane2, double distanceTolerance = Tolerance.Distance, double angleTolerance = Tolerance.Angle)
         {
             return (plane1.Origin.Distance(plane2) <= distanceTolerance && plane1.Normal.IsParallel(plane2.Normal, angleTolerance) != 0);
@@ -57,6 +70,11 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Checks if a collection of Planes are coplanar within the given tolerances.")]
+        [Input("planes", "The collection of Planes to check.")]
+        [Input("distanceTolerance", "The distance tolerance for the coplanarity check.", typeof(Length))]
+        [Input("angleTolerance", "The angle tolerance for checking normal alignment.", typeof(Angle))]
+        [Output("result", "True if all Planes are coplanar, false otherwise.")]
         public static bool IsCoplanar(this List<Plane> planes, double distanceTolerance = Tolerance.Distance, double angleTolerance = Tolerance.Angle)
         {
             for (int i = 1; i < planes.Count; i++)
@@ -73,6 +91,11 @@ namespace BH.Engine.Geometry
         /**** public Methods - Curves                   ****/
         /***************************************************/
 
+        [Description("Checks if two Lines are coplanar within the given tolerance.")]
+        [Input("line1", "The first Line to check.")]
+        [Input("line2", "The second Line to check.")]
+        [Input("tolerance", "The distance tolerance for the coplanarity check.", typeof(Length))]
+        [Output("result", "True if the Lines are coplanar, false otherwise.")]
         public static bool IsCoplanar(this Line line1, Line line2, double tolerance = Tolerance.Distance)
         {
             List<Point> cPts = new List<Point> { line1.Start, line1.End, line2.Start, line2.End };
@@ -81,6 +104,10 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Checks if a collection of Lines are coplanar within the given tolerance.")]
+        [Input("lines", "The collection of Lines to check.")]
+        [Input("tolerance", "The distance tolerance for the coplanarity check.", typeof(Length))]
+        [Output("result", "True if all Lines are coplanar, false otherwise.")]
         public static bool IsCoplanar(this List<Line> lines, double tolerance = Tolerance.Distance)
         {
             List<Point> cPts = lines.Select(x => x.Start).Union(lines.Select(x => x.End)).ToList();
@@ -89,6 +116,11 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Checks if two Polylines are coplanar within the given tolerance.")]
+        [Input("curve1", "The first Polyline to check.")]
+        [Input("curve2", "The second Polyline to check.")]
+        [Input("tolerance", "The distance tolerance for the coplanarity check.", typeof(Length))]
+        [Output("result", "True if the Polylines are coplanar, false otherwise.")]
         public static bool IsCoplanar(this Polyline curve1, Polyline curve2, double tolerance = Tolerance.Distance)
         {
             List<Point> cPts = curve1.ControlPoints.ToList();
@@ -98,6 +130,11 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Checks if two PolyCurves are coplanar within the given tolerance.")]
+        [Input("curve1", "The first PolyCurve to check.")]
+        [Input("curve2", "The second PolyCurve to check.")]
+        [Input("tolerance", "The distance tolerance for the coplanarity check.", typeof(Length))]
+        [Output("result", "True if the PolyCurves are coplanar, false otherwise.")]
         public static bool IsCoplanar(this PolyCurve curve1, PolyCurve curve2, double tolerance = Tolerance.Distance)
         {
             List<Point> pts = new List<Point> { curve1.Curves[0].IStartPoint() };
@@ -149,6 +186,11 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Checks if two ICurves are coplanar within the given tolerance.")]
+        [Input("curve1", "The first ICurve to check.")]
+        [Input("curve2", "The second ICurve to check.")]
+        [Input("tolerance", "The distance tolerance for the coplanarity check.", typeof(Length))]
+        [Output("result", "True if the curves are coplanar, false otherwise.")]
         public static bool IIsCoplanar(this ICurve curve1, ICurve curve2, double tolerance = Tolerance.Distance)
         {
             List<Point> pts = new List<Point> { curve1.IStartPoint() };

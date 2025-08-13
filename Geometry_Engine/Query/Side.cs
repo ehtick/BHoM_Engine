@@ -21,7 +21,10 @@
  */
 
 using BH.oM.Geometry;
+using BH.oM.Base.Attributes;
+using BH.oM.Quantities.Attributes;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace BH.Engine.Geometry
@@ -32,6 +35,11 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
+        [Description("Determines which side of a Plane each Point lies on, returning 1 for positive side, -1 for negative side, and 0 for on the plane.")]
+        [Input("plane", "The Plane to test against.")]
+        [Input("points", "The collection of Points to test.")]
+        [Input("tolerance", "The distance tolerance for determining if a Point is on the plane.", typeof(Length))]
+        [Output("sides", "A list of integers indicating which side of the plane each point is on (1, -1, or 0).")]
         public static List<int> Side(this Plane plane, List<Point> points, double tolerance = Tolerance.Distance)
         {
             List<double> result = points.Select(x => Create.Vector(x).DotProduct(plane.Normal)).ToList();

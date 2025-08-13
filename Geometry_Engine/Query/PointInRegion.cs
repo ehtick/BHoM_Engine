@@ -22,8 +22,10 @@
 
 using BH.oM.Geometry;
 using BH.oM.Base.Attributes;
+using BH.oM.Quantities.Attributes;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace BH.Engine.Geometry
 {
@@ -33,6 +35,11 @@ namespace BH.Engine.Geometry
         /**** Public Methods - Curves                   ****/
         /***************************************************/
 
+        [Description("Finds a Point that lies within the region defined by a closed curve.")]
+        [Input("curve", "The closed ICurve defining the region.")]
+        [Input("acceptOnEdge", "Whether to accept points that lie on the edge of the region.")]
+        [Input("tolerance", "The tolerance for containment checks.", typeof(Length))]
+        [Output("point", "A Point within the region, or null if no valid point is found.")]
         public static Point PointInRegion(this ICurve curve, bool acceptOnEdge = false, double tolerance = Tolerance.Distance)
         {
             Point point = curve.ICentroid(tolerance);

@@ -21,7 +21,10 @@
  */
 
 using System.Collections.Generic;
+using System.ComponentModel;
 using BH.oM.Geometry;
+using BH.oM.Base.Attributes;
+using BH.oM.Quantities.Attributes;
 
 
 namespace BH.Engine.Geometry
@@ -32,6 +35,14 @@ namespace BH.Engine.Geometry
         /**** Public Methods                           ****/
         /***************************************************/
 
+        [Description("Performs numerical integration along a curve in the specified direction.")]
+        [Input("fx", "The curve to integrate along.")]
+        [Input("direction", "The direction vector for integration.")]
+        [Input("from", "The starting position for integration.", typeof(Length))]
+        [Input("to", "The ending position for integration.", typeof(Length))]
+        [Input("centroid", "Reference parameter to receive the centroid position.")]
+        [Input("increment", "The increment step size for numerical integration.", typeof(Length))]
+        [Output("result", "The integrated value.")]
         public static double CurveIntegration(this ICurve fx, Vector direction, double from, double to, ref double centroid, double increment = 0.001)
         {
             double result = 0;
@@ -66,6 +77,13 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
         
+        [Description("Performs area integration over a collection of integration slices with a curve multiplier.")]
+        [Input("slices", "The collection of integration slices to integrate over.")]
+        [Input("curve", "The curve multiplier value.")]
+        [Input("from", "The starting position for integration.", typeof(Length))]
+        [Input("to", "The ending position for integration.", typeof(Length))]
+        [Input("centroid", "Reference parameter to receive the centroid position.")]
+        [Output("result", "The integrated area value.", typeof(Area))]
         public static double AreaIntegration(this List<IntegrationSlice> slices, double curve, double from, double to, ref double centroid)
         {
             double result = 0;
@@ -93,7 +111,14 @@ namespace BH.Engine.Geometry
         }
 
         /***************************************************/
-        
+
+        [Description("Performs area integration over integration slices using power functions.")]
+        [Input("slices", "The collection of integration slices to integrate over.")]
+        [Input("constant", "The constant multiplier.")]
+        [Input("xPower", "The power to raise x coordinates to.")]
+        [Input("yPower", "The power to raise y coordinates to.")]
+        [Input("origin", "The origin offset for the calculation.", typeof(Length))]
+        [Output("result", "The integrated value.")]
         public static double AreaIntegration(this List<IntegrationSlice> slices, double constant, double xPower, double yPower, double origin = 0)
         {
             double result = 0;
@@ -108,7 +133,16 @@ namespace BH.Engine.Geometry
         }
 
         /***************************************************/
-        
+
+        [Description("Performs area integration over integration slices using power functions within specified bounds.")]
+        [Input("slices", "The collection of integration slices to integrate over.")]
+        [Input("constant", "The constant multiplier.")]
+        [Input("xPower", "The power to raise x coordinates to.")]
+        [Input("yPower", "The power to raise y coordinates to.")]
+        [Input("from", "The starting position for integration.", typeof(Length))]
+        [Input("to", "The ending position for integration.", typeof(Length))]
+        [Input("origin", "The origin offset for the calculation.", typeof(Length))]
+        [Output("result", "The integrated value.")]
         public static double AreaIntegration(this List<IntegrationSlice> slices, double constant, double xPower, double yPower, double from = double.MinValue, double to = double.MaxValue, double origin = 0)
         {
             double result = 0;
@@ -133,6 +167,14 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Performs area integration over integration slices using a curve in the specified direction.")]
+        [Input("slices", "The collection of integration slices to integrate over.")]
+        [Input("direction", "The direction vector for integration.")]
+        [Input("curve", "The curve to use for integration.")]
+        [Input("from", "The starting position for integration.", typeof(Length))]
+        [Input("to", "The ending position for integration.", typeof(Length))]
+        [Input("centroid", "Reference parameter to receive the centroid position.")]
+        [Output("result", "The integrated area value.", typeof(Area))]
         public static double AreaIntegration(this List<IntegrationSlice> slices, Vector direction, ICurve curve, double from, double to, ref double centroid)
         {
             double result = 0;
@@ -171,6 +213,15 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Performs area integration over solid slices minus void slices using a curve in the specified direction.")]
+        [Input("solid", "The collection of solid integration slices.")]
+        [Input("voids", "The collection of void integration slices to subtract.")]
+        [Input("direction", "The direction vector for integration.")]
+        [Input("curve", "The curve to use for integration.")]
+        [Input("from", "The starting position for integration.", typeof(Length))]
+        [Input("to", "The ending position for integration.", typeof(Length))]
+        [Input("centroid", "Reference parameter to receive the centroid position.")]
+        [Output("result", "The integrated area value after subtracting voids.", typeof(Area))]
         public static double AreaIntegration(this List<IntegrationSlice> solid, List<IntegrationSlice> voids, Vector direction, ICurve curve, double from, double to, ref double centroid)
         {
             double centroidSolid = 0;

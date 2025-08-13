@@ -53,9 +53,16 @@ namespace BH.Engine.Lighting
         [Output("luminaires", "A collection of Luminaires created along the input curve.")]
         public static List<Luminaire> Luminaire(this ICurve crv, double exactSpacing, Point target, bool centered = true, LuminaireType type = null, string name = "")
         {
+            if (crv is NurbsCurve)
+            {
+                Base.Compute.RecordError("Luminaire Creation is not supported for Nurbs Curves.");
+                return null;
+            }
+            
             ICurve trimmedCrv;
 
-            double crvLen = crv.Length();
+            double crvLen = crv.ILength();
+
             if (exactSpacing == 0) return null;
             if (centered)
             {
@@ -80,9 +87,15 @@ namespace BH.Engine.Lighting
         [Output("luminaires", "A collection of Luminaires created along the input curve.")]
         public static List<Luminaire> Luminaire(this ICurve crv, double exactSpacing, Vector dir, bool centered = true, LuminaireType type = null, string name = "")
         {
+            if (crv is NurbsCurve)
+            {
+                Base.Compute.RecordError("Luminaire Creation is not supported for Nurbs Curves.");
+                return null;
+            }
+            
             ICurve trimmedCrv;
 
-            double crvLen = crv.Length();
+            double crvLen = crv.ILength();
             if (exactSpacing == 0) return null;
             if (centered)
             {
@@ -106,7 +119,13 @@ namespace BH.Engine.Lighting
         [Output("luminaires", "A collection of Luminaires created along the input curve.")]
         public static List<Luminaire> Luminaire(this ICurve crv, double maxSpacing, Point target, LuminaireType type = null, string name = "")
         {
-            double crvLen = crv.Length();
+            if (crv is NurbsCurve)
+            {
+                Base.Compute.RecordError("Luminaire Creation is not supported for Nurbs Curves.");
+                return null;
+            }
+            
+            double crvLen = crv.ILength();
             if (maxSpacing == 0) return null;
             int count = (int)Math.Ceiling(crvLen / maxSpacing) + 1;
             return Luminaire(crv, count, target, type, name);
@@ -123,7 +142,13 @@ namespace BH.Engine.Lighting
         [Output("luminaires", "A collection of Luminaires created along the input curve.")]
         public static List<Luminaire> Luminaire(this ICurve crv, double maxSpacing, Vector dir, LuminaireType type = null, string name = "")
         {
-            double crvLen = crv.Length();
+            if (crv is NurbsCurve)
+            {
+                Base.Compute.RecordError("Luminaire Creation is not supported for Nurbs Curves.");
+                return null;
+            }
+            
+            double crvLen = crv.ILength();
             if (maxSpacing == 0) return null;
             int count = (int)Math.Ceiling(crvLen / maxSpacing) + 1;
             return Luminaire(crv, count, dir, type, name);
@@ -140,14 +165,19 @@ namespace BH.Engine.Lighting
         [Output("luminaires", "A collection of Luminaires created along the input curve.")]
         public static List<Luminaire> Luminaire(this ICurve crv, int count, Point target, LuminaireType type = null, string name = "")
         {
+            if (crv is NurbsCurve)
+            {
+                Base.Compute.RecordError("Luminaire Creation is not supported for Nurbs Curves.");
+                return null;
+            }
+            
             List<Luminaire> luminaires = new List<Luminaire>();
             List<Point> pts = crv.SamplePoints(count);
             for (int i = 0; i < pts.Count; i++)
             {
                 Point pt = pts[i];
                 Vector dir = BH.Engine.Geometry.Create.Vector(pt, target);
-                Vector align = crv.TangentAtPoint(pt);
-                Luminaire lum = Create.Luminaire(pt, dir, align, type, name + "_" + i.ToString());
+                Luminaire lum = Create.Luminaire(pt, dir, type, name + "_" + i.ToString());
                 luminaires.Add(lum);
             }
             return luminaires;
@@ -164,12 +194,18 @@ namespace BH.Engine.Lighting
         [Output("luminaires", "A collection of Luminaires created along the input curve.")]
         public static List<Luminaire> Luminaire(this ICurve crv, int count, Vector dir, LuminaireType type = null, string name = "")
         {
+            if (crv is NurbsCurve)
+            {
+                Base.Compute.RecordError("Luminaire Creation is not supported for Nurbs Curves.");
+                return null;
+            }
+
             List<Luminaire> luminaires = new List<Luminaire>();
             List<Point> pts = crv.SamplePoints(count);
             for (int i = 0; i < pts.Count; i++)
             {
                 Point pt = pts[i];
-                Vector align = crv.TangentAtPoint(pt);
+                Vector align = crv.ITangentAtPoint(pt);
                 Luminaire lum = Create.Luminaire(pt, dir, align, type, name + "_" + i.ToString());
                 luminaires.Add(lum);
             }
@@ -197,11 +233,10 @@ namespace BH.Engine.Lighting
                     basis = Engine.Geometry.Create.Basis(Vector.XAxis.Reverse(), Vector.YAxis);
                 else
                 {
-                    Vector x = orientation.CrossProduct(Vector.ZAxis).Project(Plane.XY).Normalise();
+                    Vector x = orientation.CrossProduct(Vector.ZAxis).Normalise();
                     Vector y = orientation.CrossProduct(x).Normalise();
                     basis = Engine.Geometry.Create.Basis(x, y);
                 }
-
             }
         
             Luminaire luminaire = new Luminaire

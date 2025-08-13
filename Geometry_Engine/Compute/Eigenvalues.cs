@@ -21,8 +21,11 @@
  */
 
 using BH.oM.Geometry;
+using BH.oM.Base.Attributes;
+using BH.oM.Quantities.Attributes;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace BH.Engine.Geometry
@@ -33,6 +36,10 @@ namespace BH.Engine.Geometry
         /****   Public Methods                          ****/
         /***************************************************/
 
+        [Description("Calculates the eigenvalues of a TransformMatrix.")]
+        [Input("matrix", "The TransformMatrix to calculate eigenvalues for.")]
+        [Input("tolerance", "The tolerance for numerical calculations.", typeof(Length))]
+        [Output("values", "The eigenvalues as an array of doubles.")]
         public static double[] Eigenvalues(this TransformMatrix matrix, double tolerance = Tolerance.Distance)
         {
             return matrix.Matrix.Eigenvalues(tolerance);

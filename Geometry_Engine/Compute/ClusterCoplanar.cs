@@ -20,9 +20,12 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.oM.Base.Attributes;
 using BH.oM.Geometry;
+using BH.oM.Quantities.Attributes;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace BH.Engine.Geometry
@@ -33,6 +36,11 @@ namespace BH.Engine.Geometry
         /****         public Methods - Vectors          ****/
         /***************************************************/
 
+        [Description("Clusters coplanar Planes into groups.")]
+        [Input("planes", "Collection of Planes to cluster.")]
+        [Input("distanceTolerance", "The distance tolerance to use for coplanarity checks. Default is Tolerance.Distance.", typeof(Length))]
+        [Input("angleTolerance", "The angle tolerance to use for coplanarity checks. Default is Tolerance.Angle.", typeof(Angle))]
+        [Output("planeClusters", "A collection of lists of coplanar planes. Each list contains planes that are coplanar with respect to the first plane in the list.")]
         public static List<List<Plane>> ClusterCoplanar(this List<Plane> planes, double distanceTolerance = Tolerance.Distance, double angleTolerance = Tolerance.Angle)
         {
             List<List<Plane>> planeClusters = new List<List<Plane>>();
@@ -61,6 +69,10 @@ namespace BH.Engine.Geometry
         /****          public Methods - Curves          ****/
         /***************************************************/
 
+        [Description("Clusters coplanar Polylines into groups.")]
+        [Input("curves", "Collection of Polylines to cluster.")]
+        [Input("distanceTolerance", "The distance tolerance to use for coplanarity checks. Default is Tolerance.Distance.", typeof(Length))]
+        [Output("curveClusters", "A collection of lists of coplanar polylines. Each list contains polylines that are coplanar with respect to the first polyline in the list.")]
         public static List<List<Polyline>> ClusterCoplanar(this List<Polyline> curves, double distanceTolerance = Tolerance.Distance)
         {
             List<List<Polyline>> curveClusters = new List<List<Polyline>>();
@@ -86,6 +98,10 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Clusters coplanar PolyCurves into groups.")]
+        [Input("curves", "Collection of PolyCurves to cluster.")]
+        [Input("distanceTolerance", "The distance tolerance to use for coplanarity checks. Default is Tolerance.Distance.", typeof(Length))]
+        [Output("curveClusters", "A collection of lists of coplanar PolyCurves. Each list contains PolyCurves that are coplanar with respect to the first PolyCurve in the list.")]
         public static List<List<PolyCurve>> ClusterCoplanar(this List<PolyCurve> curves, double distanceTolerance = Tolerance.Distance)
         {
             List<List<PolyCurve>> curveClusters = new List<List<PolyCurve>>();
@@ -111,6 +127,10 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Clusters coplanar ICurves into groups.")]
+        [Input("curves", "Collection of ICurves to cluster.")]
+        [Input("distanceTolerance", "The distance tolerance to use for coplanarity checks. Default is Tolerance.Distance.", typeof(Length))]
+        [Output("curveClusters", "A collection of lists of coplanar ICurves. Each list contains ICurves that are coplanar with respect to the first ICurve in the list.")]
         public static List<List<ICurve>> IClusterCoplanar(this List<ICurve> curves, double distanceTolerance = Tolerance.Distance)
         {
             List<List<ICurve>> curveClusters = new List<List<ICurve>>();

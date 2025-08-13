@@ -22,8 +22,11 @@
 
 using BH.Engine.Base;
 using BH.oM.Geometry;
+using BH.oM.Base.Attributes;
+using BH.oM.Quantities.Attributes;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace BH.Engine.Geometry
@@ -34,6 +37,10 @@ namespace BH.Engine.Geometry
         /**** public Methods - Vectors                  ****/
         /***************************************************/
 
+        [Description("Sorts a collection of collinear Points in order along their common line.")]
+        [Input("points", "The collection of collinear Points to sort.")]
+        [Input("tolerance", "The tolerance for determining collinearity and coordinate comparison.", typeof(Length))]
+        [Output("points", "The Points sorted in order along their common line.")]
         public static List<Point> SortCollinear(this List<Point> points, double tolerance = Tolerance.Distance)
         {
             List<Point> cPoints = points.ToList();

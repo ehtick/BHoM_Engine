@@ -61,15 +61,7 @@ namespace BH.Engine.Library
                 if (messageForDeleted.TryGetValue(fullLibraryName, out message) || //Try find message for deleted for provided name
  (!string.IsNullOrWhiteSpace(newName) && messageForDeleted.TryGetValue(newName, out message))) //If cant be found, and new name is not null, try finding message for deleted from new name
                 {
-                    BH.Engine.Base.Compute.RecordEvent(new VersioningEvent
-                    {
-                        OldDocument = fullLibraryName, 
-                        NewDocument = "Dataset has been removed with the following message: " + message, 
-                        OldVersion = string.IsNullOrWhiteSpace(versionFrom) ? "?.?" : versionFrom, 
-                        NewVersion = Engine.Base.Query.BHoMVersion(), 
-                        Message = "Dataset has been removed with the following message: " + message
-                    });
-
+                    BH.Engine.Base.Compute.RecordEvent(new VersioningEvent{OldDocument = fullLibraryName, NewDocument = "Dataset has been removed with the following message: " + message, OldVersion = string.IsNullOrWhiteSpace(versionFrom) ? "?.?" : versionFrom, NewVersion = Engine.Base.Query.BHoMVersion(), Message = "Dataset has been removed with the following message: " + message});
                     Engine.Base.Compute.RecordError(message);
                 }
                 else
@@ -84,14 +76,7 @@ namespace BH.Engine.Library
                 string newVersion = Engine.Base.Query.BHoMVersion();
                 string oldVersion = string.IsNullOrWhiteSpace(versionFrom) ? "?.?" : versionFrom;
                 string message = $"{fullLibraryName} from version {oldVersion} has been upgraded to {newName} (version {newVersion})";
-                BH.Engine.Base.Compute.RecordEvent(new VersioningEvent
-                {
-                    OldDocument = fullLibraryName, 
-                    NewDocument = newName, 
-                    OldVersion = oldVersion, 
-                    NewVersion = newVersion, 
-                    Message = message
-                });
+                BH.Engine.Base.Compute.RecordEvent(new VersioningEvent{OldDocument = fullLibraryName, NewDocument = newName, OldVersion = oldVersion, NewVersion = newVersion, Message = message});
             }
 
             return newName;

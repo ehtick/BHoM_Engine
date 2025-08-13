@@ -72,8 +72,7 @@ namespace BH.Engine.Base
             "If no method is found, this returns `false`, and the `result` is null.")]
         [Input("obj", "Object whose extension method is to be found, and to which the method will be applied in order to obtain the result.")]
         [Input("methodName", "Name of the extension method defined for the input object that is to be found in any of the BHoM assemblies.")]
-        [Output("First output: true if a method was found and an invocation was attempted. False otherwise.\n" + 
-            "Second output: result of the call if an attempt was made.")]
+        [Output("First output: true if a method was found and an invocation was attempted. False otherwise." + "\nSecond output: result of the call if an attempt was made.")]
         public static async Task<Output<bool, object>> TryRunExtensionMethodAsync(this object obj, string methodName)
         {
             return await TryRunExtensionMethodAsync(methodName, new object[]{obj});
@@ -87,8 +86,7 @@ namespace BH.Engine.Base
         [Input("obj", "Object whose extension method is to be found, and to which the method will be applied in order to obtain the result.")]
         [Input("methodName", "Name of the extension method defined for the input object that is to be found in any of the BHoM assemblies.")]
         [Input("parameters", "The additional arguments of the call to the method, skipping the first argument provided by 'target'.")]
-        [Output("First output: true if a method was found and an invocation was attempted. False otherwise.\n" + 
-            "Second output: result of the call if an attempt was made.")]
+        [Output("First output: true if a method was found and an invocation was attempted. False otherwise." + "\nSecond output: result of the call if an attempt was made.")]
         public static async Task<Output<bool, object>> TryRunExtensionMethodAsync(this object obj, string methodName, object[] parameters)
         {
             return await TryRunExtensionMethodAsync(methodName, new object[]{obj}.Concat(parameters).ToArray());

@@ -23,8 +23,10 @@
 using BH.oM.Data.Collections;
 using BH.oM.Geometry;
 using BH.oM.Base.Attributes;
+using BH.oM.Quantities.Attributes;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace BH.Engine.Geometry
@@ -35,6 +37,9 @@ namespace BH.Engine.Geometry
         /**** Public  Methods                     ****/
         /*********************************************/
 
+        [Description("Converts a BoundingBox to a DomainBox with domains for X, Y, and Z dimensions.")]
+        [Input("box", "The BoundingBox to convert.")]
+        [Output("domainBox", "The resulting DomainBox with three domains representing the X, Y, and Z ranges.")]
         public static DomainBox DomainBox(this BoundingBox box)
         {
             return new oM.Data.Collections.DomainBox()

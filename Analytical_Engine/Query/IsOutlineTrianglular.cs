@@ -19,7 +19,6 @@
  * You should have received a copy of the GNU Lesser General Public License     
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
-
 using BH.oM.Analytical.Elements;
 using BH.oM.Geometry;
 using BH.oM.Base.Attributes;
@@ -35,9 +34,8 @@ namespace BH.Engine.Analytical
     public static partial class Query
     {
         /***************************************************/
-        /****               Public Methods              ****/
+        /**** Public Methods                            ****/
         /***************************************************/
-
         [Description("Determines whether a Panel's outline is triangular.")]
         [Input("panel", "The IPanel to check if the outline is triangular.")]
         [Output("bool", "True for Panels with a triangular outline or false for Panels with a non-triangular outline.")]
@@ -47,7 +45,6 @@ namespace BH.Engine.Analytical
             PolyCurve polycurve = ExternalPolyCurve(panel);
             return polycurve.IsTriangular();
         }
-
-        /***************************************************/
+    /***************************************************/
     }
 }

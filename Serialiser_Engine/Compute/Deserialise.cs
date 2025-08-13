@@ -19,7 +19,6 @@
  * You should have received a copy of the GNU Lesser General Public License     
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
-
 using BH.oM.Base;
 using MongoDB.Bson;
 using MongoDB.Bson.IO;
@@ -34,20 +33,18 @@ namespace BH.Engine.Serialiser
 {
     public static partial class Compute
     {
-        /***************************************************/
-        /****               Public Methods              ****/
-        /***************************************************/
-
+        /*******************************************/
+        /**** Public Methods                    ****/
+        /*******************************************/
         [Description("Used to support FromJson, not recommended to be used in isolation.")]
         public static object IDeserialise(this BsonValue bson)
         {
             return IDeserialise(bson, "", false);
         }
 
-        /***************************************************/
-        /**** Private Methods                           ****/
-        /***************************************************/
-
+        /*******************************************/
+        /**** Private Methods                   ****/
+        /*******************************************/
         private static object IDeserialise(this BsonValue bson, string version, bool isUpgraded)
         {
             if (bson.IsBsonNull)
@@ -84,8 +81,7 @@ namespace BH.Engine.Serialiser
                 return BsonTypeMapper.MapToDotNetValue(bson);
         }
 
-        /***************************************************/
-
+        /*******************************************/
         private static object IDeserialise(this BsonValue bson, Type targetType, object value, string version, bool isUpgraded)
         {
             if (bson.IsBsonNull)
@@ -189,10 +185,9 @@ namespace BH.Engine.Serialiser
             }
         }
 
-        /***************************************************/
-        /**** Private Methods - Support                 ****/
-        /***************************************************/
-
+        /*******************************************/
+        /**** Private Methods - Support         ****/
+        /*******************************************/
         private static object EnsureNotNull(object value, Type targetType)
         {
             if (targetType.IsAbstract)
@@ -203,8 +198,7 @@ namespace BH.Engine.Serialiser
                 return value;
         }
 
-        /***************************************************/
-
+        /*******************************************/
         private static object EnsureNotNullAndClear(ICollection value, Type targetType)
         {
             if (targetType.IsAbstract)
@@ -215,8 +209,7 @@ namespace BH.Engine.Serialiser
                 return value;
         }
 
-        /***************************************************/
-
+        /*******************************************/
         private static object CreateEmptyList(Type targetType)
         {
             Type itemType = targetType.GetGenericArguments()[0];
@@ -225,8 +218,7 @@ namespace BH.Engine.Serialiser
             return Activator.CreateInstance(constructedListType);
         }
 
-        /***************************************************/
-
+        /*******************************************/
         private static object CreateEmptyDictionary(Type targetType)
         {
             Type[] types = targetType.GetGenericArguments();
@@ -235,8 +227,7 @@ namespace BH.Engine.Serialiser
             return Activator.CreateInstance(constructedDicType);
         }
 
-        /***************************************************/
-
+        /*******************************************/
         private static object CreateEmptyArray(Type targetType)
         {
             if (targetType.Name.EndsWith("[]"))
@@ -247,8 +238,7 @@ namespace BH.Engine.Serialiser
                 return null;
         }
 
-        /***************************************************/
-
+        /*******************************************/
         private static object GetDefaultValue(Type t)
         {
             if (t.IsValueType)
@@ -256,8 +246,7 @@ namespace BH.Engine.Serialiser
             return null;
         }
 
-        /***************************************************/
-
+        /*******************************************/
         private static BsonValue ExtractValue(BsonValue bson)
         {
             if (bson != null && bson.IsBsonDocument)
@@ -271,7 +260,6 @@ namespace BH.Engine.Serialiser
 
             return bson;
         }
-
-        /***************************************************/
+    /*******************************************/
     }
 }

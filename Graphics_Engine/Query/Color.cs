@@ -19,7 +19,6 @@
  * You should have received a copy of the GNU Lesser General Public License     
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
-
 using BH.oM.Geometry;
 using BH.oM.Graphics;
 using BH.oM.Base.Attributes;
@@ -34,9 +33,8 @@ namespace BH.Engine.Graphics
     public static partial class Query
     {
         /***************************************************/
-        /****               Public Methods              ****/
+        /****           Public Methods                  ****/
         /***************************************************/
-
         [Description("Gets a color from a gradient at the specified position between 0 and 1.")]
         [Input("gradient", "The gradient to Query a Color from.")]
         [Input("val", "The number between 0 and 1 to use for interpolation of the markers colors.")]
@@ -70,7 +68,6 @@ namespace BH.Engine.Graphics
         }
 
         /***************************************************/
-
         [Description("Gets a color from a gradient at the specified position between 0 and 1.")]
         [Input("gradient", "The gradient to Query a Color from.")]
         [Input("val", "The number between 0 and 1 to use for extracting the colour from the gradient.")]
@@ -96,7 +93,6 @@ namespace BH.Engine.Graphics
         }
 
         /***************************************************/
-
         [Description("Gets a color from a gradient at the specified position scaled between from and to.")]
         [Input("gradient", "The gradient to Query a Color from.")]
         [Input("val", "The number between 'from' and 'to' to use for extraction of colour from the gradient.")]
@@ -115,9 +111,8 @@ namespace BH.Engine.Graphics
         }
 
         /***************************************************/
-        /****        Public Methods - Interface         ****/
+        /**** Public Methods - Interface                ****/
         /***************************************************/
-
         [Description("Gets a color from a gradient at the specified position between 0 and 1.")]
         [Input("gradient", "The gradient to Query a Color from.")]
         [Input("val", "The number between 0 and 1 to use for extracting the colour from the gradient.")]
@@ -134,9 +129,8 @@ namespace BH.Engine.Graphics
         }
 
         /***************************************************/
-        /****              Private Methods              ****/
+        /****           Private Methods                 ****/
         /***************************************************/
-
         private static Color InterpolateColor(KeyValuePair<decimal, Color> lower, KeyValuePair<decimal, Color> upper, decimal val)
         {
             // Safety check
@@ -153,12 +147,10 @@ namespace BH.Engine.Graphics
         }
 
         /***************************************************/
-
         private static decimal Interpolate(decimal a, decimal b, decimal val)
         {
             return (b - a) * val + a;
         }
-
     /***************************************************/
     }
 }

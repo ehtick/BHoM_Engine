@@ -19,7 +19,6 @@
  * You should have received a copy of the GNU Lesser General Public License     
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
-
 using System;
 using System.Linq;
 using System.Collections.Generic;
@@ -33,9 +32,8 @@ namespace BH.Engine.Data
     public static partial class Query
     {
         /***************************************************/
-        /****               Public Methods              ****/
+        /**** Public Methods                            ****/
         /***************************************************/
-
         [Description("Gets all table rows with values exceeding the values provided. Values returned as CustomObjects.")]
         [Input("table", "The table to extract values from.")]
         [Input("axes", "The axis of the table to match values for.")]
@@ -56,7 +54,6 @@ namespace BH.Engine.Data
         }
 
         /***************************************************/
-
         [Description("Gets all table rows with values exeeding the values provided sorted by the sortAxis. Values returned as CustomObjects.")]
         [Input("table", "The table to extract values from.")]
         [Input("axes", "The axis of the table to match values for.")]
@@ -78,9 +75,8 @@ namespace BH.Engine.Data
         }
 
         /***************************************************/
-        /****              Private Methods              ****/
+        /**** Private Methods                           ****/
         /***************************************************/
-
         private static string AboveExpressionString(List<string> axes, List<object> values, bool allowEqual)
         {
             string expression = "";
@@ -94,7 +90,6 @@ namespace BH.Engine.Data
 
             return expression;
         }
-
-        /***************************************************/
+    /***************************************************/
     }
 }

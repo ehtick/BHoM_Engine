@@ -19,7 +19,6 @@
  * You should have received a copy of the GNU Lesser General Public License     
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
-
 using System;
 using System.Linq;
 using BH.oM.Geometry;
@@ -41,9 +40,8 @@ namespace BH.Engine.Facade
     public static partial class Query
     {
         /***************************************************/
-        /****               Public Methods              ****/
+        /**** Public Methods                            ****/
         /***************************************************/
-
         [Description("Returns 2D Geometry representing the frame's projected elevation extents.")]
         [Input("opening", "The opening to get the frame geometry for.")]
         [Output("geo", "The projected elevation extents of the frame.")]
@@ -79,7 +77,5 @@ namespace BH.Engine.Facade
             PlanarSurface geo = BH.Engine.Geometry.Create.PlanarSurface(extCrv, new List<ICurve>{intCrv});
             return geo;
         }
-
-        /***************************************************/
     }
 }

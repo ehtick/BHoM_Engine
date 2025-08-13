@@ -19,7 +19,6 @@
  * You should have received a copy of the GNU Lesser General Public License     
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
-
 using BH.Engine.Base;
 using BH.oM.Geometry;
 using System;
@@ -32,7 +31,7 @@ namespace BH.Engine.Geometry
     public static partial class Create
     {
         /***************************************************/
-        /****               Public Methods              ****/
+        /**** Public Methods                            ****/
         /***************************************************/
         [Description("Creates a Plane based on its origin and normal vector.")]
         [InputFromProperty("origin")]
@@ -56,7 +55,7 @@ namespace BH.Engine.Geometry
         }
 
         /***************************************************/
-        /****             Random Geometry               ****/
+        /**** Random Geometry                           ****/
         /***************************************************/
         [Description("Creates a random Plane based on a seed. If no seed is provided, a random one will be generated. If Box is provided, the resulting geometry will be contained within the box.")]
         [Input("seed", "Input seed for random generation. If -1 is provided, a random seed will be generated.")]

@@ -21,7 +21,10 @@
  */
 
 using BH.oM.Geometry;
+using BH.oM.Base.Attributes;
+using BH.oM.Quantities.Attributes;
 using System;
+using System.ComponentModel;
 using System.Linq;
 
 namespace BH.Engine.Geometry
@@ -32,6 +35,10 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
+        [Description("Creates a Sphere with the specified center and radius.")]
+        [Input("centre", "The center point of the sphere.")]
+        [Input("radius", "The radius of the sphere.", typeof(Length))]
+        [Output("sphere", "The created Sphere.")]
         public static Sphere Sphere(Point centre, double radius)
         {
             return new Sphere

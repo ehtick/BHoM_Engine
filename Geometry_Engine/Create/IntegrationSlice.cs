@@ -21,8 +21,11 @@
  */
 
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using BH.oM.Geometry;
+using BH.oM.Base.Attributes;
+using BH.oM.Quantities.Attributes;
 
 namespace BH.Engine.Geometry
 {
@@ -32,6 +35,12 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
+        [Description("Creates an IntegrationSlice with the specified dimensions and placement.")]
+        [Input("width", "The width of the integration slice.", typeof(Length))]
+        [Input("length", "The length of the integration slice.", typeof(Length))]
+        [Input("centre", "The center position of the integration slice.", typeof(Length))]
+        [Input("placement", "Array defining the placement positions.")]
+        [Output("slice", "The created IntegrationSlice.")]
         public static IntegrationSlice IntegrationSlice(double width, double length, double centre, double[] placement)
         {
             return new IntegrationSlice
@@ -45,6 +54,12 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Creates a collection of IntegrationSlices from a list of edges along a specified direction.")]
+        [Input("edges", "The list of ICurve edges to create slices from.")]
+        [Input("direction", "The direction vector for creating the slices.")]
+        [Input("increment", "The increment step size for slice creation.", typeof(Length))]
+        [Input("tolerance", "The tolerance for geometric calculations.", typeof(Length))]
+        [Output("slices", "The created list of IntegrationSlices.")]
         public static List<IntegrationSlice> IntegrationSlices(List<ICurve> edges, Vector direction, double increment = 0.001, double tolerance = Tolerance.Distance)
         {
             List<IntegrationSlice> slices = new List<IntegrationSlice>();

@@ -21,7 +21,10 @@
  */
 
 using BH.oM.Geometry;
+using BH.oM.Base.Attributes;
+using BH.oM.Quantities.Attributes;
 using System;
+using System.ComponentModel;
 using System.Linq;
 
 namespace BH.Engine.Geometry
@@ -31,6 +34,13 @@ namespace BH.Engine.Geometry
         /***************************************************/
         /**** Public Methods                            ****/
         /***************************************************/
+        
+        [Description("Creates a Torus with the specified center, axis, major radius, and minor radius.")]
+        [Input("centre", "The center point of the torus.")]
+        [Input("axis", "The axis vector defining the torus's orientation.")]
+        [Input("radiusMajor", "The major radius of the torus (distance from center to tube center).", typeof(Length))]
+        [Input("radiusMinor", "The minor radius of the torus (radius of the tube).", typeof(Length))]
+        [Output("torus", "The created Torus.")]
         public static Torus Torus(Point centre, Vector axis, double radiusMajor = 0.0, double radiusMinor = 0.0)
         {
             return new Torus

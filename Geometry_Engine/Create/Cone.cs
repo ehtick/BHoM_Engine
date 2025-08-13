@@ -21,7 +21,10 @@
  */
 
 using BH.oM.Geometry;
+using BH.oM.Base.Attributes;
+using BH.oM.Quantities.Attributes;
 using System;
+using System.ComponentModel;
 using System.Linq;
 
 namespace BH.Engine.Geometry
@@ -31,6 +34,13 @@ namespace BH.Engine.Geometry
         /***************************************************/
         /**** Public Methods                            ****/
         /***************************************************/
+        
+        [Description("Creates a Cone with the specified center, axis, radius, and height.")]
+        [Input("centre", "The center point of the cone.")]
+        [Input("axis", "The axis vector defining the cone's orientation.")]
+        [Input("radius", "The radius of the cone at its base.", typeof(Length))]
+        [Input("height", "The height of the cone.", typeof(Length))]
+        [Output("cone", "The created Cone.")]
         public static Cone Cone(Point centre, Vector axis, double radius = 0.0, double height = 0.0)
         {
             return new Cone

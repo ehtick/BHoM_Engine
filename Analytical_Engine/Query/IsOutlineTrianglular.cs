@@ -42,8 +42,7 @@ namespace BH.Engine.Analytical
         [Input("panel", "The IPanel to check if the outline is triangular.")]
         [Output("bool", "True for Panels with a triangular outline or false for Panels with a non-triangular outline.")]
         public static bool IsOutlineTriangular<TEdge, TOpening>(this IPanel<TEdge, TOpening> panel)
-            where TEdge : IEdge
-            where TOpening : IOpening<TEdge>
+            where TEdge : IEdge where TOpening : IOpening<TEdge>
         {
             PolyCurve polycurve = ExternalPolyCurve(panel);
             return polycurve.IsTriangular();

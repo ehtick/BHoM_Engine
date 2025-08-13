@@ -40,8 +40,7 @@ namespace BH.Engine.Spatial
         [Description("Gets the dominant vector (orientation) of an Element1D based on its line lengths.")]
         [Input("element1D", "Element1D to evaluate.")]
         [Input("orthogonalPriority", "Optional, if true gives priority to curves that are on the orthogonal axis (X, Y or Z vectors).")]
-        [Input("orthogonalLengthFactor", "Optional, tests the orthogonal vector lengths in relation to the actual non-orthogonal dominant vector. \n" + 
-            "For example if the dominant vector is 10 in length but the orthogonal is only 5 in length, then this number should be 0.5 for it to pass the test.")]
+        [Input("orthogonalLengthFactor", "Optional, tests the orthogonal vector lengths in relation to the actual non-orthogonal dominant vector. For example if the dominant vector is 10 in length but the orthogonal is only 5 in length, then this number should be 0.5 for it to pass the test.")]
         [Input("angleTolerance", "Optional, angle in radians that vectors will be considered similar.")]
         [Output("dominantVector", "The dominant vector of an Element1D.")]
         public static BH.oM.Geometry.Vector DominantVector(this IElement1D element1D, bool orthogonalPriority = true, double orthogonalLengthFactor = 0.5, double angleTolerance = BH.oM.Geometry.Tolerance.Angle)
@@ -82,8 +81,7 @@ namespace BH.Engine.Spatial
         [Description("Gets the dominant vector (orientation) of an Element2D based on its line lengths.")]
         [Input("element2D", "Element2D to evaluate.")]
         [Input("orthogonalPriority", "Optional, if true gives priority to curves that are on the orthogonal axis (X, Y or Z vectors).")]
-        [Input("orthogonalLengthFactor", "Optional, tests the orthogonal vector lengths in relation to the actual non-orthogonal dominant vector. \n" + 
-            "For example if the dominant vector is 10 in length but the orthogonal is only 5 in length, then this number should be 0.5 for it to pass the test.")]
+        [Input("orthogonalLengthFactor", "Optional, tests the orthogonal vector lengths in relation to the actual non-orthogonal dominant vector. For example if the dominant vector is 10 in length but the orthogonal is only 5 in length, then this number should be 0.5 for it to pass the test.")]
         [Input("angleTolerance", "Optional, angle in radians that vectors will be considered similar.")]
         [Output("dominantVector", "The dominant vector of an Element2D.")]
         public static BH.oM.Geometry.Vector DominantVector(this IElement2D element2D, bool orthogonalPriority = true, double orthogonalLengthFactor = 0.5, double angleTolerance = BH.oM.Geometry.Tolerance.Angle)

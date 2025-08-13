@@ -56,10 +56,7 @@ namespace BH.Engine.Spatial
         [Output("elementCurves", "The curve defining the base geometry of the IElement1D.")]
         public static List<ICurve> ElementCurves(this IElement1D element1D, bool recursive = true)
         {
-            return new List<ICurve>
-            {
-                element1D.IGeometry()
-            };
+            return new List<ICurve>{element1D.IGeometry()};
         }
 
         /***************************************************/

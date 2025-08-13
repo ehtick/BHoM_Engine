@@ -20,7 +20,9 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.oM.Base.Attributes;
 using BH.oM.Geometry;
+using System.ComponentModel;
 
 namespace BH.Engine.Geometry
 {
@@ -30,6 +32,9 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
+        [Description("Returns the inverse of the given transformation matrix.")]
+        [Input("transform", "The transformation matrix to invert.")]
+        [Output("transform", "The inverted transformation matrix.")]
         public static TransformMatrix Invert(this TransformMatrix transform)
         {
             double[,] m = transform.Matrix;

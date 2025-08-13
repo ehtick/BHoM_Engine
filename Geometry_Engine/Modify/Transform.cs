@@ -23,8 +23,11 @@
 using BH.Engine.Base;
 using BH.oM.Geometry;
 using BH.oM.Geometry.CoordinateSystem;
+using BH.oM.Base.Attributes;
+using BH.oM.Quantities.Attributes;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace BH.Engine.Geometry
@@ -35,6 +38,10 @@ namespace BH.Engine.Geometry
         /**** Public Methods - Vectors                  ****/
         /***************************************************/
 
+        [Description("Transforms a Point using the provided transformation matrix.")]
+        [Input("pt", "The Point to transform.")]
+        [Input("transform", "The transformation matrix to apply to the Point.")]
+        [Output("point", "The transformed Point.")]
         public static Point Transform(this Point pt, TransformMatrix transform)
         {
             double[,] matrix = transform.Matrix;
@@ -49,6 +56,10 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Transforms a Vector using the provided transformation matrix.")]
+        [Input("vector", "The Vector to transform.")]
+        [Input("transform", "The transformation matrix to apply to the Vector.")]
+        [Output("vector", "The transformed Vector.")]
         public static Vector Transform(this Vector vector, TransformMatrix transform)
         {
             double[,] matrix = transform.Matrix;
@@ -63,6 +74,10 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Transforms a Plane using the provided transformation matrix.")]
+        [Input("plane", "The Plane to transform.")]
+        [Input("transform", "The transformation matrix to apply to the Plane.")]
+        [Output("plane", "The transformed Plane.")]
         public static Plane Transform(this Plane plane, TransformMatrix transform)
         {
             return new Plane { Origin = plane.Origin.Transform(transform), Normal = plane.Normal.Transform(transform).Normalise() };
@@ -70,6 +85,10 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Transforms a Basis using the provided transformation matrix.")]
+        [Input("basis", "The Basis to transform.")]
+        [Input("transform", "The transformation matrix to apply to the Basis.")]
+        [Output("basis", "The transformed Basis.")]
         public static Basis Transform(this Basis basis, TransformMatrix transform)
         {
             return Create.Basis(basis.X.Transform(transform), basis.Y.Transform(transform));
@@ -77,6 +96,10 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Transforms a Cartesian coordinate system using the provided transformation matrix.")]
+        [Input("coordinateSystem", "The Cartesian coordinate system to transform.")]
+        [Input("transform", "The transformation matrix to apply to the coordinate system.")]
+        [Output("coordinateSystem", "The transformed Cartesian coordinate system.")]
         public static Cartesian Transform(this Cartesian coordinateSystem, TransformMatrix transform)
         {
             Point origin = coordinateSystem.Origin.Transform(transform);
@@ -93,6 +116,10 @@ namespace BH.Engine.Geometry
         /**** Public Methods - Curves                   ****/
         /***************************************************/
 
+        [Description("Transforms an Arc using the provided transformation matrix. For non-rigid or non-uniform transformations, the Arc is converted to a NurbsCurve.")]
+        [Input("curve", "The Arc to transform.")]
+        [Input("transform", "The transformation matrix to apply to the Arc.")]
+        [Output("curve", "The transformed curve as an Arc or NurbsCurve.")]
         public static ICurve Transform(this Arc curve, TransformMatrix transform)
         {
             if (transform.IsRigidTransformation() || transform.IsUniformScaling())
@@ -112,6 +139,10 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Transforms a Circle using the provided transformation matrix. For non-rigid or non-uniform transformations, the Circle is converted to a NurbsCurve.")]
+        [Input("curve", "The Circle to transform.")]
+        [Input("transform", "The transformation matrix to apply to the Circle.")]
+        [Output("curve", "The transformed curve as a Circle or NurbsCurve.")]
         public static ICurve Transform(this Circle curve, TransformMatrix transform)
         {
             if (transform.IsRigidTransformation() || transform.IsUniformScaling())
@@ -130,6 +161,10 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Transforms an Ellipse using the provided transformation matrix. For non-rigid or non-uniform transformations, the Ellipse is converted to a NurbsCurve.")]
+        [Input("curve", "The Ellipse to transform.")]
+        [Input("transform", "The transformation matrix to apply to the Ellipse.")]
+        [Output("curve", "The transformed curve as an Ellipse or NurbsCurve.")]
         public static ICurve Transform(this Ellipse curve, TransformMatrix transform)
         {
             if (transform.IsRigidTransformation() || transform.IsUniformScaling())
@@ -150,6 +185,10 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Transforms a Line using the provided transformation matrix.")]
+        [Input("curve", "The Line to transform.")]
+        [Input("transform", "The transformation matrix to apply to the Line.")]
+        [Output("line", "The transformed Line.")]
         public static Line Transform(this Line curve, TransformMatrix transform)
         {
             return new Line { Start = curve.Start.Transform(transform), End = curve.End.Transform(transform) };
@@ -157,6 +196,10 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Transforms a NurbsCurve using the provided transformation matrix.")]
+        [Input("curve", "The NurbsCurve to transform.")]
+        [Input("transform", "The transformation matrix to apply to the NurbsCurve.")]
+        [Output("curve", "The transformed NurbsCurve.")]
         public static NurbsCurve Transform(this NurbsCurve curve, TransformMatrix transform)
         {
             return new NurbsCurve()
@@ -169,6 +212,10 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Transforms a PolyCurve using the provided transformation matrix.")]
+        [Input("curve", "The PolyCurve to transform.")]
+        [Input("transform", "The transformation matrix to apply to the PolyCurve.")]
+        [Output("curve", "The transformed PolyCurve.")]
         public static PolyCurve Transform(this PolyCurve curve, TransformMatrix transform)
         {
             return new PolyCurve { Curves = curve.Curves.Select(x => x.ITransform(transform)).ToList() };
@@ -176,6 +223,10 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Transforms a Polyline using the provided transformation matrix.")]
+        [Input("curve", "The Polyline to transform.")]
+        [Input("transform", "The transformation matrix to apply to the Polyline.")]
+        [Output("curve", "The transformed Polyline.")]
         public static Polyline Transform(this Polyline curve, TransformMatrix transform)
         {
             return new Polyline { ControlPoints = curve.ControlPoints.Select(x => x.Transform(transform)).ToList() };
@@ -186,6 +237,10 @@ namespace BH.Engine.Geometry
         /**** Public Methods - Surfaces                 ****/
         /***************************************************/
 
+        [Description("Transforms an Extrusion surface using the provided transformation matrix.")]
+        [Input("surface", "The Extrusion surface to transform.")]
+        [Input("transform", "The transformation matrix to apply to the Extrusion.")]
+        [Output("surface", "The transformed Extrusion surface.")]
         public static Extrusion Transform(this Extrusion surface, TransformMatrix transform)
         {
             return new Extrusion { Curve = surface.Curve.ITransform(transform), Direction = surface.Direction.Transform(transform), Capped = surface.Capped };
@@ -193,6 +248,10 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Transforms a Loft surface using the provided transformation matrix.")]
+        [Input("surface", "The Loft surface to transform.")]
+        [Input("transform", "The transformation matrix to apply to the Loft.")]
+        [Output("surface", "The transformed Loft surface.")]
         public static Loft Transform(this Loft surface, TransformMatrix transform)
         {
             return new Loft { Curves = surface.Curves.Select(x => x.ITransform(transform)).ToList() };
@@ -200,6 +259,10 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Transforms a NurbsSurface using the provided transformation matrix.")]
+        [Input("surface", "The NurbsSurface to transform.")]
+        [Input("transform", "The transformation matrix to apply to the NurbsSurface.")]
+        [Output("surface", "The transformed NurbsSurface.")]
         public static NurbsSurface Transform(this NurbsSurface surface, TransformMatrix transform)
         {
             List<SurfaceTrim> innerTrims = surface.InnerTrims.Select(x => new SurfaceTrim(ITransform(x.Curve3d, transform), x.Curve2d)).ToList();
@@ -219,6 +282,10 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Transforms a Pipe surface using the provided transformation matrix.")]
+        [Input("surface", "The Pipe surface to transform.")]
+        [Input("transform", "The transformation matrix to apply to the Pipe.")]
+        [Output("surface", "The transformed Pipe surface.")]
         public static Pipe Transform(this Pipe surface, TransformMatrix transform)
         {
             return new Pipe { Centreline = surface.Centreline.ITransform(transform), Radius = surface.Radius, Capped = surface.Capped };
@@ -226,6 +293,10 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Transforms a PlanarSurface using the provided transformation matrix.")]
+        [Input("surface", "The PlanarSurface to transform.")]
+        [Input("transform", "The transformation matrix to apply to the PlanarSurface.")]
+        [Output("surface", "The transformed PlanarSurface.")]
         public static PlanarSurface Transform(this PlanarSurface surface, TransformMatrix transform)
         {
             return new PlanarSurface(surface.ExternalBoundary.ITransform(transform), surface.InternalBoundaries.Select(x => x.ITransform(transform)).ToList());
@@ -233,6 +304,10 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Transforms a PolySurface using the provided transformation matrix.")]
+        [Input("surface", "The PolySurface to transform.")]
+        [Input("transform", "The transformation matrix to apply to the PolySurface.")]
+        [Output("surface", "The transformed PolySurface.")]
         public static PolySurface Transform(this PolySurface surface, TransformMatrix transform)
         {
             return new PolySurface { Surfaces = surface.Surfaces.Select(x => x.ITransform(transform)).ToList() };
@@ -243,6 +318,10 @@ namespace BH.Engine.Geometry
         /**** Public Methods - Mesh                     ****/
         /***************************************************/
 
+        [Description("Transforms a Mesh using the provided transformation matrix.")]
+        [Input("mesh", "The Mesh to transform.")]
+        [Input("transform", "The transformation matrix to apply to the Mesh.")]
+        [Output("mesh", "The transformed Mesh.")]
         public static Mesh Transform(this Mesh mesh, TransformMatrix transform)
         {
             return new Mesh { Vertices = mesh.Vertices.Select(x => x.Transform(transform)).ToList(), Faces = mesh.Faces.ToList() };
@@ -253,6 +332,10 @@ namespace BH.Engine.Geometry
         /**** Public Methods - Solid                    ****/
         /***************************************************/
 
+        [Description("Transforms a BoundaryRepresentation solid using the provided transformation matrix. Volume will be invalidated for non-rigid transformations.")]
+        [Input("solid", "The BoundaryRepresentation solid to transform.")]
+        [Input("transform", "The transformation matrix to apply to the solid.")]
+        [Output("solid", "The transformed BoundaryRepresentation solid.")]
         public static BoundaryRepresentation Transform(this BoundaryRepresentation solid, TransformMatrix transform)
         {
             double volume = solid.Volume;
@@ -270,6 +353,10 @@ namespace BH.Engine.Geometry
         /**** Public Methods - Misc                     ****/
         /***************************************************/
 
+        [Description("Transforms a CompositeGeometry using the provided transformation matrix.")]
+        [Input("group", "The CompositeGeometry to transform.")]
+        [Input("transform", "The transformation matrix to apply to the CompositeGeometry.")]
+        [Output("group", "The transformed CompositeGeometry.")]
         public static CompositeGeometry Transform(this CompositeGeometry group, TransformMatrix transform)
         {
             return new CompositeGeometry { Elements = group.Elements.Select(x => x.ITransform(transform)).ToList() };
@@ -280,6 +367,10 @@ namespace BH.Engine.Geometry
         /**** Public Methods - Interfaces               ****/
         /***************************************************/
 
+        [Description("Transforms any IGeometry using the provided transformation matrix.")]
+        [Input("geometry", "The IGeometry to transform.")]
+        [Input("transform", "The transformation matrix to apply to the geometry.")]
+        [Output("geometry", "The transformed IGeometry.")]
         public static IGeometry ITransform(this IGeometry geometry, TransformMatrix transform)
         {
             return Transform(geometry as dynamic, transform);
@@ -287,6 +378,10 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Transforms any ICurve using the provided transformation matrix.")]
+        [Input("geometry", "The ICurve to transform.")]
+        [Input("transform", "The transformation matrix to apply to the curve.")]
+        [Output("geometry", "The transformed ICurve.")]
         public static ICurve ITransform(this ICurve geometry, TransformMatrix transform)
         {
             return Transform(geometry as dynamic, transform);
@@ -294,6 +389,10 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Transforms any ISurface using the provided transformation matrix.")]
+        [Input("geometry", "The ISurface to transform.")]
+        [Input("transform", "The transformation matrix to apply to the surface.")]
+        [Output("geometry", "The transformed ISurface.")]
         public static ISurface ITransform(this ISurface geometry, TransformMatrix transform)
         {
             return Transform(geometry as dynamic, transform);
@@ -301,6 +400,10 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Transforms any ISolid using the provided transformation matrix.")]
+        [Input("geometry", "The ISolid to transform.")]
+        [Input("transform", "The transformation matrix to apply to the solid.")]
+        [Output("geometry", "The transformed ISurface.")]
         public static ISurface ITransform(this ISolid geometry, TransformMatrix transform)
         {
             return Transform(geometry as dynamic, transform);

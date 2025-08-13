@@ -22,11 +22,8 @@
 
 using System;
 using System.Collections.Generic;
-
 using System.Linq;
-
 using BH.oM.Geometry;
-
 using BH.oM.Base.Attributes;
 using System.ComponentModel;
 
@@ -38,9 +35,9 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Removes duplicate lines from the collection")]
-        [Input("lines", "The nested collection of lines to cull duplicates from")]
-        [Output("lines", "A collection of lines with no duplicates")]
+        [Description("Removes duplicate lines from the collection.")]
+        [Input("lines", "The nested collection of lines to cull duplicates from.")]
+        [Output("lines", "A collection of lines with no duplicates.")]
         public static List<Line> CullDuplicateLines(this List<Line> lines, double tolerance = Tolerance.Distance)
         {
             double sqTol = tolerance * tolerance;

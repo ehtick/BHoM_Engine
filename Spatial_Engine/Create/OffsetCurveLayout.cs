@@ -19,6 +19,7 @@
  * You should have received a copy of the GNU Lesser General Public License     
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
+
 using System;
 using System.Linq;
 using System.Collections.Generic;
@@ -35,13 +36,20 @@ namespace BH.Engine.Spatial
         /***************************************************/
         /**** Public Methods                            ****/
         /***************************************************/
+
         [Description("Creates an offset curve layout.")]
         [InputFromProperty("offset")]
         [Output("curveLayout", "Created offset curve layout.")]
         public static OffsetCurveLayout OffsetCurveLayout(double offset = 0)
-        {
+        {            
             return new OffsetCurveLayout(offset);
         }
-    /***************************************************/
+
+        /***************************************************/
     }
 }
+
+
+
+
+

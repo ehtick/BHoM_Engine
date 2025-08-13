@@ -41,7 +41,7 @@ namespace BH.Engine.Geometry
         [Input("tolerance", "The tolerance for the intersection calculation.", typeof(Length))]
         [Output("line", "The intersection Line between the Plane and Mesh.")]
         [NotImplemented]
-        public static Line MeshIntersection(this Plane p, Mesh mesh, double tolerance = Tolerance.Distance)
+        public static Line MeshIntersections(this Plane p, Mesh mesh, double tolerance = Tolerance.Distance)
         {
             throw new NotImplementedException();
         }

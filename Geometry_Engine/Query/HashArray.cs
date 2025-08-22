@@ -28,9 +28,7 @@ using BH.oM.Geometry.CoordinateSystem;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing.Drawing2D;
 using System.Linq;
-using System.Security.Cryptography.Xml;
 
 namespace BH.Engine.Geometry
 {
@@ -469,7 +467,7 @@ namespace BH.Engine.Geometry
 
             translationFactor += (int)TypeTranslationFactor.Mesh;
 
-            var dic = new Dictionary<int, int>();
+            Dictionary<int, int> dic = new Dictionary<int, int>();
             List<double> result = new List<double>();
 
             if (!comparisonConfig?.TypeExceptions?.Any(t => typeof(Face).IsAssignableFrom(t)) ?? true)
@@ -479,7 +477,7 @@ namespace BH.Engine.Geometry
                     if (comparisonConfig?.TypeExceptions?.Any(t => typeof(Point).IsAssignableFrom(t)) ?? false)
                         result.AddRange(obj.Faces[i].FaceIndices().Select<int, double>(n => n));
 
-                    foreach (var faceIndex in obj.Faces[i].FaceIndices())
+                    foreach (int faceIndex in obj.Faces[i].FaceIndices())
                     {
                         if (dic.ContainsKey(faceIndex))
                             dic[faceIndex] += i;
@@ -517,7 +515,7 @@ namespace BH.Engine.Geometry
 
             translationFactor += (int)TypeTranslationFactor.Mesh3D;
 
-            var dic = new Dictionary<int, int>();
+            Dictionary<int, int> dic = new Dictionary<int, int>();
             List<double> result = new List<double>();
 
             if (!comparisonConfig?.TypeExceptions?.Any(t => typeof(Face).IsAssignableFrom(t)) ?? true)
@@ -527,7 +525,7 @@ namespace BH.Engine.Geometry
                     if (comparisonConfig?.TypeExceptions?.Any(t => typeof(Point).IsAssignableFrom(t)) ?? false)
                         result.AddRange(obj.Faces[i].FaceIndices().Select<int, double>(n => n));
 
-                    foreach (var faceIndex in obj.Faces[i].FaceIndices())
+                    foreach (int faceIndex in obj.Faces[i].FaceIndices())
                     {
                         if (dic.ContainsKey(faceIndex))
                             dic[faceIndex] += i;
@@ -611,6 +609,21 @@ namespace BH.Engine.Geometry
         /****  Other methods for "conceptual" geometry  ****/
         /***************************************************/
 
+        [Description("The GeometryHash for a BoundingBox is calculated as the GeometryHash of its Min and Max points.")]
+        private static double[] HashArray(this BoundingBox obj, double translationFactor, BaseComparisonConfig comparisonConfig, string fullName = null)
+        {
+            if (comparisonConfig?.TypeExceptions?.Any(t => typeof(BoundingBox).IsAssignableFrom(t)) ?? false)
+                return default;
+
+            translationFactor += (int)TypeTranslationFactor.BoundingBox;
+
+            double[] min = obj.Min.HashArray(translationFactor, comparisonConfig, fullName.AppendPropertyName($"{nameof(obj.Min)}"));
+            double[] max = obj.Max.HashArray(translationFactor, comparisonConfig, fullName.AppendPropertyName($"{nameof(obj.Max)}"));
+            return min.Concat(max).ToArray();
+        }
+
+        /***************************************************/
+
         [Description("The GeometryHash for a Vector is given as the concatenated GeometryHash of the single elements composing it.")]
         private static double[] HashArray(this Vector obj, double translationFactor, BaseComparisonConfig comparisonConfig, string fullName = null)
         {
@@ -646,9 +659,9 @@ namespace BH.Engine.Geometry
 
             translationFactor = (double)TypeTranslationFactor.Basis;
 
-            var x = obj.X.HashArray(translationFactor, comparisonConfig, fullName.AppendPropertyName($"{nameof(obj.X)}"));
-            var y = obj.Y.HashArray(translationFactor, comparisonConfig, fullName.AppendPropertyName($"{nameof(obj.Y)}"));
-            var z = obj.Z.HashArray(translationFactor, comparisonConfig, fullName.AppendPropertyName($"{nameof(obj.Z)}"));
+            double[] x = obj.X.HashArray(translationFactor, comparisonConfig, fullName.AppendPropertyName($"{nameof(obj.X)}"));
+            double[] y = obj.Y.HashArray(translationFactor, comparisonConfig, fullName.AppendPropertyName($"{nameof(obj.Y)}"));
+            double[] z = obj.Z.HashArray(translationFactor, comparisonConfig, fullName.AppendPropertyName($"{nameof(obj.Z)}"));
             return x.Concat(y).Concat(z).ToArray();
         }
 
@@ -662,10 +675,10 @@ namespace BH.Engine.Geometry
 
             translationFactor = (double)TypeTranslationFactor.Cartesian;
 
-            var x = obj.X.HashArray(translationFactor, comparisonConfig, fullName.AppendPropertyName($"{nameof(obj.X)}"));
-            var y = obj.Y.HashArray(translationFactor, comparisonConfig, fullName.AppendPropertyName($"{nameof(obj.Y)}"));
-            var z = obj.Z.HashArray(translationFactor, comparisonConfig, fullName.AppendPropertyName($"{nameof(obj.Z)}"));
-            var o = obj.Origin.HashArray(translationFactor, comparisonConfig, fullName.AppendPropertyName($"{nameof(obj.Origin)}"));
+            double[] x = obj.X.HashArray(translationFactor, comparisonConfig, fullName.AppendPropertyName($"{nameof(obj.X)}"));
+            double[] y = obj.Y.HashArray(translationFactor, comparisonConfig, fullName.AppendPropertyName($"{nameof(obj.Y)}"));
+            double[] z = obj.Z.HashArray(translationFactor, comparisonConfig, fullName.AppendPropertyName($"{nameof(obj.Z)}"));
+            double[] o = obj.Origin.HashArray(translationFactor, comparisonConfig, fullName.AppendPropertyName($"{nameof(obj.Origin)}"));
 
             return x.Concat(y).Concat(z).Concat(o).ToArray();
         }
@@ -766,7 +779,8 @@ namespace BH.Engine.Geometry
             NurbsSurface = 11 * m_ToleranceMultiplier,
             SurfaceTrim = 12 * m_ToleranceMultiplier,
             Mesh = 13 * m_ToleranceMultiplier,
-            Mesh3D = 14 * m_ToleranceMultiplier
+            Mesh3D = 14 * m_ToleranceMultiplier,
+            BoundingBox = 15 * m_ToleranceMultiplier
         }
     }
 }

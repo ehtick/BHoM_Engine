@@ -624,6 +624,21 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("The GeometryHash for a Plane is calculated as the GeometryHash of its Origin point and Normal vector.")]
+        private static double[] HashArray(this Plane obj, double translationFactor, BaseComparisonConfig comparisonConfig, string fullName = null)
+        {
+            if (comparisonConfig?.TypeExceptions?.Any(t => typeof(Plane).IsAssignableFrom(t)) ?? false)
+                return default;
+
+            translationFactor += (int)TypeTranslationFactor.Plane;
+
+            double[] origin = obj.Origin.HashArray(translationFactor, comparisonConfig, fullName.AppendPropertyName($"{nameof(obj.Origin)}"));
+            double[] normal = obj.Normal.HashArray(translationFactor, comparisonConfig, fullName.AppendPropertyName($"{nameof(obj.Normal)}"));
+            return origin.Concat(normal).ToArray();
+        }
+
+        /***************************************************/
+
         [Description("The GeometryHash for a Vector is given as the concatenated GeometryHash of the single elements composing it.")]
         private static double[] HashArray(this Vector obj, double translationFactor, BaseComparisonConfig comparisonConfig, string fullName = null)
         {

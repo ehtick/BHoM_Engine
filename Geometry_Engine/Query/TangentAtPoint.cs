@@ -38,7 +38,7 @@ namespace BH.Engine.Geometry
         [Input("curve", "The Arc to get the tangent from.")]
         [Input("point", "The Point to get the tangent at.")]
         [Input("tolerance", "The tolerance for finding the point on the curve.", typeof(Length))]
-        [Output("vector", "The tangent Vector at the specified Point, or null if the Point is not on the curve.")]
+        [Output("tangent", "The tangent Vector at the specified Point, or null if the Point is not on the curve.")]
         public static Vector TangentAtPoint(this Arc curve, Point point, double tolerance = Tolerance.Distance)
         {
             double parameterAtPoint = curve.ParameterAtPoint(point, tolerance);
@@ -51,7 +51,7 @@ namespace BH.Engine.Geometry
         [Input("curve", "The Circle to get the tangent from.")]
         [Input("point", "The Point to get the tangent at.")]
         [Input("tolerance", "The tolerance for finding the point on the curve.", typeof(Length))]
-        [Output("vector", "The tangent Vector at the specified Point, or null if the Point is not on the curve.")]
+        [Output("tangent", "The tangent Vector at the specified Point, or null if the Point is not on the curve.")]
         public static Vector TangentAtPoint(this Circle curve, Point point, double tolerance = Tolerance.Distance)
         {
             double parameterAtPoint = curve.ParameterAtPoint(point, tolerance);
@@ -64,7 +64,7 @@ namespace BH.Engine.Geometry
         [Input("curve", "The Line to get the tangent from.")]
         [Input("point", "The Point to get the tangent at.")]
         [Input("tolerance", "The tolerance for finding the point on the curve.", typeof(Length))]
-        [Output("vector", "The tangent Vector at the specified Point, or null if the Point is not on the curve.")]
+        [Output("tangent", "The tangent Vector at the specified Point, or null if the Point is not on the curve.")]
         public static Vector TangentAtPoint(this Line curve, Point point, double tolerance = Tolerance.Distance)
         {
             double parameterAtPoint = curve.ParameterAtPoint(point, tolerance);
@@ -77,7 +77,7 @@ namespace BH.Engine.Geometry
         [Input("curve", "The PolyCurve to get the tangent from.")]
         [Input("point", "The Point to get the tangent at.")]
         [Input("tolerance", "The tolerance for finding the point on the curve.", typeof(Length))]
-        [Output("vector", "The tangent Vector at the specified Point, or null if the Point is not on the curve.")]
+        [Output("tangent", "The tangent Vector at the specified Point, or null if the Point is not on the curve.")]
         public static Vector TangentAtPoint(this PolyCurve curve, Point point, double tolerance = Tolerance.Distance)
         {
             double parameterAtPoint = curve.ParameterAtPoint(point, tolerance);
@@ -90,7 +90,7 @@ namespace BH.Engine.Geometry
         [Input("curve", "The Polyline to get the tangent from.")]
         [Input("point", "The Point to get the tangent at.")]
         [Input("tolerance", "The tolerance for finding the point on the curve.", typeof(Length))]
-        [Output("vector", "The tangent Vector at the specified Point, or null if the Point is not on the curve.")]
+        [Output("tangent", "The tangent Vector at the specified Point, or null if the Point is not on the curve.")]
         public static Vector TangentAtPoint(this Polyline curve, Point point, double tolerance = Tolerance.Distance)
         {
             double parameterAtPoint = curve.ParameterAtPoint(point, tolerance);
@@ -106,7 +106,7 @@ namespace BH.Engine.Geometry
         [Input("curve", "The ICurve to get the tangent from.")]
         [Input("point", "The Point to get the tangent at.")]
         [Input("tolerance", "The tolerance for finding the point on the curve.", typeof(Length))]
-        [Output("vector", "The tangent Vector at the specified Point, or null if the Point is not on the curve.")]
+        [Output("tangent", "The tangent Vector at the specified Point, or null if the Point is not on the curve.")]
         public static Vector ITangentAtPoint(this ICurve curve, Point point, double tolerance = Tolerance.Distance)
         {
             return Query.TangentAtPoint(curve as dynamic, point, tolerance);
@@ -121,7 +121,7 @@ namespace BH.Engine.Geometry
         [Input("curve", "The ICurve to get the tangent from.")]
         [Input("point", "The Point to get the tangent at.")]
         [Input("tolerance", "The tolerance for finding the point on the curve.", typeof(Length))]
-        [Output("vector", "The tangent Vector at the specified Point, or null if the Point is not on the curve.")]
+        [Output("tangent", "The tangent Vector at the specified Point, or null if the Point is not on the curve.")]
         public static Vector TangentAtPoint(this ICurve curve, Point point, double tolerance = Tolerance.Distance)
         {
             Base.Compute.RecordError($"TangentAtPoint is not implemented for ICurves of type: {curve.GetType().Name}.");

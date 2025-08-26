@@ -37,7 +37,7 @@ namespace BH.Engine.Geometry
         [Description("Gets the centre Point of an Arc.")]
         [Input("arc", "The Arc to get the centre of.")]
         [Input("tolerance", "The tolerance for the calculation.", typeof(Length))]
-        [Output("point", "The centre Point of the Arc.")]
+        [Output("centre", "The centre Point of the Arc.")]
         public static Point Centre(this Arc arc, double tolerance = Tolerance.Distance)
         {
             return arc.CoordinateSystem.Origin;
@@ -49,7 +49,7 @@ namespace BH.Engine.Geometry
 
         [Description("Gets the centre Point of a BoundingBox.")]
         [Input("box", "The BoundingBox to get the centre of.")]
-        [Output("point", "The centre Point of the BoundingBox.")]
+        [Output("centre", "The centre Point of the BoundingBox.")]
         public static Point Centre(this BoundingBox box)
         {
             return new Point { X = (box.Max.X + box.Min.X) / 2, Y = (box.Max.Y + box.Min.Y) / 2, Z = (box.Max.Z + box.Min.Z) / 2 };
@@ -61,7 +61,7 @@ namespace BH.Engine.Geometry
 
         [Description("Gets the centre Points of all faces in a Mesh.")]
         [Input("mesh", "The Mesh to get the face centres from.")]
-        [Output("points", "The centre Points of all faces in the Mesh.")]
+        [Output("centres", "The centre Points of all faces in the Mesh.")]
         public static List<Point> Centres(this Mesh mesh)
         {
             List<Face> faces = mesh.Faces;

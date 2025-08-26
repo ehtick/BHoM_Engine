@@ -38,7 +38,7 @@ namespace BH.Engine.Geometry
 
         [Description("Gets the start Point of an Arc.")]
         [Input("arc", "The Arc to get the start point of.")]
-        [Output("point", "The start Point of the Arc.")]
+        [Output("startPoint", "The start Point of the Arc.")]
         public static Point StartPoint(this Arc arc)
         {
             Vector locSt = arc.CoordinateSystem.X * arc.Radius;
@@ -49,7 +49,7 @@ namespace BH.Engine.Geometry
 
         [Description("Gets the start Point of a Circle. For closed curves, this is an arbitrary point on the circle.")]
         [Input("circle", "The Circle to get the start point of.")]
-        [Output("point", "The start Point of the Circle.")]
+        [Output("startPoint", "The start Point of the Circle.")]
         public static Point StartPoint(this Circle circle)
         {
             Vector refVector = 1 - Math.Abs(circle.Normal.DotProduct(Vector.XAxis)) > Tolerance.Angle ? Vector.XAxis : Vector.ZAxis;
@@ -61,7 +61,7 @@ namespace BH.Engine.Geometry
 
         [Description("Gets the start Point of an Ellipse. For closed curves, this is typically at the end of the first axis.")]
         [Input("ellipse", "The Ellipse to get the start point of.")]
-        [Output("point", "The start Point of the Ellipse.")]
+        [Output("startPoint", "The start Point of the Ellipse.")]
         public static Point StartPoint(this Ellipse ellipse)
         {
             return ellipse.Centre + ellipse.Radius1 * ellipse.Axis1.Normalise();
@@ -71,7 +71,7 @@ namespace BH.Engine.Geometry
 
         [Description("Gets the start Point of a Line.")]
         [Input("line", "The Line to get the start point of.")]
-        [Output("point", "The start Point of the Line.")]
+        [Output("startPoint", "The start Point of the Line.")]
         public static Point StartPoint(this Line line)
         {
             return line.Start;
@@ -81,7 +81,7 @@ namespace BH.Engine.Geometry
 
         [Description("Gets the start Point of a NurbsCurve. For non-periodic curves, returns the first control point.")]
         [Input("curve", "The NurbsCurve to get the start point of.")]
-        [Output("point", "The start Point of the NurbsCurve.")]
+        [Output("startPoint", "The start Point of the NurbsCurve.")]
         public static Point StartPoint(this NurbsCurve curve)
         {
             if (curve.IsNull())
@@ -94,7 +94,7 @@ namespace BH.Engine.Geometry
 
         [Description("Gets the start Point of a PolyCurve.")]
         [Input("curve", "The PolyCurve to get the start point of.")]
-        [Output("point", "The start Point of the PolyCurve.")]
+        [Output("startPoint", "The start Point of the PolyCurve.")]
         public static Point StartPoint(this PolyCurve curve)
         {
             foreach (ICurve c in curve.Curves)
@@ -111,7 +111,7 @@ namespace BH.Engine.Geometry
 
         [Description("Gets the start Point of a Polyline.")]
         [Input("curve", "The Polyline to get the start point of.")]
-        [Output("point", "The start Point of the Polyline.")]
+        [Output("startPoint", "The start Point of the Polyline.")]
         public static Point StartPoint(this Polyline curve)
         {
             List<Point> pts = curve.ControlPoints;
@@ -128,7 +128,7 @@ namespace BH.Engine.Geometry
 
         [Description("Gets the start Point of any ICurve.")]
         [Input("curve", "The ICurve to get the start point of.")]
-        [Output("point", "The start Point of the curve.")]
+        [Output("startPoint", "The start Point of the curve.")]
         public static Point IStartPoint(this ICurve curve)
         {
             return StartPoint(curve as dynamic);

@@ -41,7 +41,7 @@ namespace BH.Engine.Geometry
         [Input("u", "The U parameter (0 to 1).")]
         [Input("v", "The V parameter (0 to 1).")]
         [Input("tolerance", "The tolerance for surface evaluation.", typeof(Length))]
-        [Output("plane", "The plane at the specified UV parameter location.")]
+        [Output("planeAtParameter", "The plane at the specified UV parameter location.")]
         public static Plane PlaneAtParameter(this NurbsSurface surface, double u, double v, double tolerance = Tolerance.Distance)
         {
             var vectors = TangentAtParameter(surface, u, v, tolerance);

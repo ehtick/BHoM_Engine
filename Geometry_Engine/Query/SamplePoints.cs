@@ -38,7 +38,7 @@ namespace BH.Engine.Geometry
         [Description("Samples Points along a curve at regular distance intervals along the curve.")]
         [Input("curve", "The ICurve to sample points from.")]
         [Input("step", "The distance step between sample points.", typeof(Length))]
-        [Output("points", "The sampled Points along the curve.")]
+        [Output("samplePoints", "The sampled Points along the curve.")]
         public static List<Point> SamplePoints(this ICurve curve, double step)
         {
             if (step <= 0)
@@ -61,7 +61,7 @@ namespace BH.Engine.Geometry
         [Description("Samples a specified number of Points evenly distributed along a curve.")]
         [Input("curve", "The ICurve to sample points from.")]
         [Input("number", "The number of points to sample.")]
-        [Output("points", "The sampled Points evenly distributed along the curve.")]
+        [Output("samplePoints", "The sampled Points evenly distributed along the curve.")]
         public static List<Point> SamplePoints(this ICurve curve, int number)
         {
             if (number <= 0)

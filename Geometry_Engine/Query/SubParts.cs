@@ -37,7 +37,7 @@ namespace BH.Engine.Geometry
 
         [Description("Gets the individual Line segments that make up a Polyline.")]
         [Input("curve", "The Polyline to get the sub-parts of.")]
-        [Output("lines", "The individual Line segments.")]
+        [Output("segments", "The individual Line segments.")]
         public static List<Line> SubParts(this Polyline curve)
         {
             List<Line> result = new List<Line>();
@@ -53,7 +53,7 @@ namespace BH.Engine.Geometry
 
         [Description("Gets the individual curve parts that make up a PolyCurve, recursively exploding any nested curves.")]
         [Input("curve", "The PolyCurve to get the sub-parts of.")]
-        [Output("curves", "The individual curve parts.")]
+        [Output("curveParts", "The individual curve parts.")]
         public static List<ICurve> SubParts(this PolyCurve curve)
         {
             List<ICurve> exploded = new List<ICurve>();
@@ -72,7 +72,7 @@ namespace BH.Engine.Geometry
 
         [Description("Gets the individual surface parts that make up a PolySurface, recursively exploding any nested surfaces.")]
         [Input("surface", "The PolySurface to get the sub-parts of.")]
-        [Output("surfaces", "The individual surface parts.")]
+        [Output("surfaceParts", "The individual surface parts.")]
         public static List<ISurface> SubParts(this PolySurface surface)
         {
             List<ISurface> exploded = new List<ISurface>();
@@ -90,7 +90,7 @@ namespace BH.Engine.Geometry
 
         [Description("Gets the individual mesh parts that make up a Mesh. Returns individual face meshes from the original mesh.")]
         [Input("mesh", "The Mesh to get the sub-parts of.")]
-        [Output("meshes", "The individual mesh parts, one per face.")]
+        [Output("meshParts", "The individual mesh parts, one per face.")]
         public static List<Mesh> SubParts(this Mesh mesh)
         {
             List<Mesh> explodedMeshes = new List<Mesh>();
@@ -123,7 +123,7 @@ namespace BH.Engine.Geometry
 
         [Description("Gets the individual geometry elements that make up a CompositeGeometry, recursively exploding any nested CompositeGeometry objects.")]
         [Input("group", "The CompositeGeometry to get the sub-parts of.")]
-        [Output("geometries", "The individual geometry elements.")]
+        [Output("geometryElements", "The individual geometry elements.")]
         public static List<IGeometry> SubParts(this CompositeGeometry group)
         {
             List<IGeometry> exploded = new List<IGeometry>();
@@ -142,7 +142,7 @@ namespace BH.Engine.Geometry
 
         [Description("Gets the individual parts that make up any IGeometry.")]
         [Input("geometry", "The IGeometry to get the sub-parts of.")]
-        [Output("geometries", "The individual geometry parts.")]
+        [Output("geometryParts", "The individual geometry parts.")]
         public static IEnumerable<IGeometry> ISubParts(this IGeometry geometry)
         {
             return SubParts(geometry as dynamic);
@@ -152,7 +152,7 @@ namespace BH.Engine.Geometry
 
         [Description("Gets the individual curve parts that make up any ICurve.")]
         [Input("geometry", "The ICurve to get the sub-parts of.")]
-        [Output("curves", "The individual curve parts.")]
+        [Output("curveParts", "The individual curve parts.")]
         public static IEnumerable<ICurve> ISubParts(this ICurve geometry)
         {
             return SubParts(geometry as dynamic);
@@ -162,7 +162,7 @@ namespace BH.Engine.Geometry
 
         [Description("Gets the individual surface parts that make up any ISurface.")]
         [Input("geometry", "The ISurface to get the sub-parts of.")]
-        [Output("surfaces", "The individual surface parts.")]
+        [Output("surfaceParts", "The individual surface parts.")]
         public static IEnumerable<ISurface> ISubParts(this ISurface geometry)
         {
             return SubParts(geometry as dynamic);

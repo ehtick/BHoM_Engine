@@ -39,7 +39,7 @@ namespace BH.Engine.Geometry
         [Input("curve", "The closed ICurve defining the region.")]
         [Input("acceptOnEdge", "Whether a point that lies on the edge of the region is considered valid.")]
         [Input("tolerance", "The tolerance for containment checks.", typeof(Length))]
-        [Output("point", "A Point within the region, or null if no valid point is found.")]
+        [Output("interiorPoint", "A Point within the region, or null if no valid point is found.")]
         public static Point PointInRegion(this ICurve curve, bool acceptOnEdge = false, double tolerance = Tolerance.Distance)
         {
             Point point = curve.ICentroid(tolerance);

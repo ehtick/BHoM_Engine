@@ -34,7 +34,7 @@ namespace BH.Engine.Geometry
 
         [Description("Returns the inverse of the given transformation matrix.")]
         [Input("transform", "The transformation matrix to invert.")]
-        [Output("transform", "The inverted transformation matrix.")]
+        [Output("inverse", "The inverted transformation matrix.")]
         public static TransformMatrix Invert(this TransformMatrix transform)
         {
             double[,] m = transform.Matrix;

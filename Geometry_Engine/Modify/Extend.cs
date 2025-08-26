@@ -42,6 +42,7 @@ namespace BH.Engine.Geometry
         [Input("start", "Length of extension on the begining of a curve. Negative value will trim the curve.", typeof(Length))]
         [Input("end", "Length of extension on the end of a curve. Negative value will trim the curve.", typeof(Length))]
         [Input("tangentExtensions", "True - extends on tangent lines\nFalse - extends by curve's shape.")]
+        [Input("tolerance", "Tolerance value used for geometry processing.", typeof(Length))]
         [Output("curve", "Extended curve.")]
         public static Line Extend(this Line curve, double start = 0.0, double end = 0.0, bool tangentExtensions = false, double tolerance = Tolerance.Distance)
         {
@@ -61,6 +62,7 @@ namespace BH.Engine.Geometry
         [Input("start", "Length of extension on the begining of a curve. Negative value will trim the curve.", typeof(Length))]
         [Input("end", "Length of extension on the end of a curve. Negative value will trim the curve.", typeof(Length))]
         [Input("tangentExtensions", "True - extends on tangent lines\nFalse - extends by curve's shape.")]
+        [Input("tolerance", "Tolerance value used for geometry processing.", typeof(Length))]
         [Output("curve", "Extended curve.")]
         public static ICurve Extend(this Arc curve, double start = 0.0, double end = 0.0, bool tangentExtensions = false, double tolerance = Tolerance.Distance)
         {
@@ -107,6 +109,7 @@ namespace BH.Engine.Geometry
         [Input("start", "Length of extension on the begining of a curve. Negative value will trim the curve.", typeof(Length))]
         [Input("end", "Length of extension on the end of a curve. Negative value will trim the curve.", typeof(Length))]
         [Input("tangentExtensions", "True - extends on tangent lines\nFalse - extends by curve's shape.")]
+        [Input("tolerance", "Tolerance value used for geometry processing.", typeof(Length))]
         [Output("curve", "Extended curve.")]
         public static Circle Extend(this Circle curve, double start = 0.0, double end = 0.0, bool tangentExtensions = false, double tolerance = Tolerance.Distance)
         {
@@ -121,6 +124,7 @@ namespace BH.Engine.Geometry
         [Input("start", "Length of extension on the begining of a curve. Negative value will trim the curve.", typeof(Length))]
         [Input("end", "Length of extension on the end of a curve. Negative value will trim the curve.", typeof(Length))]
         [Input("tangentExtensions", "True - extends on tangent lines\nFalse - extends by curve's shape.")]
+        [Input("tolerance", "Tolerance value used for geometry processing.", typeof(Length))]
         [Output("curve", "Extended curve.")]
         public static Ellipse Extend(this Ellipse curve, double start = 0.0, double end = 0.0, bool tangentExtensions = false, double tolerance = Tolerance.Distance)
         {
@@ -135,6 +139,7 @@ namespace BH.Engine.Geometry
         [Input("start", "Length of extension on the begining of a curve. Negative value will trim the curve.", typeof(Length))]
         [Input("end", "Length of extension on the end of a curve. Negative value will trim the curve.", typeof(Length))]
         [Input("tangentExtensions", "True - extends on tangent lines\nFalse - extends by curve's shape.")]
+        [Input("tolerance", "Tolerance value used for geometry processing.", typeof(Length))]
         [Output("curve", "Extended curve.")]
         public static Polyline Extend(this Polyline curve, double start = 0.0, double end = 0.0, bool tangentExtensions = false, double tolerance = Tolerance.Distance)
         {
@@ -202,6 +207,7 @@ namespace BH.Engine.Geometry
         [Input("start", "Length of extension on the begining of a curve. Negative value will trim the curve.", typeof(Length))]
         [Input("end", "Length of extension on the end of a curve. Negative value will trim the curve.", typeof(Length))]
         [Input("tangentExtensions", "True - extends on tangent lines\nFalse - extends by curve's shape.")]
+        [Input("tolerance", "Tolerance value used for geometry processing.", typeof(Length))]
         [Output("curve", "Extended curve.")]
         public static PolyCurve Extend(this PolyCurve curve, double start = 0.0, double end = 0.0, bool tangentExtensions = false, double tolerance = Tolerance.Distance)
         {
@@ -270,6 +276,7 @@ namespace BH.Engine.Geometry
         [Input("start", "Length of extension on the begining of a curve. Negative value will trim the curve.", typeof(Length))]
         [Input("end", "Length of extension on the end of a curve. Negative value will trim the curve.", typeof(Length))]
         [Input("tangentExtensions", "True - extends on tangent lines\nFalse - extends by curve's shape.")]
+        [Input("tolerance", "Tolerance value used for geometry processing.", typeof(Length))]
         [Output("curve", "Extended curve.")]
         public static ICurve IExtend(this ICurve curve, double start = 0.0, double end = 0.0, bool tangentExtensions = false, double tolerance = Tolerance.Distance)
         {

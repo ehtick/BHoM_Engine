@@ -36,7 +36,7 @@ namespace BH.Engine.Geometry
         [Description("Returns a new BoundingBox that is inflated by the specified amount in all directions.")]
         [Input("box", "The bounding box to inflate.")]
         [Input("amount", "The amount by which to inflate the bounding box in each direction.", typeof(Length))]
-        [Output("box", "A new BoundingBox with its minimum corner decreased and maximum corner increased by the specified amount along each axis.")]
+        [Output("inflated", "A new BoundingBox with its minimum corner decreased and maximum corner increased by the specified amount along each axis.")]
         public static BoundingBox Inflate(this BoundingBox box, double amount)
         {
             Vector extents = new Vector { X = amount, Y = amount, Z = amount };

@@ -36,7 +36,7 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Calculates the proximity parameters for two skew lines, returning the parameters along each line where they are closest.")]
+        [Description("Calculates the proximity parameters for two skew lines, returning the parameters along each line where they are closest. Returns null in case of parallel lines.")]
         [Input("line1", "The first Line.")]
         [Input("line2", "The second Line.")]
         [Input("angleTolerance", "The angle tolerance for determining if lines are parallel.", typeof(Angle))]

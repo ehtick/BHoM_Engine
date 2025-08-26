@@ -35,7 +35,7 @@ namespace BH.Engine.Geometry
 
         [Description("Calculates the transpose of a TransformMatrix.")]
         [Input("transform", "The TransformMatrix to transpose.")]
-        [Output("matrix", "The transposed TransformMatrix.")]
+        [Output("transposed", "The transposed TransformMatrix.")]
         public static TransformMatrix Transpose(this TransformMatrix transform)
         {
             return new TransformMatrix { Matrix = transform.Matrix.Transpose() };
@@ -45,7 +45,7 @@ namespace BH.Engine.Geometry
 
         [Description("Calculates the transpose of a 2D matrix represented as a double array.")]
         [Input("matrix", "The 2D matrix to transpose.")]
-        [Output("matrix", "The transposed matrix.")]
+        [Output("transposed", "The transposed matrix.")]
         public static double[,] Transpose(this double[,] matrix)
         {
             int h = matrix.GetLength(0);

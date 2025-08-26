@@ -35,7 +35,7 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Samples Points along a curve at regular distance intervals.")]
+        [Description("Samples Points along a curve at regular distance intervals along the curve.")]
         [Input("curve", "The ICurve to sample points from.")]
         [Input("step", "The distance step between sample points.", typeof(Length))]
         [Output("points", "The sampled Points along the curve.")]

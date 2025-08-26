@@ -36,7 +36,7 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Gets the Line segment of a Polyline that contains the specified Point.")]
+        [Description("Gets the Line segment of a Polyline that the specified Point lies on.")]
         [Input("pline", "The Polyline to search for the containing segment.")]
         [Input("pt", "The Point to find the containing segment for.")]
         [Output("segment", "The Line segment that contains the Point, or an empty Line if no segment contains the Point.")]

@@ -35,8 +35,9 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Removes duplicate lines from the collection.")]
+        [Description("Removes duplicate lines from the collection. Lines are considered the same if both of their endpoints lie within tolerance distance from each other, regardless of line direction.")]
         [Input("lines", "The nested collection of lines to cull duplicates from.")]
+        [Input("tolerance", "Maximum allowed distance between end points for the lines to be considered the same.", typeof(Length))]
         [Output("lines", "A collection of lines with no duplicates.")]
         public static List<Line> CullDuplicateLines(this List<Line> lines, double tolerance = Tolerance.Distance)
         {

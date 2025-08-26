@@ -35,9 +35,9 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Normalizes a Vector to unit length.")]
-        [Input("vector", "The Vector to normalize.")]
-        [Output("vector", "The normalized Vector with unit length.")]
+        [Description("Normalises a Vector to unit length.")]
+        [Input("vector", "The Vector to normalise.")]
+        [Output("normalised", "The normalised Vector with unit length.")]
         public static Vector Normalise(this Vector vector)
         {
             double x = vector.X;
@@ -53,9 +53,9 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
-        [Description("Normalizes a Quaternion to unit length.")]
-        [Input("q", "The Quaternion to normalize.")]
-        [Output("quaternion", "The normalized Quaternion with unit length.")]
+        [Description("Normalises a Quaternion to unit length.")]
+        [Input("q", "The Quaternion to normalise.")]
+        [Output("normalised", "The normalised Quaternion with unit length.")]
         public static Quaternion Normalise(this Quaternion q)
         {
             double x = q.X;

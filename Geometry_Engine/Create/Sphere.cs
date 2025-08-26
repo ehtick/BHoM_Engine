@@ -35,8 +35,8 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Creates a Sphere with the specified center and radius.")]
-        [Input("centre", "The center point of the sphere.")]
+        [Description("Creates a Sphere with the specified centre and radius.")]
+        [Input("centre", "The centre point of the sphere.")]
         [Input("radius", "The radius of the sphere.", typeof(Length))]
         [Output("sphere", "The created Sphere.")]
         public static Sphere Sphere(Point centre, double radius)

@@ -20,7 +20,6 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.Engine.Base.Objects;
 using BH.Engine.Verification.Objects;
 using BH.oM.Base;
 using BH.oM.Base.Attributes;
@@ -28,6 +27,7 @@ using BH.oM.Verification;
 using BH.oM.Verification.Conditions;
 using BH.oM.Verification.Results;
 using Microsoft.CodeAnalysis.CSharp.Scripting;
+using Microsoft.CodeAnalysis.Scripting;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -66,7 +66,9 @@ namespace BH.Engine.Verification
             object result;
             if (!BH.Engine.Base.Compute.TryRunExtensionMethod(obj, nameof(VerifyCondition), new object[] { condition }, out result))
             {
-                BH.Engine.Base.Compute.RecordError($"Verification failed because condition of type {condition.GetType().Name} is currently not supported.");
+                if (BH.Engine.Base.Query.CurrentEvents().LastOrDefault()?.Message?.StartsWith($"Failed to run {nameof(VerifyCondition)} extension method") != true)
+                    BH.Engine.Base.Compute.RecordError($"Verification failed because condition of type {condition.GetType().Name} is currently not supported.");
+
                 return null;
             }
 
@@ -98,7 +100,7 @@ namespace BH.Engine.Verification
 
             IConditionResult result = obj.IVerifyCondition(condition.Condition);
             bool? inverted;
-            if (result.Passed == null)
+            if (result?.Passed == null)
                 inverted = null;
             else
                 inverted = !(result.Passed.Value);
@@ -135,7 +137,7 @@ namespace BH.Engine.Verification
                 if (f == null)
                     continue;
 
-                var r = obj.IVerifyCondition(f);
+                IConditionResult r = obj.IVerifyCondition(f);
                 results.Add(r);
             }
 
@@ -178,20 +180,19 @@ namespace BH.Engine.Verification
                 return null;
             }
 
-            bool pass = false;
+            // Try to extract the value from value source
+            Output<bool, object> valueFromSource = obj.TryGetValueFromSource(condition);
+            bool found = valueFromSource?.Item1 == true;
+            if (!found)
+                return new ValueConditionResult(null, null);
 
-            object value = obj.ValueFromSource(condition);
-            double numericalValue;
-            double tolerance;
-            double.TryParse(condition.Tolerance.ToString(), out tolerance);
+            // If value found, check the actual condition
+            object value = valueFromSource.Item2;
+            bool? pass = false;
 
-            if (double.TryParse(value?.ToString(), out numericalValue))
-                pass = Query.IsInDomain(numericalValue, condition.Domain, tolerance);
-            else if (obj is DateTime)
-            {
-                DateTime? dt = obj as DateTime?;
-                pass = Query.IsInDomain(dt.Value.Ticks, condition.Domain, tolerance);
-            }
+            pass = ICompareValues(value, condition.Domain.Min, ValueComparisonType.GreaterThanOrEqualTo, condition.Tolerance);
+            if (pass == true)
+                pass = ICompareValues(value, condition.Domain.Max, ValueComparisonType.LessThanOrEqualTo, condition.Tolerance);
 
             return new ValueConditionResult(pass, value);
         }
@@ -244,13 +245,19 @@ namespace BH.Engine.Verification
                 return null;
             }
 
-            object value = obj.ValueFromSource(condition);
-            bool? pass = false;
-            if (value.IsInSet(condition.Set, condition.ComparisonConfig))
-                pass = true;
+            // Try to extract the value from value source
+            Output<bool, object> valueFromSource = obj.TryGetValueFromSource(condition);
+            bool found = valueFromSource?.Item1 == true;
+            if (!found)
+                return new ValueConditionResult(null, null);
 
+            // If value found, check the actual condition
+            object value = valueFromSource?.Item2;
+            bool? pass;
             if (value is IEnumerable<object> ienumerable)
                 pass = ienumerable.All(x => x.IsInSet(condition.Set, condition.ComparisonConfig));
+            else
+                pass = value.IsInSet(condition.Set, condition.ComparisonConfig);
 
             return new ValueConditionResult(pass, value);
         }
@@ -304,6 +311,35 @@ namespace BH.Engine.Verification
 
         /***************************************************/
 
+        [Description("Verifies an object against " + nameof(HasValue) + " condition and returns a result object containing details of the check.")]
+        [Input("obj", "Object to check against the condition.")]
+        [Input("condition", "Condition to check the object against.")]
+        [Output("result", "Object containing the check result as a boolean as well as details of the check (object type etc.).")]
+        public static ValueConditionResult VerifyCondition(this object obj, HasValue condition)
+        {
+            if (obj == null)
+            {
+                BH.Engine.Base.Compute.RecordError("Could not verify condition against a null object.");
+                return null;
+            }
+
+            if (condition == null)
+            {
+                BH.Engine.Base.Compute.RecordError("Could not verify condition because it was null.");
+                return null;
+            }
+
+            Output<bool, object> valueFromSource = obj.TryGetValueFromSource(condition);
+            bool found = valueFromSource?.Item1 == true;
+            if (!found)
+                return new ValueConditionResult(null, null);
+
+            object value = valueFromSource.Item2;
+            return new ValueConditionResult(value.IHasValue(), value);
+        }
+
+        /***************************************************/
+
         [Description("Verifies an object against " + nameof(ValueCondition) + " and returns a result object containing details of the check.")]
         [Input("obj", "Object to check against the condition.")]
         [Input("condition", "Condition to check the object against.")]
@@ -322,8 +358,16 @@ namespace BH.Engine.Verification
                 return null;
             }
 
-            object value = obj.ValueFromSource(condition);
-            bool? pass = value.CompareValues(condition.ReferenceValue, condition.ComparisonType, condition.Tolerance);
+            // Try to extract the value from value source
+            Output<bool, object> valueFromSource = obj.TryGetValueFromSource(condition);
+            bool found = valueFromSource?.Item1 == true;
+            if (!found)
+                return new ValueConditionResult(null, null);
+
+            object value = valueFromSource?.Item2;
+
+            // If value found, check the actual condition
+            bool? pass = value.ICompareValues(condition.ReferenceValue, condition.ComparisonType, condition.Tolerance);
             return new ValueConditionResult(pass, value);
         }
 
@@ -354,7 +398,7 @@ namespace BH.Engine.Verification
             }
 
             Dictionary<string, object> components = condition.Inputs.ToDictionary(x => x.Key, x => (object)x.Value);
-            foreach (var formula in condition.CalculationFormulae)
+            foreach (KeyValuePair<string, Formula> formula in condition.CalculationFormulae)
             {
                 components.Add(formula.Key, (object)formula.Value);
             }
@@ -370,10 +414,7 @@ namespace BH.Engine.Verification
 
         private static bool IsInSet(this object value, List<object> set, ComparisonConfig comparisonConfig)
         {
-            if (comparisonConfig != null)
-                return set.Contains(value, new HashComparer<object>(comparisonConfig));
-            else
-                return set.Contains(value);
+            return set.Any(x => ICompareValues(value, x, ValueComparisonType.EqualTo, comparisonConfig) == true);
         }
 
         /***************************************************/
@@ -387,9 +428,9 @@ namespace BH.Engine.Verification
 
                 // Collect variables used in the equation
                 string formulaToSolve = formula.Equation;
-                var usedVariables = new List<(string, object)>();
+                List<(string, object)> usedVariables = new List<(string, object)>();
                 int k = 1;
-                foreach (var key in variables.Keys.OrderByDescending(x => x))
+                foreach (string key in variables.Keys.OrderByDescending(x => x))
                 {
                     if (formulaToSolve.Contains(key))
                     {
@@ -402,7 +443,7 @@ namespace BH.Engine.Verification
                         object value = variables[key];
                         if (value is IValueSource vs)
                         {
-                            value = obj.IValueFromSource(vs);
+                            value = obj.ITryGetValueFromSource(vs)?.Item2;
                             if (value == null || (value is double && double.IsNaN((double)value)))
                                 return null;
 
@@ -413,7 +454,7 @@ namespace BH.Engine.Verification
                             value = f.Solve(obj, variables);
                             if (value == null || (value is double && double.IsNaN((double)value)))
                                 return null;
-                            
+
                             variables[key] = value;
                         }
 
@@ -433,7 +474,7 @@ namespace BH.Engine.Verification
 
                 // Set the properties of globals object based on variables
                 k = 1;
-                foreach (var kvp in usedVariables)
+                foreach ((string, object) kvp in usedVariables)
                 {
                     string propName = $"Variable{k}";
                     constructedType.GetProperty(propName).SetValue(globals, kvp.Item2);
@@ -445,7 +486,7 @@ namespace BH.Engine.Verification
                 Dictionary<string, string> stringReplacements = new Dictionary<string, string>();
                 string stringRegex = @"'([^']*)'";
                 int stringCount = 0;
-                foreach (var match in Regex.Matches(formulaToSolve, stringRegex).Cast<Match>().Select(x => x.Value).Distinct().OrderByDescending(x => x.Length))
+                foreach (string match in Regex.Matches(formulaToSolve, stringRegex).Cast<Match>().Select(x => x.Value).Distinct().OrderByDescending(x => x.Length))
                 {
                     stringCount++;
                     string replacement = $"\"%%TempString{stringCount}\"";
@@ -513,14 +554,14 @@ namespace BH.Engine.Verification
                 }
 
                 // Bring back the original strings
-                foreach (var key in stringReplacements.Keys.OrderByDescending(x => x.Length))
+                foreach (string key in stringReplacements.Keys.OrderByDescending(x => x.Length))
                 {
                     formulaToSolve = formulaToSolve.Replace(key, stringReplacements[key]);
                 }
 
-                return CSharpScript.EvaluateAsync(formulaToSolve, globals: globals).Result;
+                return Evaluate(formulaToSolve, globals);
             }
-            catch
+            catch (Exception ex)
             {
                 BH.Engine.Base.Compute.RecordError($"Formula {formula.Equation} could not be solved, please make sure it does not contain errors.");
                 return null;
@@ -642,13 +683,42 @@ namespace BH.Engine.Verification
             }
 
             string result = equation;
-            foreach (var kvp in replacements.OrderByDescending(x => x.Key.Index))
+            foreach (KeyValuePair<Match, string> kvp in replacements.OrderByDescending(x => x.Key.Index))
             {
                 result = result.Remove(kvp.Key.Index, kvp.Key.Length).Insert(kvp.Key.Index, kvp.Value);
             }
 
             return result;
         }
+
+        /***************************************************/
+
+        private static object Evaluate(string formula, object globals)
+        {
+            return CompileScript(formula, globals.GetType()).RunAsync(globals: globals).Result.ReturnValue;
+        }
+
+        /***************************************************/
+
+        private static Script CompileScript(string formula, Type globalsType)
+        {
+            (string, Type) key = (formula, globalsType);
+            Script result;
+            if (!m_CompiledScripts.TryGetValue(key, out result))
+            {
+                result = CSharpScript.Create(formula, globalsType: globalsType);
+                m_CompiledScripts.Add(key, result);
+            }
+
+            return result;
+        }
+
+
+        /***************************************************/
+        /****              Private Fields               ****/
+        /***************************************************/
+
+        private static Dictionary<(string, Type), Script> m_CompiledScripts = new Dictionary<(string, Type), Script>();
 
         /***************************************************/
     }

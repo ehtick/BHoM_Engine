@@ -30,6 +30,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using BH.Engine.Base;
+using BH.oM.Quantities;
 
 namespace BH.Engine.Reflection
 {
@@ -39,7 +40,7 @@ namespace BH.Engine.Reflection
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Return the custom description of a C# class member (e.g. property, method, field)")]
+        [Description("Return the custom description of a C# class member (e.g. property, method, field).")]
         public static string Description(this MemberInfo member, bool addTypeDescription = true)
         {
             if(member == null)
@@ -69,7 +70,7 @@ namespace BH.Engine.Reflection
 
         /***************************************************/
 
-        [Description("Return the custom description of a C# method argument")]
+        [Description("Return the custom description of a C# method argument.")]
         public static string Description(this ParameterInfo parameter, bool addTypeDescription = true)
         {
             if(parameter == null)
@@ -108,7 +109,28 @@ namespace BH.Engine.Reflection
                             return prop.Description();
                     }
                 }
+                else
+                {
+                    InputFromDescription inputFromDesc = parameter.Member.GetCustomAttributes<InputFromDescription>().FirstOrDefault(x => x.InputName == parameter.Name);
+                    if (inputFromDesc != null)
+                    {
+                        desc = inputFromDesc.Member?.IDescription() ?? "";
+
+                        if (addTypeDescription)
+                        {
+                            if (inputFromDesc.Classification != null)
+                                classification = inputFromDesc.Classification;
+
+                            desc += parameter.ParameterType.Description(classification);
+                        }
+
+                        return desc;
+                    }
+                }
             }
+
+
+
             if (addTypeDescription && parameter.ParameterType != null)
             {
                 desc += parameter.ParameterType.Description(classification);
@@ -118,7 +140,7 @@ namespace BH.Engine.Reflection
 
         /***************************************************/
 
-        [Description("Return the custom description of a C# class")]
+        [Description("Return the custom description of a C# class.")]
         public static string Description(this Type type)
         {
             return Description(type, null);
@@ -126,7 +148,7 @@ namespace BH.Engine.Reflection
 
         /***************************************************/
 
-        [Description("Return the custom description of a C# class")]
+        [Description("Return the custom description of a C# class.")]
         public static string Description(this Type type, ClassificationAttribute classification)
         {
             if (type == null)
@@ -145,6 +167,26 @@ namespace BH.Engine.Reflection
                 desc += classification.IDescription();
                 desc += " (as a " + type.ToText(type.Namespace.StartsWith("BH.")) + ")";
                 return desc;
+            }
+
+            // If this is a Quantity, return the description of the QuantityAttribute
+            if (typeof(IQuantity).IsAssignableFrom(type))
+            {
+                if (type.Name != "Quantity`1")
+                {
+                    if (attribute != null)
+                        desc += attribute.Description + Environment.NewLine;
+                    if (type.BaseType != null)
+                        desc += Description(type.BaseType);
+
+                    return desc;
+                }
+                else
+                {
+                    Type attributeType = type.GenericTypeArguments.FirstOrDefault();
+                    if (attributeType != null)
+                        return desc + Description(Activator.CreateInstance(attributeType) as QuantityAttribute);
+                }
             }
 
             //Add the default description
@@ -189,8 +231,8 @@ namespace BH.Engine.Reflection
 
         /***************************************************/
 
-        [Description("Return the custom description of a C# element such as Type, MemberInfo, and ParamaterInfo")]
-        [Input("item", "This item can either be a Type, a MemberInfo, or a ParamaterInfo")]
+        [Description("Return the custom description of a C# element such as Type, MemberInfo, and ParameterInfo.")]
+        [Input("item", "This item can either be a Type, a MemberInfo, or a ParameterInfo.")]
         public static string IDescription(this object item)
         {
             if (item is ParameterInfo)
@@ -199,6 +241,8 @@ namespace BH.Engine.Reflection
                 return Description(item as Type);
             else if (item is MemberInfo)
                 return Description(item as MemberInfo);
+            else if (item is Enum)
+                return Description(item as Enum);
             else
                 return "";
         }
@@ -247,6 +291,21 @@ namespace BH.Engine.Reflection
                 description += $" It supports files with following extensions: {string.Join(", ", filePath.FileExtensions)}.";
 
             return description;
+        }
+
+        /***************************************************/
+
+        [Description("Return the description of an enum.")]
+        [Input("e", "Enum to be queried for description.")]
+        public static string Description(this Enum e)
+        {
+            FieldInfo fi = e.GetType().GetField(e.ToString());
+            DescriptionAttribute[] descriptions = fi.GetCustomAttributes(typeof(DescriptionAttribute), false) as DescriptionAttribute[];
+
+            if (descriptions != null && descriptions.Count() > 0)
+                return descriptions.First().Description;
+            else
+                return "";
         }
 
 

@@ -20,42 +20,51 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.oM.Analytical.Elements;
-using BH.oM.Geometry;
-using BH.oM.Base.Attributes;
-using BH.Engine.Geometry;
-using BH.Engine.Reflection;
-
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.ComponentModel;
+using System.Linq;
+using BH.oM.Base;
+using BH.oM.Base.Attributes;
 
-namespace BH.Engine.Analytical
+namespace BH.Engine.Base
 {
-    public static partial class Query
+    public static partial class Modify
     {
         /***************************************************/
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Determines whether a Panel's outline is triangular.")]
-        [Input("panel", "The IPanel to check if the outline is a triangular.")]
-        [Output("bool", "True for Panels with a triangular outline or false for Panels with a non-triangular outline.")]
-        public static bool IsOutlineTriangular<TEdge, TOpening>(this IPanel<TEdge, TOpening> panel)
-            where TEdge : IEdge
-            where TOpening : IOpening<TEdge>
+        [Description("Fallback method to set a property of a BHoM object. This will try to set the property either as a fragment or into CustomData.")]
+        [Input("obj", "Object to set the value for.")]
+        [Input("propertyName", "Name of the property to set the value of.")]
+        [Input("value", "New value of the property.")]
+        [Input("isSilent", "If true, no warning will be recorded when the property is set in CustomData.")]
+        [Output("result", "New object with its property changed to the new value.")]
+        public static IBHoMObject SetPropertyFallback(this IBHoMObject obj, string propertyName, object value, bool isSilent = false)
         {
-            PolyCurve polycurve = ExternalPolyCurve(panel);
+            if (value is IFragment)
+            {
+                // Handle fragments
+                obj.Fragments.AddOrReplace(value as IFragment); 
+            }
+            else
+            {
+                // Otherwise add to custom data
+                obj.CustomData[propertyName] = value;
 
-            return polycurve.IsTriangular();
-
+                if (!isSilent)
+                    Compute.RecordWarning($"{obj} does not contain any property with the name {propertyName}. The value is being set as custom data.");
+            }
+                
+            return obj;
         }
 
         /***************************************************/
-
     }
 }
+
+
 
 
 

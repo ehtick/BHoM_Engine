@@ -35,7 +35,7 @@ namespace BH.Engine.Geometry
 
         [Description("Checks if a Point is valid by ensuring none of its coordinates are NaN.")]
         [Input("point", "The Point to validate.")]
-        [Output("result", "True if the Point is valid, false otherwise.")]
+        [Output("isValid", "True if the Point is valid, false otherwise.")]
         public static bool IsValid(this Point point)
         {
             return !(double.IsNaN(point.X) || double.IsNaN(point.Y) || double.IsNaN(point.Z));
@@ -45,7 +45,7 @@ namespace BH.Engine.Geometry
 
         [Description("Checks if a Vector is valid by ensuring none of its components are NaN.")]
         [Input("v", "The Vector to validate.")]
-        [Output("result", "True if the Vector is valid, false otherwise.")]
+        [Output("isValid", "True if the Vector is valid, false otherwise.")]
         public static bool IsValid(this Vector v)
         {
             return !(double.IsNaN(v.X) || double.IsNaN(v.Y) || double.IsNaN(v.Z));
@@ -58,7 +58,7 @@ namespace BH.Engine.Geometry
 
         [Description("Checks if a TransformMatrix is valid by ensuring it has the correct dimensions (4x4).")]
         [Input("transform", "The TransformMatrix to validate.")]
-        [Output("result", "True if the TransformMatrix is valid, false otherwise.")]
+        [Output("isValid", "True if the TransformMatrix is valid, false otherwise.")]
         public static bool IsValid(this TransformMatrix transform)
         {
             return transform?.Matrix != null && transform.Matrix.GetLength(0) == 4 && transform.Matrix.GetLength(1) == 4;
@@ -71,7 +71,7 @@ namespace BH.Engine.Geometry
 
         [Description("Checks if any IGeometry is valid. Currently returns true for all geometries.")]
         [Input("geometry", "The IGeometry to validate.")]
-        [Output("result", "True if the geometry is valid, false otherwise.")]
+        [Output("isValid", "True if the geometry is valid, false otherwise.")]
         public static bool IsValid(this IGeometry geometry)
         {
             return true;
@@ -82,7 +82,7 @@ namespace BH.Engine.Geometry
         [Description("Checks if an Arc is valid. Currently returns true for all arcs.")]
         [Input("arc", "The Arc to validate.")]
         [Input("tolerance", "The tolerance for the validation check.", typeof(Length))]
-        [Output("result", "True if the Arc is valid, false otherwise.")]
+        [Output("isValid", "True if the Arc is valid, false otherwise.")]
         public static bool IsValid(this Arc arc, double tolerance = Tolerance.Distance)
         {
             //TODO: Returning true for all for now until method is expanded to all objects
@@ -96,7 +96,7 @@ namespace BH.Engine.Geometry
 
         [Description("Checks if any IGeometry is valid using dynamic dispatch.")]
         [Input("geometry", "The IGeometry to validate.")]
-        [Output("result", "True if the geometry is valid, false otherwise.")]
+        [Output("isValid", "True if the geometry is valid, false otherwise.")]
         public static bool IIsValid(this IGeometry geometry)
         {
             return IsValid(geometry as dynamic);

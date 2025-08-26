@@ -36,7 +36,7 @@ namespace BH.Engine.Geometry
 
         [Description("Checks if a NurbsCurve is periodic (closed with continuous derivatives).")]
         [Input("curve", "The NurbsCurve to check for periodicity.")]
-        [Output("result", "True if the curve is periodic, false otherwise.")]
+        [Output("isPeriodic", "True if the curve is periodic, false otherwise.")]
         public static bool IsPeriodic(this NurbsCurve curve)
         {
             int multiplicity = 1;
@@ -51,7 +51,7 @@ namespace BH.Engine.Geometry
         
         [Description("Checks if a NurbsSurface is periodic in either U or V direction.")]
         [Input("surface", "The NurbsSurface to check for periodicity.")]
-        [Output("result", "True if the surface is periodic in either direction, false otherwise.")]
+        [Output("isPeriodic", "True if the surface is periodic in either direction, false otherwise.")]
         public static bool IsPeriodic(this NurbsSurface surface)
         {
             int uMultiplicity = 1;

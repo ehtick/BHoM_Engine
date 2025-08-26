@@ -37,7 +37,7 @@ namespace BH.Engine.Geometry
         [Description("Checks if a TransformMatrix represents a rigid transformation (rotation and translation only, no scaling or shearing).")]
         [Input("transform", "The TransformMatrix to check.")]
         [Input("tolerance", "The tolerance for checking orthogonality and determinant.", typeof(Length))]
-        [Output("result", "True if the transformation is rigid, false otherwise.")]
+        [Output("isRigid", "True if the transformation is rigid, false otherwise.")]
         public static bool IsRigidTransformation(this TransformMatrix transform, double tolerance = Tolerance.Distance)
         {
             if (!transform.IsValid())

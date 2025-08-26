@@ -41,7 +41,7 @@ namespace BH.Engine.Geometry
         [Description("Combines an unordered set of lines and turns them into closed cells, e.g. mesh edges will be combined into a set of outlines each representing one mesh cell.")]
         [Input("lines", "Unordered set of lines to turn into closed cells.")]
         [Input("distanceTolerance", "Tolerance to use for geometrical processing.")]
-        [Output("outlines", "Closed outines created from the input lines.")]
+        [Output("closedOutlines", "Closed outlines created by combining the input lines into cells.")]
         public static List<Polyline> OutlinesFromLines(this List<Line> lines, double distanceTolerance = Tolerance.Distance)
         {
             if (lines == null)

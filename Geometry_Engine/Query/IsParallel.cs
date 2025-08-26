@@ -38,7 +38,7 @@ namespace BH.Engine.Geometry
         [Input("v1", "The first Vector to check.")]
         [Input("v2", "The second Vector to check.")]
         [Input("angleTolerance", "The angle tolerance for the parallelism check.", typeof(Angle))]
-        [Output("result", "1 if parallel in same direction, -1 if parallel in opposite direction, 0 if not parallel.")]
+        [Output("parallelism", "1 if parallel in same direction, -1 if parallel in opposite direction, 0 if not parallel.")]
         public static int IsParallel(this Vector v1, Vector v2, double angleTolerance = Tolerance.Angle)
         {
             Vector v1N = v1.Normalise();
@@ -54,7 +54,7 @@ namespace BH.Engine.Geometry
         [Input("line1", "The first Line to check.")]
         [Input("line2", "The second Line to check.")]
         [Input("angleTolerance", "The angle tolerance for the parallelism check.", typeof(Angle))]
-        [Output("result", "1 if parallel in same direction, -1 if parallel in opposite direction, 0 if not parallel.")]
+        [Output("parallelism", "1 if parallel in same direction, -1 if parallel in opposite direction, 0 if not parallel.")]
         public static int IsParallel(this Line line1, Line line2, double angleTolerance = Tolerance.Angle)
         {
             return line1.Direction().IsParallel(line2.Direction(), angleTolerance);

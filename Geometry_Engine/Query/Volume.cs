@@ -100,8 +100,13 @@ namespace BH.Engine.Geometry
         [Output("volume", "", typeof(Volume))]
         public static double Volume(this Mesh mesh)
         {
-            double volume = 0.0;
+            if (!mesh.IsManifold())
+            {
+                Base.Compute.RecordError("Cannot calculate volume of a non-manifold mesh.");
+                return double.NaN;
+            }
 
+            double volume = 0.0;
             foreach (Face face in mesh.Faces)
             {
                 if (face.D == -1) // Triangular face

@@ -20,12 +20,10 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.oM.Geometry;
 using BH.oM.Base.Attributes;
+using BH.oM.Geometry;
 using BH.oM.Quantities.Attributes;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.ComponentModel;
 
 namespace BH.Engine.Geometry
@@ -37,7 +35,7 @@ namespace BH.Engine.Geometry
         /***************************************************/
 
         [Description("Gets the enclosed volume created by the BoundaryRepresentation Surfaces. This value is retrieved from the immutable property stored on the object itself.")]
-        [Input("solid","The solid BoundaryRepresentaion to query the volume from.")]
+        [Input("solid", "The solid BoundaryRepresentaion to query the volume from.")]
         [Output("volume", "", typeof(Volume))]
         public static double Volume(this BoundaryRepresentation solid)
         {
@@ -93,6 +91,54 @@ namespace BH.Engine.Geometry
         public static double Volume(this Torus torus)
         {
             return 2.0 * Math.Pow(Math.PI, 2) * Math.Pow(torus.RadiusMinor, 2) * torus.RadiusMajor;
+        }
+
+        /***************************************************/
+
+        [Description("Calculates the enclosed volume of a mesh using the divergence theorem. The mesh must be closed and manifold for the result to be valid.")]
+        [Input("mesh", "The mesh to query the volume from. Must be closed and manifold.")]
+        [Output("volume", "", typeof(Volume))]
+        public static double Volume(this Mesh mesh)
+        {
+            double volume = 0.0;
+
+            foreach (Face face in mesh.Faces)
+            {
+                if (face.D == -1) // Triangular face
+                {
+                    Point p0 = mesh.Vertices[face.A];
+                    Point p1 = mesh.Vertices[face.B];
+                    Point p2 = mesh.Vertices[face.C];
+
+                    // Compute the signed volume of the tetrahedron formed by the triangle and the origin
+                    double v = (p0.X * (p1.Y * p2.Z - p2.Y * p1.Z) -
+                                p0.Y * (p1.X * p2.Z - p2.X * p1.Z) +
+                                p0.Z * (p1.X * p2.Y - p2.X * p1.Y)) / 6.0;
+
+                    volume += v;
+                }
+                else // Quadrilateral face - split into two triangles
+                {
+                    Point p0 = mesh.Vertices[face.A];
+                    Point p1 = mesh.Vertices[face.B];
+                    Point p2 = mesh.Vertices[face.C];
+                    Point p3 = mesh.Vertices[face.D];
+
+                    // First triangle: A, B, C
+                    double v1 = (p0.X * (p1.Y * p2.Z - p2.Y * p1.Z) -
+                                 p0.Y * (p1.X * p2.Z - p2.X * p1.Z) +
+                                 p0.Z * (p1.X * p2.Y - p2.X * p1.Y)) / 6.0;
+
+                    // Second triangle: A, C, D
+                    double v2 = (p0.X * (p2.Y * p3.Z - p3.Y * p2.Z) -
+                                 p0.Y * (p2.X * p3.Z - p3.X * p2.Z) +
+                                 p0.Z * (p2.X * p3.Y - p3.X * p2.Y)) / 6.0;
+
+                    volume += v1 + v2;
+                }
+            }
+
+            return Math.Abs(volume); // Return absolute value to ensure positive volume
         }
 
 

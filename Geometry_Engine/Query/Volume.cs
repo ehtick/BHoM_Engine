@@ -101,10 +101,7 @@ namespace BH.Engine.Geometry
         public static double Volume(this Mesh mesh)
         {
             if (!mesh.IsManifold())
-            {
-                Base.Compute.RecordError("Cannot calculate volume of a non-manifold mesh.");
-                return double.NaN;
-            }
+                Base.Compute.RecordWarning("The input mesh is nonmanifold, therefore volume computation may yield incorrect results.");
 
             double volume = 0.0;
             foreach (Face face in mesh.Faces)

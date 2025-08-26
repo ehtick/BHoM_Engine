@@ -38,7 +38,7 @@ namespace BH.Engine.Geometry
         [Description("Creates an IntegrationSlice with the specified dimensions and placement.")]
         [Input("width", "The width of the integration slice.", typeof(Length))]
         [Input("length", "The length of the integration slice.", typeof(Length))]
-        [Input("centre", "The center position of the integration slice.", typeof(Length))]
+        [Input("centre", "The centre position of the integration slice.", typeof(Length))]
         [Input("placement", "Array defining the placement positions.")]
         [Output("slice", "The created IntegrationSlice.")]
         public static IntegrationSlice IntegrationSlice(double width, double length, double centre, double[] placement)

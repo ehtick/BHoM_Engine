@@ -51,7 +51,7 @@ namespace BH.Engine.Geometry
             double[,] Q = Identity(n);
             double[] S = new double[n];
 
-            // Initialize the rotation counter and the sweep counter
+            // Initialise the rotation counter and the sweep counter
             int count = 1;
             int sweep = 0;
 
@@ -72,7 +72,7 @@ namespace BH.Engine.Geometry
             // Orthogonalize A by plane rotations
             while (count > 0 && sweep < sweepmax)
             {
-                // Initialize rotation counter
+                // Initialise rotation counter
                 count = n * (n - 1) / 2;
 
                 for (int j = 0; j < n - 1; j++)

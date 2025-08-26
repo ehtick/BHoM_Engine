@@ -69,7 +69,7 @@ namespace BH.Engine.Geometry
             if (n == 0)
                 n = N;
 
-            double D = 0; // Initialize result
+            double D = 0; // Initialise result
 
             // If a single item matrix
             if (n == 1)

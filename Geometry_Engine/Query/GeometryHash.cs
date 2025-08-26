@@ -47,7 +47,7 @@ namespace BH.Engine.Geometry
             "\nThe geometrical identity is computed by extracting the geometry of the object via the IGeometry() method." +
             "\nThen, the hash is computed as a serialised array representing the coordinate of significant points taken on the geometry." +
             "\nThe number of points is reduced to the minimum essential to determine uniquely any geometry." +
-            "\nAdditionally, the resulting points are transformed based on the source geometry type, to remove or minimize collisions." +
+            "\nAdditionally, the resulting points are transformed based on the source geometry type, to remove or minimise collisions." +
             "\n(Any transformation so performed is translational only, in order to support geometrical tolerance, i.e. numerical distance, when comparing GeometryHashes downstream).")]
         [Input("bhomObj", "Input BHoMObject whose geometry will be queried by IGeometry() and which will be used for computing a Geometry Hash.")]
         [Output("geomHash", "Value representing a unique signature of the input object's geometry.")]
@@ -63,7 +63,7 @@ namespace BH.Engine.Geometry
         [Description("Returns a signature of the input geometry, useful for diffing." +
             "\nThe hash is computed as a serialised array representing the coordinate of significant points taken on the geometry." +
             "\nThe number of points is reduced to the minimum essential to determine uniquely any geometry." +
-            "\nAdditionally, the resulting points are transformed based on the source geometry type, to remove or minimize collisions." +
+            "\nAdditionally, the resulting points are transformed based on the source geometry type, to remove or minimise collisions." +
             "\n(Any transformation so performed is translational only, in order to support geometrical tolerance, i.e. numerical distance, when comparing GeometryHashes downstream).")]
         [Output("geomHash", "Value representing a unique signature of the input geometry.")]
         public static string GeometryHash(this IGeometry igeometry, BaseComparisonConfig comparisonConfig = null)
@@ -76,7 +76,7 @@ namespace BH.Engine.Geometry
         [Description("Returns a signature of the input geometry, useful for diffing." +
             "\nThe hash is computed as a serialised array representing the coordinate of significant points taken on the geometry." +
             "\nThe number of points is reduced to the minimum essential to determine uniquely any geometry." +
-            "\nAdditionally, the resulting points are transformed based on the source geometry type, to remove or minimize collisions." +
+            "\nAdditionally, the resulting points are transformed based on the source geometry type, to remove or minimise collisions." +
             "\n(Any transformation so performed is translational only, in order to support geometrical tolerance, i.e. numerical distance, when comparing GeometryHashes downstream).")]
         [Input("igeometry", "Geometry you want to compute the hash for.")]
         [Input("comparisonConfig", "Configurations on how the hash is computed, with options for numerical approximation, type exceptions and many others.")]

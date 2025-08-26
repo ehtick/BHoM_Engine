@@ -40,7 +40,7 @@ namespace BH.Engine.Geometry
 
         [Description("Creates an offset of a curve.")]
         [Input("curve", "Curve to offset.")]
-        [Input("offset", "Offset distance. Positive value offsets outside of a curve. If normal is given then offsets to the right with normal pointing up and direction of a curve pointing forward.")]
+        [Input("offset", "Offset distance. Positive value offsets outside of a curve. If normal is given then offsets to the right with normal pointing up and direction of a curve pointing forwards.")]
         [Input("normal", "Normal of a plane for offset operation, not needed for closed curves.")]
         [Input("tangentExtensions", "If true, arc segments of a PolyCurve will be extend by a tangent line, if false - by arc.")]
         [Input("distTol", "Distance tolerance used for checking segment lengths equal to zero, point coincidence etc.", typeof(Length))]
@@ -55,7 +55,7 @@ namespace BH.Engine.Geometry
 
         [Description("Creates an offset of a curve.")]
         [Input("curve", "Curve to offset.")]
-        [Input("offset", "Offset distance. Positive value offsets outside of a curve. If normal is given then offsets to the right with normal pointing up and direction of a curve pointing forward.")]
+        [Input("offset", "Offset distance. Positive value offsets outside of a curve. If normal is given then offsets to the right with normal pointing up and direction of a curve pointing forwards.")]
         [Input("normal", "Normal of a plane for offset operation, not needed for closed curves.")]
         [Input("tangentExtensions", "If true, arc segments of a PolyCurve will be extend by a tangent line, if false - by arc.")]
         [Input("distTol", "Distance tolerance used for checking segment lengths equal to zero, point coincidence etc.", typeof(Length))]
@@ -94,7 +94,7 @@ namespace BH.Engine.Geometry
 
         [Description("Creates an offset of a curve.")]
         [Input("curve", "Curve to offset.")]
-        [Input("offset", "Offset distance. Positive value offsets outside of a curve. If normal is given then offsets to the right with normal pointing up and direction of a curve pointing forward.")]
+        [Input("offset", "Offset distance. Positive value offsets outside of a curve. If normal is given then offsets to the right with normal pointing up and direction of a curve pointing forwards.")]
         [Input("normal", "Normal of a plane for offset operation, not needed for closed curves.")]
         [Input("tangentExtensions", "If true, arc segments of a PolyCurve will be extend by a tangent line, if false - by arc.")]
         [Input("distTol", "Distance tolerance used for checking segment lengths equal to zero, point coincidence etc.", typeof(Length))]
@@ -134,7 +134,7 @@ namespace BH.Engine.Geometry
 
         [Description("Creates an offset of a curve. Works only on planar curves.")]
         [Input("curve", "Curve to offset.")]
-        [Input("offset", "Offset distance. Positive value offsets outside of a curve. If normal is given then offsets to the right with normal pointing up and direction of a curve pointing forward.")]
+        [Input("offset", "Offset distance. Positive value offsets outside of a curve. If normal is given then offsets to the right with normal pointing up and direction of a curve pointing forwards.")]
         [Input("normal", "Normal of a plane for offset operation, not needed for closed curves.")]
         [Input("tangentExtensions", "If true, arc segments of a PolyCurve will be extend by a tangent line, if false - by arc.")]
         [Input("distTol", "Distance tolerance used for checking segment lengths equal to zero, point coincidence etc.", typeof(Length))]
@@ -163,7 +163,7 @@ namespace BH.Engine.Geometry
 
         [Description("Creates an offset of a curve. Works only on planar curves")]
         [Input("curve", "Curve to offset.")]
-        [Input("offset", "Offset distance. Positive value offsets outside of a curve. If normal is given then offsets to the right with normal pointing up and direction of a curve pointing forward.")]
+        [Input("offset", "Offset distance. Positive value offsets outside of a curve. If normal is given then offsets to the right with normal pointing up and direction of a curve pointing forwards.")]
         [Input("normal", "Normal of a plane for offset operation, not needed for closed curves.")]
         [Input("tangentExtensions", "If true, arc segments of a PolyCurve will be extend by a tangent line, if false - by arc.")]
         [Input("distTol", "Distance tolerance used for checking segment lengths equal to zero, point coincidence etc.", typeof(Length))]
@@ -422,7 +422,7 @@ namespace BH.Engine.Geometry
 
         [Description("Creates an offset of a curve. Works only on planar curves")]
         [Input("curve", "Curve to offset.")]
-        [Input("offset", "Offset distance. Positive value offsets outside of a curve. If normal is given then offsets to the right with normal pointing up and direction of a curve pointing forward.")]
+        [Input("offset", "Offset distance. Positive value offsets outside of a curve. If normal is given then offsets to the right with normal pointing up and direction of a curve pointing forwards.")]
         [Input("normal", "Normal of a plane for offset operation, not needed for closed curves.")]
         [Input("tangentExtensions", "If true, arc segments of a PolyCurve will be extend by a tangent line, if false - by arc.")]
         [Input("distTol", "Distance tolerance used for checking segment lengths equal to zero, point coincidence etc.", typeof(Length))]

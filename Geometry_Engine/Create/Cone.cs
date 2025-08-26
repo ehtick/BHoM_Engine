@@ -35,8 +35,8 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
         
-        [Description("Creates a Cone with the specified center, axis, radius, and height.")]
-        [Input("centre", "The center point of the cone.")]
+        [Description("Creates a Cone with the specified centre, axis, radius, and height.")]
+        [Input("centre", "The centre point of the cone.")]
         [Input("axis", "The axis vector defining the cone's orientation.")]
         [Input("radius", "The radius of the cone at its base.", typeof(Length))]
         [Input("height", "The height of the cone.", typeof(Length))]

@@ -38,12 +38,12 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Calculates and returns the intersection point of two Lines. If the lines are collinear or no intersection point can be found, null is returned.")]
+        [Description("Calculates and returns the intersection point of two Lines. If the Lines are collinear or no intersection point can be found, null is returned.")]
         [Input("line1", "First Line to intersect.")]
         [Input("line2", "Second Line to intersect.")]
-        [Input("useInfiniteLines", "If true or if a lines Infinite property is true, a intersection point found that is outside the domain of that lines start and end point is accepted. If false, and the lines Infinite property is false, the found intersection point needs to be on the finite line segment, between or on the start and end point, if not, null is returned.")]
+        [Input("useInfiniteLines", "If true or if a Lines Infinite property is true, a intersection point found that is outside the domain of that Lines start and end point is accepted. If false, and the Lines Infinite property is false, the found intersection point needs to be on the finite Line segment, between or on the start and end point, if not, null is returned.")]
         [Input("tolerance", "Distance tolerance to be used in the method. Used for checking if the intersection point is within acceptable distance from the Lines.", typeof(Length))]
-        [Input("angleTolerance", "Angle tolerance to be used in the method. Used for checking if the lines are collinear.", typeof(Angle))]
+        [Input("angleTolerance", "Angle tolerance to be used in the method. Used for checking if the Lines are collinear.", typeof(Angle))]
         [Output("intersection", "The intersection point of the two Lines. If no intersection point is found, null is returned.")]
         public static Point LineIntersection(this Line line1, Line line2, bool useInfiniteLines = false, double tolerance = Tolerance.Distance, double angleTolerance = Tolerance.Angle)
         {
@@ -80,10 +80,10 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
-        [Description("Calculates and returns the intersection points of two Lines. If the lines are colienar and overlapping, the end points of the overlaps are returned.")]
+        [Description("Calculates and returns the intersection points of two Lines. If the Lines are collinear and overlapping, the end points of the overlaps are returned.")]
         [Input("line1", "First Line to intersect.")]
         [Input("line2", "Second Line to intersect.")]
-        [Input("useInfiniteLines", "If true or if a lines Infinite property is true, a intersection point found that is outside the domain of that lines start and end point is accepted. If false, and the lines Infinite property is false, the found intersection point needs to be on the finite line segment, between or on the start and end point.")]
+        [Input("useInfiniteLines", "If true or if a Lines Infinite property is true, a intersection point found that is outside the domain of that Lines start and end point is accepted. If false, and the Lines Infinite property is false, the found intersection point needs to be on the finite Line segment, between or on the start and end point.")]
         [Input("tolerance", "Distance tolerance to be used in the method. Used for checking if the intersection point is within acceptable distance from the Lines.", typeof(Length))]
         [Output("intersections", "The intersection points of the two Lines.")]
         public static List<Point> LineIntersections(this Line line1, Line line2, bool useInfiniteLines = false, double tolerance = Tolerance.Distance)
@@ -173,20 +173,20 @@ namespace BH.Engine.Geometry
             List<Point> iPts = new List<Point>();
             Point midPoint = arc.PointAtParameter(0.5);
 
-            Point center = arc.Centre();
+            Point centre = arc.Centre();
 
             //Check if curves are coplanar
             if (Math.Abs(arc.CoordinateSystem.Z.DotProduct(l.Direction())) > Tolerance.Angle)
             {
                 //Curves not coplanar
                 Point pt = l.PlaneIntersection((Plane)arc.CoordinateSystem, tolerance : tolerance);
-                if (pt != null && Math.Abs(pt.Distance(center) - arc.Radius) <= tolerance)
+                if (pt != null && Math.Abs(pt.Distance(centre) - arc.Radius) <= tolerance)
                     iPts.Add(pt);
             }
             else
             {
                 //Curves coplanar
-                Circle c = new Circle { Centre = center, Normal = arc.CoordinateSystem.Z, Radius = arc.Radius };
+                Circle c = new Circle { Centre = centre, Normal = arc.CoordinateSystem.Z, Radius = arc.Radius };
                 iPts = c.LineIntersections(l, tolerance: tolerance);
             }
 
@@ -517,6 +517,7 @@ namespace BH.Engine.Geometry
         /***************************************************/
     }
 }
+
 
 
 

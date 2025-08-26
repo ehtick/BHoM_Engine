@@ -34,7 +34,7 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Creates a Cartesian CoordinateSystem. x and y will be unitised. If x and why are non-orthogonal, y will be made orthogonal to x, while x will be kept.")]
+        [Description("Creates a Cartesian CoordinateSystem. x and y will be unitised. If x and y are non-orthogonal, y will be made orthogonal to x, whilst x will be kept.")]
         public static Cartesian CartesianCoordinateSystem(Point origin, Vector x, Vector y)
         {
 

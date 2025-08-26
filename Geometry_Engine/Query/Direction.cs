@@ -34,10 +34,10 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Gets the direction Vector of a Line as a normalized vector from start to end.")]
+        [Description("Gets the direction Vector of a Line as a normalised Vector from start to end.")]
         [Input("line", "The Line to get the direction from.")]
         [Input("tolerance", "The tolerance for checking if the line has zero length.", typeof(Length))]
-        [Output("vector", "The normalized direction Vector of the Line.")]
+        [Output("vector", "The normalised direction Vector of the Line.")]
         public static Vector Direction(this Line line, double tolerance = Tolerance.Distance)
         {
             if (line.Start.SquareDistance(line.End) <= tolerance * tolerance)

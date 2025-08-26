@@ -35,8 +35,8 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
         
-        [Description("Creates a Cylinder with the specified center, axis, radius, and height.")]
-        [Input("centre", "The center point of the cylinder.")]
+        [Description("Creates a Cylinder with the specified centre, axis, radius, and height.")]
+        [Input("centre", "The centre point of the cylinder.")]
         [Input("axis", "The axis vector defining the cylinder's orientation.")]
         [Input("radius", "The radius of the cylinder.", typeof(Length))]
         [Input("height", "The height of the cylinder.", typeof(Length))]

@@ -124,4 +124,3 @@ namespace BH.Engine.Geometry
         private static HashAlgorithm m_SHA256Algorithm = SHA256.Create();
     }
 }
-

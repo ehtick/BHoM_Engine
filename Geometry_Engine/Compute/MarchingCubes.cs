@@ -107,9 +107,3 @@ namespace BH.Engine.Geometry
 
     }
 }
-
-
-
-
-
-

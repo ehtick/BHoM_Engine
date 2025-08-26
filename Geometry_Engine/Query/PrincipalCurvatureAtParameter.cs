@@ -133,8 +133,3 @@ namespace BH.Engine.Geometry
 
     }
 }
-
-
-
-
-

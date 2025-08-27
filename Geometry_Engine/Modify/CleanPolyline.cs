@@ -36,11 +36,11 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Returns a polyline that is cleaned by removing least significant vertices and short segments. This is designed for closed polylines only")]
-        [Input("polyline", "The polyline you wish to clean by removing unnecessary points")]
-        [Input("angleTolerance", "The tolerance of the angle that defines a straight line. Default is set to the value defined by BH.oM.Geometry.Tolerance.Angle")]
-        [Input("minimumSegmentLength", "The length of the smallest allowed segment. Segments smaller than this will be removed. Default is set to the value defined by BH.oM.Geometry.Tolerance.Distance")]
-        [Output("polyline", "The cleaned polyline")]
+        [Description("Returns a polyline that is cleaned by removing least significant vertices and short segments. This is designed for closed polylines only.")]
+        [Input("polyline", "The polyline you wish to clean by removing unnecessary points.")]
+        [Input("angleTolerance", "The tolerance of the angle that defines a straight line. Default is set to the value defined by BH.oM.Geometry.Tolerance.Angle.")]
+        [Input("minimumSegmentLength", "The length of the smallest allowed segment. Segments smaller than this will be removed. Default is set to the value defined by BH.oM.Geometry.Tolerance.Distance.")]
+        [Output("polyline", "The cleaned polyline.")]
         public static Polyline CleanPolyline(this Polyline polyline, double angleTolerance = Tolerance.Angle, double minimumSegmentLength = Tolerance.Distance)
         {
             return polyline.RemoveLeastSignificantVertices(angleTolerance, angleTolerance, minimumSegmentLength).RemoveShortSegments(minimumSegmentLength, minimumSegmentLength);

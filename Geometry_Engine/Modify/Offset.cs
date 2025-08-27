@@ -161,7 +161,7 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
-        [Description("Creates an offset of a curve. Works only on planar curves")]
+        [Description("Creates an offset of a curve. Works only on planar curves.")]
         [Input("curve", "Curve to offset.")]
         [Input("offset", "Offset distance. Positive value offsets outside of a curve. If normal is given then offsets to the right with normal pointing up and direction of a curve pointing forwards.")]
         [Input("normal", "Normal of a plane for offset operation, not needed for closed curves.")]
@@ -420,7 +420,7 @@ namespace BH.Engine.Geometry
         /***  Public methods - Interfaces                ***/
         /***************************************************/
 
-        [Description("Creates an offset of a curve. Works only on planar curves")]
+        [Description("Creates an offset of a curve. Works only on planar curves.")]
         [Input("curve", "Curve to offset.")]
         [Input("offset", "Offset distance. Positive value offsets outside of a curve. If normal is given then offsets to the right with normal pointing up and direction of a curve pointing forwards.")]
         [Input("normal", "Normal of a plane for offset operation, not needed for closed curves.")]

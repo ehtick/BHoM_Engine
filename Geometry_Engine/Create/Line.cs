@@ -51,7 +51,7 @@ namespace BH.Engine.Geometry
 
         [Description("Creates an infinite Line based on its start point and a direction vector.")]
         [InputFromProperty("start")]
-        [Input("direction", "The direction of the infinite line")]
+        [Input("direction", "The direction of the infinite line.")]
         [Output("ray", "The created infinite line Line.")]
         public static Line Line(Point start, Vector direction)
         {

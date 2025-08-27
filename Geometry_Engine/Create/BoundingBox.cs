@@ -49,6 +49,9 @@ namespace BH.Engine.Geometry
         /***************************************************/
 
         [Description("Creates a bounding box based on a centre point and vector controling the extents of the bounding box.")]
+        [Input("centre", "The centre point of the bounding box.")]
+        [Input("extent", "The vector controlling the extents of the bounding box.")]
+        [Output("boundingBox", "The created BoundingBox.")]
         public static BoundingBox BoundingBox(Point centre, Vector extent)
         {
             //TODO: SHould this be changed to

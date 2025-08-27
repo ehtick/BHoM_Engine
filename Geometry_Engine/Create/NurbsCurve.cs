@@ -52,6 +52,11 @@ namespace BH.Engine.Geometry
 
         [NotImplemented]
         [Description("Not yet implemented method for generating random nurbs curve.")]
+        [Input("rnd", "Random number generator to use for creating the curve.")]
+        [Input("box", "Optional bounding box to constrain the random curve within. If null, a default bounding box will be used.")]
+        [Input("minNbCPs", "Minimum number of control points to generate. Must be at least 5.", typeof(int))]
+        [Input("maxNbCPs", "Maximum number of control points to generate. Must be greater than minNbCPs.", typeof(int))]
+        [Output("curve", "A randomly generated NurbsCurve. Currently throws NotImplementedException.")]
         public static NurbsCurve RandomNurbsCurve(Random rnd, BoundingBox box = null, int minNbCPs = 5, int maxNbCPs = 20)
         {
             throw new NotImplementedException();

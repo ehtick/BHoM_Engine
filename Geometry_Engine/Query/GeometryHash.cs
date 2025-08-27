@@ -65,6 +65,8 @@ namespace BH.Engine.Geometry
             "\nThe number of points is reduced to the minimum essential to determine uniquely any geometry." +
             "\nAdditionally, the resulting points are transformed based on the source geometry type, to remove or minimise collisions." +
             "\n(Any transformation so performed is translational only, in order to support geometrical tolerance, i.e. numerical distance, when comparing GeometryHashes downstream).")]
+        [Input("igeometry", "The geometry to compute the hash for.")]
+        [Input("comparisonConfig", "Configuration settings for the comparison. If null, default settings will be used.")]
         [Output("geomHash", "Value representing a unique signature of the input geometry.")]
         public static string GeometryHash(this IGeometry igeometry, BaseComparisonConfig comparisonConfig = null)
         {

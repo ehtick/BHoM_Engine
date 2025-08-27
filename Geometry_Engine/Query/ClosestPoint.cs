@@ -64,8 +64,8 @@ namespace BH.Engine.Geometry
         /***************************************************/
 
         [Description("Finds the closest point in the provided set of points in relation to the provided Point.")]
-        [Input("points", "The set of points from which to find the closest to the provided point.")]
         [Input("point", "The reference point. The point in the set of points with the smallest distance to this point will be returned.")]
+        [Input("points", "The set of points from which to find the closest to the provided point.")]
         [Output("closestPt", "The point in list of points with the smallest distance to the provided point.")]
         public static Point ClosestPoint(this Point point, IEnumerable<Point> points)
         {

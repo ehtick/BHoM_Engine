@@ -23,8 +23,10 @@
 using BH.Engine.Base;
 using BH.oM.Geometry;
 using BH.oM.Base.Attributes;
+using BH.oM.Quantities.Attributes;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace BH.Engine.Geometry
@@ -35,6 +37,9 @@ namespace BH.Engine.Geometry
         /**** Public  Methods - Curves                  ****/
         /***************************************************/
 
+        [Description("Converts an Arc to its NURBS curve representation.")]
+        [Input("arc", "The Arc to convert to a NurbsCurve.")]
+        [Output("curve", "The equivalent NurbsCurve representation of the Arc.")]
         public static NurbsCurve ToNurbsCurve(this Arc arc)
         {
             {
@@ -77,6 +82,9 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Converts a Circle to its NURBS curve representation.")]
+        [Input("circle", "The Circle to convert to a NurbsCurve.")]
+        [Output("curve", "The equivalent NurbsCurve representation of the Circle.")]
         public static NurbsCurve ToNurbsCurve(this Circle circle)
         {
             {
@@ -109,6 +117,9 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Converts an Ellipse to its NURBS curve representation.")]
+        [Input("ellipse", "The Ellipse to convert to a NurbsCurve.")]
+        [Output("curve", "The equivalent NurbsCurve representation of the Ellipse.")]
         public static NurbsCurve ToNurbsCurve(this Ellipse ellipse)
         {
             {
@@ -141,6 +152,9 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Converts a Line to its NURBS curve representation.")]
+        [Input("line", "The Line to convert to a NurbsCurve.")]
+        [Output("curve", "The equivalent NurbsCurve representation of the Line.")]
         public static NurbsCurve ToNurbsCurve(this Line line)
         {
             return Create.NurbsCurve(new List<Point> { line.Start, line.End }, new double[] { 1, 1 }, new double[] { 0, 1 });
@@ -148,6 +162,9 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Returns the same NurbsCurve (identity conversion).")]
+        [Input("curve", "The NurbsCurve to return.")]
+        [Output("curve", "The same NurbsCurve as input.")]
         public static NurbsCurve ToNurbsCurve(this NurbsCurve curve)
         {
             return curve;
@@ -155,6 +172,9 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Converts a Polyline to its NURBS curve representation.")]
+        [Input("curve", "The Polyline to convert to a NurbsCurve.")]
+        [Output("curve", "The equivalent NurbsCurve representation of the Polyline.")]
         public static NurbsCurve ToNurbsCurve(this Polyline curve)
         {
             List<Point> points = curve.ControlPoints;
@@ -174,9 +194,12 @@ namespace BH.Engine.Geometry
 
 
         /***************************************************/
-        /**** Public Methods - Interaces                ****/
+        /**** Public Methods - Interfaces               ****/
         /***************************************************/
 
+        [Description("Converts any ICurve to its NURBS curve representation.")]
+        [Input("curve", "The ICurve to convert to a NurbsCurve.")]
+        [Output("curve", "The equivalent NurbsCurve representation of the curve.")]
         public static NurbsCurve IToNurbsCurve(this ICurve curve)
         {
             return ToNurbsCurve(curve as dynamic);
@@ -196,7 +219,3 @@ namespace BH.Engine.Geometry
         /***************************************************/
     }
 }
-
-
-
-

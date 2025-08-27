@@ -21,10 +21,12 @@
  */
 
 using System;
+using System.ComponentModel;
 using BH.oM.Geometry;
 using BH.oM.Base;
 using System.Collections.Generic;
 using BH.oM.Base.Attributes;
+using BH.oM.Quantities.Attributes;
 
 namespace BH.Engine.Geometry
 {
@@ -34,6 +36,12 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
+        [Description("Calculates the proximity parameters for two skew lines, returning the parameters along each line where they are closest. Returns null in case of parallel lines.")]
+        [Input("line1", "The first Line.")]
+        [Input("line2", "The second Line.")]
+        [Input("angleTolerance", "The angle tolerance for determining if lines are parallel.", typeof(Angle))]
+        [MultiOutput(0, "parameter1", "The parameter along the first line where it is closest to the second line.")]
+        [MultiOutput(1, "parameter2", "The parameter along the second line where it is closest to the first line.")]
         public static Output<double, double> SkewLineProximity(this Line line1, Line line2, double angleTolerance = Tolerance.Angle)
         {
             Vector v1 = line1.End - line1.Start;
@@ -60,8 +68,3 @@ namespace BH.Engine.Geometry
         /***************************************************/
     }
 }
-
-
-
-
-

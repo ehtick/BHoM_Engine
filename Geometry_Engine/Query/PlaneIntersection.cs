@@ -332,6 +332,11 @@ namespace BH.Engine.Geometry
 
         //TODO: Resolve. Method is not implemented and have input not matching the interface.
         [Description("Method not implemented.")]
+        [Input("c", "The NurbsCurve to intersect with the Plane.")]
+        [Input("p", "The Plane to intersect with the NurbsCurve.")]
+        [Input("curveParameters", "Output parameter for the curve parameters at intersection points.")]
+        [Input("tolerance", "The tolerance for the intersection calculation.", typeof(Length))]
+        [Output("intersectionPoints", "The intersection points between the NurbsCurve and Plane.")]
         [NotImplemented]
         public static List<Point> PlaneIntersections(this NurbsCurve c, Plane p, out List<double> curveParameters, double tolerance = Tolerance.Distance)
         {
@@ -424,7 +429,3 @@ namespace BH.Engine.Geometry
         /***************************************************/
     }
 }
-
-
-
-

@@ -21,8 +21,10 @@
  */
 
 using System;
+using System.ComponentModel;
 using BH.oM.Geometry;
 using BH.oM.Base.Attributes;
+using BH.oM.Quantities.Attributes;
 
 namespace BH.Engine.Geometry
 {
@@ -32,6 +34,11 @@ namespace BH.Engine.Geometry
         /**** Public Methods - Curves                   ****/
         /***************************************************/
 
+        [Description("Gets the tangent Vector of an Arc at the specified length along the curve.")]
+        [Input("curve", "The Arc to get the tangent from.")]
+        [Input("length", "The length along the curve to get the tangent at.", typeof(Length))]
+        [Input("tolerance", "The tolerance for the calculation.", typeof(Length))]
+        [Output("tangent", "The tangent Vector at the specified length.")]
         public static Vector TangentAtLength(this Arc curve, double length, double tolerance = Tolerance.Distance)
         {
             double parameter = length / curve.Length();
@@ -40,6 +47,11 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Gets the tangent Vector of a Circle at the specified length along the curve.")]
+        [Input("curve", "The Circle to get the tangent from.")]
+        [Input("length", "The length along the curve to get the tangent at.", typeof(Length))]
+        [Input("tolerance", "The tolerance for the calculation.", typeof(Length))]
+        [Output("tangent", "The tangent Vector at the specified length.")]
         public static Vector TangentAtLength(this Circle curve, double length, double tolerance = Tolerance.Distance)
         {
             double parameter = length / curve.Length();
@@ -48,6 +60,11 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Gets the tangent Vector of a Line at the specified length along the curve.")]
+        [Input("curve", "The Line to get the tangent from.")]
+        [Input("length", "The length along the curve to get the tangent at.", typeof(Length))]
+        [Input("tolerance", "The tolerance for the calculation.", typeof(Length))]
+        [Output("tangent", "The tangent Vector at the specified length.")]
         public static Vector TangentAtLength(this Line curve, double length, double tolerance = Tolerance.Distance)
         {
             double parameter = length / curve.Length();
@@ -56,6 +73,11 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Gets the tangent Vector of a PolyCurve at the specified length along the curve.")]
+        [Input("curve", "The PolyCurve to get the tangent from.")]
+        [Input("length", "The length along the curve to get the tangent at.", typeof(Length))]
+        [Input("tolerance", "The tolerance for the calculation.", typeof(Length))]
+        [Output("tangent", "The tangent Vector at the specified length.")]
         public static Vector TangentAtLength(this PolyCurve curve, double length, double tolerance = Tolerance.Distance)
         {
             double parameter = length / curve.Length();
@@ -64,6 +86,11 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Gets the tangent Vector of a Polyline at the specified length along the curve.")]
+        [Input("curve", "The Polyline to get the tangent from.")]
+        [Input("length", "The length along the curve to get the tangent at.", typeof(Length))]
+        [Input("tolerance", "The tolerance for the calculation.", typeof(Length))]
+        [Output("tangent", "The tangent Vector at the specified length.")]
         public static Vector TangentAtLength(this Polyline curve, double length, double tolerance = Tolerance.Distance)
         {
             double parameter = length / curve.Length();
@@ -75,6 +102,11 @@ namespace BH.Engine.Geometry
         /**** Public Methods - Interfaces               ****/
         /***************************************************/
 
+        [Description("Gets the tangent Vector of any ICurve at the specified length along the curve.")]
+        [Input("curve", "The ICurve to get the tangent from.")]
+        [Input("length", "The length along the curve to get the tangent at.", typeof(Length))]
+        [Input("tolerance", "The tolerance for the calculation.", typeof(Length))]
+        [Output("tangent", "The tangent Vector at the specified length.")]
         public static Vector ITangentAtLength(this ICurve curve, double length, double tolerance = Tolerance.Distance)
         {
             return TangentAtLength(curve as dynamic, length, tolerance);
@@ -94,7 +126,3 @@ namespace BH.Engine.Geometry
         /***************************************************/
     }
 }
-
-
-
-

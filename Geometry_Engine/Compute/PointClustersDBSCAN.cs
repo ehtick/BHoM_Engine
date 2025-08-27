@@ -23,8 +23,11 @@
 using BH.Engine.Data;
 using BH.oM.Geometry;
 using BH.oM.Data.Collections;
+using BH.oM.Base.Attributes;
+using BH.oM.Quantities.Attributes;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace BH.Engine.Geometry
@@ -35,6 +38,11 @@ namespace BH.Engine.Geometry
         /**** public Methods - Vectors                  ****/
         /***************************************************/
         
+        [Description("Clusters Points using the DBSCAN algorithm based on distance and minimum point count criteria.")]
+        [Input("points", "The collection of Points to cluster.")]
+        [Input("maxDist", "The maximum distance between points to be considered in the same cluster.", typeof(Length))]
+        [Input("minPointCount", "The minimum number of points required to form a cluster.")]
+        [Output("clusters", "A list of clusters, where each cluster is a list of Points.")]
         public static List<List<Point>> PointClustersDBSCAN(this List<Point> points, double maxDist, int minPointCount = 1)
         {
             double sqDist = maxDist * maxDist;
@@ -54,9 +62,3 @@ namespace BH.Engine.Geometry
         /***************************************************/
     }
 }
-
-
-
-
-
-

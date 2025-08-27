@@ -64,6 +64,3 @@ namespace BH.Engine.Geometry
 
     }
 }
-
-
-

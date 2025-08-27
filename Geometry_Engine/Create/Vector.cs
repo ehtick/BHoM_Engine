@@ -124,8 +124,8 @@ namespace BH.Engine.Geometry
 
         [Description("Creates a random Vector in the provided plane, e.g a vector that is orthogonal to the normal of the plane, using the provided Random class.")]
         [Input("plane", "The plane that the vector should be contained to.")]
-        [Input("normalise", "If true the created vector will be a unit vector (length 1).")]
         [Input("rnd", "Random object to be used to generate the random geometry.")]
+        [Input("normalise", "If true the created vector will be a unit vector (length 1).")]
         [Output("vector", "The generated random Vector in the plane.")]
         public static Vector RandomVectorInPlane(Plane plane, Random rnd, bool normalise = false)
         {
@@ -145,9 +145,3 @@ namespace BH.Engine.Geometry
         /***************************************************/
     }
 }
-
-
-
-
-
-

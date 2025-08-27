@@ -81,9 +81,3 @@ namespace BH.Engine.Geometry
         }
     }
 }
-
-
-
-
-
-

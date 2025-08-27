@@ -38,6 +38,7 @@ namespace BH.Engine.Geometry
         [Input("a", "the point to begin from.")]
         [Input("b", "the point to end at.")]
         [Input("powX", "the region will be evaluated under the function: x^(powX).")]
+        [Input("tol", "Tolerance for the integration calculation.", typeof(Length))]
         [Output("V", "Calculated value. The region intergral calculated over a boundery, the line from a to b./n" + 
                      "The solution is only defined for closed counter-clockwise oriented regions, this can be achived by a sum of solutions." +
                      "This value should only be used on its own with this in mind.")]

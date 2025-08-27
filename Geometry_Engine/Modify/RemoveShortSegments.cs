@@ -39,6 +39,7 @@ namespace BH.Engine.Geometry
         [Description("Returns a polyline that has short segments removed. For example, if the polyline has 2 points less than the minimumSegmentLength apart, then only one point will be retained and the short segment will be merged with the next segment.")]
         [Input("polyline", "The polyline you wish to clean by removing short segments.")]
         [Input("minimumSegmentLength", "The tolerance of what a short segment is. Segments greater than this length will be kept, segments shorter will be cleaned (removed). Default is set to the value defined by BH.oM.Geometry.Tolerance.Distance.")]
+        [Input("distanceTolerance", "Distance tolerance for the operation.", typeof(Length))]
         [Output("polyline", "The cleaned polyline.")]
         public static Polyline RemoveShortSegments(this Polyline polyline, double minimumSegmentLength = Tolerance.Distance, double distanceTolerance = Tolerance.Distance)
         {            

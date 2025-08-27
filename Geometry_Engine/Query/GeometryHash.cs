@@ -50,6 +50,7 @@ namespace BH.Engine.Geometry
             "\nAdditionally, the resulting points are transformed based on the source geometry type, to remove or minimise collisions." +
             "\n(Any transformation so performed is translational only, in order to support geometrical tolerance, i.e. numerical distance, when comparing GeometryHashes downstream).")]
         [Input("bhomObj", "Input BHoMObject whose geometry will be queried by IGeometry() and which will be used for computing a Geometry Hash.")]
+        [Input("comparisonConfig", "Configuration settings for the comparison. If null, default settings will be used.")]
         [Output("geomHash", "Value representing a unique signature of the input object's geometry.")]
         public static string GeometryHash(this IBHoMObject bhomObj, BaseComparisonConfig comparisonConfig = null)
         {

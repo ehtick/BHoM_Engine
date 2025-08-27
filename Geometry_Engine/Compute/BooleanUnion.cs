@@ -40,6 +40,7 @@ namespace BH.Engine.Geometry
         [Input("line", "First line to union.")]
         [Input("refLine", "Second line to union.")]
         [Input("tolerance", "Tolerance used for checking colinearity and proximity of the lines.", typeof(Length))]
+        [Input("keepIntermediatePoints", "If true, keeps intermediate points when joining lines.")]
         [Output("union", "Boolean union of the lines.")]
         public static List<Line> BooleanUnion(this Line line, Line refLine, double tolerance = Tolerance.Distance, bool keepIntermediatePoints = false)
         {
@@ -56,6 +57,7 @@ namespace BH.Engine.Geometry
         [Description("Joins overlapping lines into single segments, i.e. each set of collinear lines that overlap with each other will be returned as a single line spanning between the extremes of the set.")]
         [Input("lines", "Lines to union.")]
         [Input("tolerance", "Tolerance used for checking colinearity and proximity of the lines.", typeof(Length))]
+        [Input("keepIntermediatePoints", "If true, keeps intermediate points when joining lines.")]
         [Output("union", "Boolean union of the lines.")]
         public static List<Line> BooleanUnion(this List<Line> lines, double tolerance = Tolerance.Distance, bool keepIntermediatePoints = false)
         {

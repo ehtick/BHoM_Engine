@@ -36,6 +36,8 @@ namespace BH.Engine.Geometry
         
         //TODO: Only works for points in the XY plane - add plane as input?
         [Description("Creates a Convex Hull from a list of points. Currently only works for points in the XY plane.")]
+        [Input("points", "The collection of points to create a convex hull from.")]
+        [Output("convexHull", "The convex hull as a Polyline.")]
         public static Polyline ConvexHull(List<Point> points)
         {
             List<Point> hull = new List<Point>();

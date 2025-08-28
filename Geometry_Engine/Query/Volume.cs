@@ -35,8 +35,8 @@ namespace BH.Engine.Geometry
         /***************************************************/
 
         [Description("Gets the enclosed volume created by the BoundaryRepresentation Surfaces. This value is retrieved from the immutable property stored on the object itself.")]
-        [Input("solid", "The solid BoundaryRepresentaion to query the volume from.")]
-        [Output("volume", "", typeof(Volume))]
+        [Input("solid","The solid BoundaryRepresentaion to query the volume from.")]
+        [Output("volume", "The volume of the solid.", typeof(Volume))]
         public static double Volume(this BoundaryRepresentation solid)
         {
             return solid.Volume;
@@ -46,7 +46,7 @@ namespace BH.Engine.Geometry
 
         [Description("Calculates the analytical solid volume.")]
         [Input("cone", "The solid cone to query the volume from.")]
-        [Output("volume", "", typeof(Volume))]
+        [Output("volume", "The volume of the solid.", typeof(Volume))]
         public static double Volume(this Cone cone)
         {
             return (1.0 / 3.0) * Math.PI * Math.Pow(cone.Radius, 2) * cone.Height;
@@ -56,7 +56,7 @@ namespace BH.Engine.Geometry
 
         [Description("Calculates the analytical solid volume.")]
         [Input("cuboid", "The cuboid to query the volume from.")]
-        [Output("volume", "", typeof(Volume))]
+        [Output("volume", "The volume of the solid.", typeof(Volume))]
         public static double Volume(this Cuboid cuboid)
         {
             return cuboid.Length * cuboid.Depth * cuboid.Height;
@@ -66,7 +66,7 @@ namespace BH.Engine.Geometry
 
         [Description("Calculates the analytical solid volume.")]
         [Input("cylinder", "The cylinder to query the volume from.")]
-        [Output("volume", "", typeof(Volume))]
+        [Output("volume", "The volume of the solid.", typeof(Volume))]
         public static double Volume(this Cylinder cylinder)
         {
             return Math.PI * Math.Pow(cylinder.Radius, 2) * cylinder.Height;
@@ -76,7 +76,7 @@ namespace BH.Engine.Geometry
 
         [Description("Calculates the analytical solid volume.")]
         [Input("sphere", "The sphere to query the volume from.")]
-        [Output("volume", "", typeof(Volume))]
+        [Output("volume", "The volume of the solid.", typeof(Volume))]
         public static double Volume(this Sphere sphere)
         {
             return (4.0 / 3.0) * Math.PI * Math.Pow(sphere.Radius, 3);
@@ -87,7 +87,7 @@ namespace BH.Engine.Geometry
 
         [Description("Calculates the analytical solid volume.")]
         [Input("torus", "The torus to query the volume from.")]
-        [Output("volume", "", typeof(Volume))]
+        [Output("volume", "The volume of the solid.", typeof(Volume))]
         public static double Volume(this Torus torus)
         {
             return 2.0 * Math.Pow(Math.PI, 2) * Math.Pow(torus.RadiusMinor, 2) * torus.RadiusMajor;
@@ -150,7 +150,7 @@ namespace BH.Engine.Geometry
 
         [Description("Gets the enclosed volume of a solid.")]
         [Input("solid", "The solid to query the volume from.")]
-        [Output("volume", "", typeof(Volume))]
+        [Output("volume", "The volume of the solid.", typeof(Volume))]
         public static double IVolume(this ISolid solid)
         {
             return Volume(solid as dynamic);
@@ -170,7 +170,3 @@ namespace BH.Engine.Geometry
         /***************************************************/
     }
 }
-
-
-
-

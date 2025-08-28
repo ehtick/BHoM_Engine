@@ -21,6 +21,9 @@
  */
 
 using BH.oM.Geometry;
+using BH.oM.Base.Attributes;
+using BH.oM.Quantities.Attributes;
+using System.ComponentModel;
 
 namespace BH.Engine.Geometry
 {
@@ -30,6 +33,9 @@ namespace BH.Engine.Geometry
         /****               Public Methods              ****/
         /***************************************************/
 
+        [Description("Returns the geometry of a Point, which is the Point itself.")]
+        [Input("point", "The Point to get the geometry of.")]
+        [Output("point", "The Point geometry.")]
         public static Point Geometry(this Point point)
         {
             return point;
@@ -37,6 +43,9 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Returns the geometry of a Line as an ICurve.")]
+        [Input("curve", "The Line to get the geometry of.")]
+        [Output("curve", "The Line as an ICurve.")]
         public static ICurve Geometry(this Line curve)
         {
             return curve;
@@ -44,6 +53,9 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Returns the geometry of an Arc as an ICurve.")]
+        [Input("curve", "The Arc to get the geometry of.")]
+        [Output("curve", "The Arc as an ICurve.")]
         public static ICurve Geometry(this Arc curve)
         {
             return curve;
@@ -51,6 +63,9 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Returns the geometry of a Circle as an ICurve.")]
+        [Input("curve", "The Circle to get the geometry of.")]
+        [Output("curve", "The Circle as an ICurve.")]
         public static ICurve Geometry(this Circle curve)
         {
             return curve;
@@ -58,6 +73,9 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Returns the geometry of an Ellipse as an ICurve.")]
+        [Input("curve", "The Ellipse to get the geometry of.")]
+        [Output("curve", "The Ellipse as an ICurve.")]
         public static ICurve Geometry(this Ellipse curve)
         {
             return curve;
@@ -65,6 +83,9 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Returns the geometry of a NurbsCurve as an ICurve.")]
+        [Input("curve", "The NurbsCurve to get the geometry of.")]
+        [Output("curve", "The NurbsCurve as an ICurve.")]
         public static ICurve Geometry(this NurbsCurve curve)
         {
             return curve;
@@ -72,6 +93,9 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Returns the geometry of a Polyline as an ICurve.")]
+        [Input("curve", "The Polyline to get the geometry of.")]
+        [Output("curve", "The Polyline as an ICurve.")]
         public static ICurve Geometry(this Polyline curve)
         {
             return curve;
@@ -79,6 +103,9 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Returns the geometry of a PolyCurve as an ICurve.")]
+        [Input("curve", "The PolyCurve to get the geometry of.")]
+        [Output("curve", "The PolyCurve as an ICurve.")]
         public static ICurve Geometry(this PolyCurve curve)
         {
             return curve;
@@ -88,6 +115,9 @@ namespace BH.Engine.Geometry
         /****              Interface Methods            ****/
         /***************************************************/
 
+        [Description("Returns the geometry of any ICurve as an ICurve.")]
+        [Input("curve", "The ICurve to get the geometry of.")]
+        [Output("curve", "The ICurve geometry.")]
         public static ICurve IGeometry(this ICurve curve)
         {
             return Geometry(curve as dynamic);
@@ -96,9 +126,3 @@ namespace BH.Engine.Geometry
         /***************************************************/
     }
 }
-
-
-
-
-
-

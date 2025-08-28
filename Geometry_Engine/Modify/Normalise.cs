@@ -22,7 +22,10 @@
 
 using BH.Engine.Base;
 using BH.oM.Geometry;
+using BH.oM.Base.Attributes;
+using BH.oM.Quantities.Attributes;
 using System;
+using System.ComponentModel;
 
 namespace BH.Engine.Geometry
 {
@@ -32,6 +35,9 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
+        [Description("Normalises a Vector to unit length.")]
+        [Input("vector", "The Vector to normalise.")]
+        [Output("normalised", "The normalised Vector with unit length.")]
         public static Vector Normalise(this Vector vector)
         {
             double x = vector.X;
@@ -47,6 +53,9 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Normalises a Quaternion to unit length.")]
+        [Input("q", "The Quaternion to normalise.")]
+        [Output("normalised", "The normalised Quaternion with unit length.")]
         public static Quaternion Normalise(this Quaternion q)
         {
             double x = q.X;
@@ -61,9 +70,3 @@ namespace BH.Engine.Geometry
         /***************************************************/
     }
 }
-
-
-
-
-
-

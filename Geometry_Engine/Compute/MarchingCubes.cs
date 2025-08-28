@@ -72,7 +72,7 @@ namespace BH.Engine.Geometry
                 List<List<Polyline>> pLines = MarchingSquares(meshAndValues.Item1, meshAndValues.Item2, isoValues).Select(x => x.Join()).ToList();
 
                 // Create faces from the polyline
-                // Note that each vertex may be added twice here from neighboring cells
+                // Note that each vertex may be added twice here from neighbouring cells
                 for (int j = 0; j < isoValues.Count; j++)
                 {
                     foreach (Polyline polyline in pLines[j])
@@ -107,9 +107,3 @@ namespace BH.Engine.Geometry
 
     }
 }
-
-
-
-
-
-

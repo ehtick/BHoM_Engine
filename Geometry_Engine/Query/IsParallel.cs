@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -21,7 +21,10 @@
  */
 
 using BH.oM.Geometry;
+using BH.oM.Base.Attributes;
+using BH.oM.Quantities.Attributes;
 using System;
+using System.ComponentModel;
 
 namespace BH.Engine.Geometry
 {
@@ -31,6 +34,11 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
+        [Description("Checks if two Vectors are parallel within the given angle tolerance. Returns 1 for same direction, -1 for opposite direction, 0 for not parallel.")]
+        [Input("v1", "The first Vector to check.")]
+        [Input("v2", "The second Vector to check.")]
+        [Input("angleTolerance", "The angle tolerance for the parallelism check.", typeof(Angle))]
+        [Output("parallelism", "1 if parallel in same direction, -1 if parallel in opposite direction, 0 if not parallel.")]
         public static int IsParallel(this Vector v1, Vector v2, double angleTolerance = Tolerance.Angle)
         {
             Vector v1N = v1.Normalise();
@@ -42,6 +50,11 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Checks if two Lines are parallel within the given angle tolerance. Returns 1 for same direction, -1 for opposite direction, 0 for not parallel.")]
+        [Input("line1", "The first Line to check.")]
+        [Input("line2", "The second Line to check.")]
+        [Input("angleTolerance", "The angle tolerance for the parallelism check.", typeof(Angle))]
+        [Output("parallelism", "1 if parallel in same direction, -1 if parallel in opposite direction, 0 if not parallel.")]
         public static int IsParallel(this Line line1, Line line2, double angleTolerance = Tolerance.Angle)
         {
             return line1.Direction().IsParallel(line2.Direction(), angleTolerance);
@@ -50,8 +63,3 @@ namespace BH.Engine.Geometry
         /***************************************************/
     }
 }
-
-
-
-
-

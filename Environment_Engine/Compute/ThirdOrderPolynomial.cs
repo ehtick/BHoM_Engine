@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -42,8 +42,8 @@ namespace BH.Engine.Environment
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Calculate the Third Order Polynominal for the numbers provided. The equation is: ((a * x + b) * x * c) * x + d")]
-        [Output("thirdOrderPolynominal", "The calculated Third Order Polynominal")]
+        [Description("Calculate the Third Order Polynomial for the numbers provided. The equation is: ((a * x + b) * x + c) * x + d")]
+        [Output("thirdOrderPolynomial", "The calculated Third Order Polynomial")]
         public static double ThirdOrderPolynomial(double a, double b, double c, double d, double x)
         {
             return ((a * x + b) * x + c) * x + d;
@@ -51,6 +51,7 @@ namespace BH.Engine.Environment
     }
 
 }
+
 
 
 

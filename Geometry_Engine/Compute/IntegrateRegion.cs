@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -20,11 +20,12 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.oM.Base.Attributes;
+using BH.oM.Geometry;
+using BH.oM.Quantities.Attributes;
 using System;
 using System.Collections.Generic;
-using BH.oM.Geometry;
 using System.ComponentModel;
-using BH.oM.Base.Attributes;
 
 namespace BH.Engine.Geometry
 {
@@ -38,6 +39,7 @@ namespace BH.Engine.Geometry
         [Input("a", "the point to begin from.")]
         [Input("b", "the point to end at.")]
         [Input("powX", "the region will be evaluated under the function: x^(powX).")]
+        [Input("tol", "Tolerance for the integration calculation.", typeof(Length))]
         [Output("V", "Calculated value. The region intergral calculated over a boundery, the line from a to b./n" + 
                      "The solution is only defined for closed counter-clockwise oriented regions, this can be achived by a sum of solutions." +
                      "This value should only be used on its own with this in mind.")]
@@ -243,7 +245,3 @@ namespace BH.Engine.Geometry
         /***************************************************/
     }
 }
-
-
-
-

@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -34,8 +34,8 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Evaluates whether a line is vertical from its start- and endpoints projected 2d-distance")]
-        [Input("line", "The line to determine the verticality of")]
+        [Description("Evaluates whether a line is vertical from its start- and endpoints projected 2d-distance.")]
+        [Input("line", "The line to determine the verticality of.")]
         [Output("isVertical", "If it is vertical, as defined in the wiki.")]
         [DocumentationURL("https://bhom.xyz/documentation/BHoM_oM/Structure_oM/BHoM-Structural-Conventions/", DocumentationType.Documentation)]
         public static bool IsVertical(this Line line)
@@ -62,7 +62,3 @@ namespace BH.Engine.Geometry
         /***************************************************/
     }
 }
-
-
-
-

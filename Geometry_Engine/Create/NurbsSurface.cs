@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -25,6 +25,7 @@ using BH.oM.Base.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ComponentModel;
 
 namespace BH.Engine.Geometry
 {
@@ -35,6 +36,12 @@ namespace BH.Engine.Geometry
         /***************************************************/
 
         [NotImplemented]
+        [Description("Creates a random NurbsSurface for testing purposes. This method is not yet implemented.")]
+        [Input("rnd", "Random number generator to use for creating the surface.")]
+        [Input("box", "Optional bounding box to constrain the random surface within. If null, a default bounding box will be used.")]
+        [Input("minNbCPs", "Minimum number of control points to generate in each direction. Must be at least 4.", typeof(int))]
+        [Input("maxNbCPs", "Maximum number of control points to generate in each direction. Must be greater than minNbCPs.", typeof(int))]
+        [Output("surface", "A randomly generated NurbsSurface. Currently throws NotImplementedException.")]
         public static NurbsSurface RandomNurbsSurface(Random rnd, BoundingBox box = null, int minNbCPs = 4, int maxNbCPs = 20)
         {
             throw new NotImplementedException();
@@ -43,6 +50,3 @@ namespace BH.Engine.Geometry
         /***************************************************/
     }
 }
-
-
-

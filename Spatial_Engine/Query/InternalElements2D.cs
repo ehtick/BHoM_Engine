@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -34,7 +34,7 @@ namespace BH.Engine.Spatial
         /****            IElement2D            ****/
         /******************************************/
 
-        [Description("Queries the IElement2Ds internal IElement2Ds. Returns a empty list for objects without definied internal elements")]
+        [Description("Queries the IElement2Ds internal IElement2Ds. Returns an empty list for objects without defined internal elements.")]
         [Input("element2D", "The IElement2D to get the internal IElement2Ds from.")]
         [Output("element2D", "A list of the IElement2Ds internal elements.")]
         public static List<IElement2D> IInternalElements2D(this IElement2D element2D)
@@ -47,6 +47,7 @@ namespace BH.Engine.Spatial
         /******************************************/
     }
 }
+
 
 
 

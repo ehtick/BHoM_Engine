@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -21,8 +21,11 @@
  */
 
 using BH.oM.Geometry;
+using BH.oM.Base.Attributes;
+using BH.oM.Quantities.Attributes;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace BH.Engine.Geometry
 {
@@ -32,6 +35,11 @@ namespace BH.Engine.Geometry
         /**** Public  Methods                           ****/
         /***************************************************/
 
+        [Description("Finds the closest distance between two collections of Points.")]
+        [Input("ptsA", "The first collection of Points.")]
+        [Input("ptsB", "The second collection of Points.")]
+        [Input("tolerance", "The tolerance for distance calculations.", typeof(Length))]
+        [Output("distance", "The closest distance between any two points from the collections.", typeof(Length))]
         public static double ClosestDistance(this IEnumerable<Point> ptsA, IEnumerable<Point> ptsB, double tolerance = Tolerance.Distance)
         {
             double sqTol = tolerance * tolerance;
@@ -52,8 +60,3 @@ namespace BH.Engine.Geometry
         /***************************************************/
     }
 }
-
-
-
-
-

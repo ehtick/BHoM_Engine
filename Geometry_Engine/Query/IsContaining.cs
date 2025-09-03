@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -765,6 +765,7 @@ namespace BH.Engine.Geometry
         [Input("pointLists", "The List of Lists of points to check to see if each List of points are contained within the bounds of the panels.")]
         [Input("acceptOnEdges", "Decide whether to allow the points to sit on the edge of the panel, default false.")]
         [Input("acceptPartialContainment", "Decide whether to allow some of the points to sit outside the panels as long as at least one is within them.")]
+        [Input("tolerance", "Distance tolerance for the containment check.", typeof(Length))]
         [Output("isContaining", "True if the points of each sublist are contained within the bounds of the panels, false if it is not for each sublist of points provided.")]
         public static List<bool> IsContaining(this List<Polyline> closedVolume, List<List<Point>> pointLists, bool acceptOnEdges = false, bool acceptPartialContainment = false, double tolerance = BH.oM.Geometry.Tolerance.Distance)
         {
@@ -943,6 +944,3 @@ namespace BH.Engine.Geometry
         /***************************************************/
     }
 }
-
-
-

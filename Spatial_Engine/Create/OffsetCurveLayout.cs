@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -37,7 +37,7 @@ namespace BH.Engine.Spatial
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Creates an offseet curve layout.")]
+        [Description("Creates an offset curve layout.")]
         [InputFromProperty("offset")]
         [Output("curveLayout", "Created offset curve layout.")]
         public static OffsetCurveLayout OffsetCurveLayout(double offset = 0)
@@ -48,6 +48,7 @@ namespace BH.Engine.Spatial
         /***************************************************/
     }
 }
+
 
 
 

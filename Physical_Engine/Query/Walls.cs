@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -40,9 +40,9 @@ namespace BH.Engine.Physical
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Returns a collection of Physical Walls from a list of generic BHoM objects")]
-        [Input("bhomObjects", "A collection of generic BHoM objects")]
-        [Output("walls", "A collection of Physical Wall objects")]
+        [Description("Returns a collection of Physical Walls from a list of generic BHoM objects.")]
+        [Input("bhomObjects", "A collection of generic BHoM objects.")]
+        [Output("walls", "A collection of Physical Wall objects.")]
         public static List<Wall> Walls(this List<IBHoMObject> bhomObjects)
         {
             bhomObjects = bhomObjects.ObjectsByType(typeof(Wall));
@@ -54,6 +54,7 @@ namespace BH.Engine.Physical
         }
     }
 }
+
 
 
 

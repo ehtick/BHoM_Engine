@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -21,6 +21,8 @@
  */
 
 using BH.oM.Geometry;
+using BH.oM.Base.Attributes;
+using BH.oM.Quantities.Attributes;
 using System;
 using System.ComponentModel;
 using System.Collections.Generic;
@@ -34,6 +36,10 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
+        [Description("Gets the Line segment of a Polyline that the specified Point lies on.")]
+        [Input("pline", "The Polyline to search for the containing segment.")]
+        [Input("pt", "The Point to find the containing segment for.")]
+        [Output("segment", "The Line segment that contains the Point, or an empty Line if no segment contains the Point.")]
         public static Line GetLineSegment(this Polyline pline, Point pt)
         {
             List<Line> pLineSegments = pline.SubParts();
@@ -51,7 +57,3 @@ namespace BH.Engine.Geometry
         /***************************************************/
     }
 }
-
-
-
-

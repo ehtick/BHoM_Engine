@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -50,9 +50,9 @@ namespace BH.Engine.Environment
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Returns a collection of Environment Panels from a list of generic BHoM objects")]
-        [Input("bhomObjects", "A collection of generic BHoM objects")]
-        [Output("panels", "A collection of Environment Panel objects")]
+        [Description("Returns a collection of Environment Panels from a list of generic BHoM objects.")]
+        [Input("bhomObjects", "A collection of generic BHoM objects.")]
+        [Output("panels", "A collection of Environment Panel objects.")]
         public static List<Panel> Panels(this List<IBHoMObject> bhomObjects)
         {
             bhomObjects = bhomObjects.ObjectsByType(typeof(Panel));
@@ -64,6 +64,7 @@ namespace BH.Engine.Environment
         }
     }
 }
+
 
 
 

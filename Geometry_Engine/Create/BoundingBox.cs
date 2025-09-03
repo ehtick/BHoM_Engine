@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -49,6 +49,9 @@ namespace BH.Engine.Geometry
         /***************************************************/
 
         [Description("Creates a bounding box based on a centre point and vector controling the extents of the bounding box.")]
+        [Input("centre", "The centre point of the bounding box.")]
+        [Input("extent", "The vector controlling the extents of the bounding box.")]
+        [Output("boundingBox", "The created BoundingBox.")]
         public static BoundingBox BoundingBox(Point centre, Vector extent)
         {
             //TODO: SHould this be changed to
@@ -122,8 +125,3 @@ namespace BH.Engine.Geometry
         /***************************************************/
     }
 }
-
-
-
-
-

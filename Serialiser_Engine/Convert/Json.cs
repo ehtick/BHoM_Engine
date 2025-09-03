@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -39,9 +39,9 @@ namespace BH.Engine.Serialiser
         /**** Public Methods                    ****/
         /*******************************************/
 
-        [Description("Convert a BHoM object To a Json string")]
-        [Input("obj", "Object to be converted")]
-        [Output("json", "String representing the object in json")]
+        [Description("Convert a BHoM object to a Json string.")]
+        [Input("obj", "Object to be converted.")]
+        [Output("json", "String representing the object in json.")]
         public static string ToJson(this object obj)
         {
             if (obj == null)
@@ -59,9 +59,9 @@ namespace BH.Engine.Serialiser
 
         /*******************************************/
 
-        [Description("Convert a Json string to a BHoMObject")]
-        [Input("json", "String representing the object in json")]
-        [Output("obj", "Object recovered from the Json string")]
+        [Description("Convert a Json string to a BHoMObject.")]
+        [Input("json", "String representing the object in json.")]
+        [Output("obj", "Object recovered from the Json string.")]
         public static object FromJson(string json)
         {
             if (string.IsNullOrWhiteSpace(json))
@@ -140,6 +140,7 @@ namespace BH.Engine.Serialiser
         /*******************************************/
     }
 }
+
 
 
 

@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -36,7 +36,7 @@ namespace BH.Engine.Library
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Validates that the provided string is a valid full library path, and atempts to upgrade the path if it is not. Returns the input path if valid, or failing to upgrade. Returns the upgraded path if an upgrade is possible.")]
+        [Description("Validates that the provided string is a valid full library path, and attempts to upgrade the path if it is not. Returns the input path if valid, or failing to upgrade. Returns the upgraded path if an upgrade is possible.")]
         [Input("fullLibraryName", "The full library path to the particular Library to validate. Only full paths supported, not super paths or partial paths to libraries.")]
         [Output("path", "Returns the input path if valid or failing to upgrade. Returns the upgraded path if able to upgrade.")]
         public static string ValidatePath(this string fullLibraryName, string versionFrom = "")
@@ -99,5 +99,6 @@ namespace BH.Engine.Library
         /***************************************************/
     }
 }
+
 
 

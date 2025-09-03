@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -50,9 +50,9 @@ namespace BH.Engine.Environment
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Returns a collection of unique Environment Panels from a list of panels representing spaces")]
-        [Input("panelsAsSpaces", "A collection of Environment Panels that represent spaces")]
-        [Output("uniquePanels", "A collection of Environment Panel without duplicates")]
+        [Description("Returns a collection of unique Environment Panels from a list of panels representing spaces.")]
+        [Input("panelsAsSpaces", "A collection of Environment Panels that represent spaces.")]
+        [Output("uniquePanels", "A collection of Environment Panel without duplicates.")]
         public static List<Panel> UniquePanels(this List<List<Panel>> panelsAsSpaces)
         {
             List<Panel> rtn = new List<Panel>();
@@ -71,6 +71,7 @@ namespace BH.Engine.Environment
         }
     }
 }
+
 
 
 

@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -21,10 +21,12 @@
  */
 
 using BH.Engine.Base;
-using BH.oM.Geometry;
 using BH.oM.Base.Attributes;
+using BH.oM.Geometry;
+using BH.oM.Quantities.Attributes;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace BH.Engine.Geometry
@@ -35,6 +37,11 @@ namespace BH.Engine.Geometry
         /**** Public Methods - Curves                   ****/
         /***************************************************/
 
+        [Description("Returns a polyline approximation of the arc using the specified angle tolerance and maximum segment count.")]
+        [Input("curve", "The arc to collapse to a polyline.")]
+        [Input("angleTolerance", "The maximum angle between segments.", typeof(Angle))]
+        [Input("maxSegmentCount", "The maximum number of segments allowed.")]
+        [Output("polyline", "The resulting polyline approximation.")]
         public static Polyline CollapseToPolyline(this Arc curve, double angleTolerance, int maxSegmentCount = 100)
         {
             return new Polyline { ControlPoints = curve.CollapseToPolylineVertices(angleTolerance, maxSegmentCount) };
@@ -42,6 +49,11 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Returns a polyline approximation of the circle using the specified angle tolerance and maximum segment count.")]
+        [Input("curve", "The circle to collapse to a polyline.")]
+        [Input("angleTolerance", "The maximum angle between segments.", typeof(Angle))]
+        [Input("maxSegmentCount", "The maximum number of segments allowed.")]
+        [Output("polyline", "The resulting polyline approximation.")]
         public static Polyline CollapseToPolyline(this Circle curve, double angleTolerance, int maxSegmentCount = 100)
         {
             return new Polyline { ControlPoints = curve.CollapseToPolylineVertices(angleTolerance, maxSegmentCount) };
@@ -49,6 +61,11 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Returns a polyline representation of the line.")]
+        [Input("curve", "The line to collapse to a polyline.")]
+        [Input("angleTolerance", "The maximum angle between segments (not used for lines).", typeof(Angle))]
+        [Input("maxSegmentCount", "The maximum number of segments allowed (not used for lines).")]
+        [Output("polyline", "The resulting polyline.")]
         public static Polyline CollapseToPolyline(this Line curve, double angleTolerance, int maxSegmentCount = 100)
         {
             return new Polyline { ControlPoints = curve.CollapseToPolylineVertices(angleTolerance, maxSegmentCount) };
@@ -56,6 +73,11 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Returns a copy of the polyline.")]
+        [Input("curve", "The polyline to copy.")]
+        [Input("angleTolerance", "The maximum angle between segments (not used for polylines).", typeof(Angle))]
+        [Input("maxSegmentCount", "The maximum number of segments allowed (not used for polylines).")]
+        [Output("polyline", "The resulting polyline.")]
         public static Polyline CollapseToPolyline(this Polyline curve, double angleTolerance, int maxSegmentCount = 100)
         {
             return new Polyline { ControlPoints = curve.ControlPoints.ToList() };
@@ -63,6 +85,11 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Returns a polyline approximation of the polycurve by collapsing each sub-curve and joining the results.")]
+        [Input("curve", "The polycurve to collapse to a polyline.")]
+        [Input("angleTolerance", "The maximum angle between segments.", typeof(Angle))]
+        [Input("maxSegmentCount", "The maximum number of segments allowed.")]
+        [Output("polyline", "The resulting polyline approximation.")]
         public static Polyline CollapseToPolyline(this PolyCurve curve, double angleTolerance, int maxSegmentCount = 100)
         {
             List<Point> controlPoints = new List<Point> { curve.StartPoint() };
@@ -75,6 +102,11 @@ namespace BH.Engine.Geometry
         /**** Public Methods - Interfaces               ****/
         /***************************************************/
 
+        [Description("Returns a polyline approximation of the curve using the specified angle tolerance and maximum segment count. Used for interface-based dispatch.")]
+        [Input("curve", "The curve to collapse to a polyline.")]
+        [Input("angleTolerance", "The maximum angle between segments.", typeof(Angle))]
+        [Input("maxSegmentCount", "The maximum number of segments allowed.")]
+        [Output("polyline", "The resulting polyline approximation.")]
         public static Polyline ICollapseToPolyline(this ICurve curve, double angleTolerance, int maxSegmentCount = 100)
         {
             return CollapseToPolyline(curve as dynamic, angleTolerance, maxSegmentCount);
@@ -171,6 +203,3 @@ namespace BH.Engine.Geometry
         /***************************************************/
     }
 }
-
-
-

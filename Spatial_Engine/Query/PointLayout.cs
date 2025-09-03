@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -351,7 +351,7 @@ namespace BH.Engine.Spatial
                 case oM.Spatial.Layouts.ReferencePoint.BottomRight:
                     return new Point { X = bounds.Max.X, Y = bounds.Min.Y };
                 case oM.Spatial.Layouts.ReferencePoint.MiddleLeft:
-                    return new Point { X = bounds.Min.X, Y = bounds.Min.Y };
+                    return new Point { X = bounds.Min.X, Y = (bounds.Min.Y + bounds.Max.Y) / 2 };
                 case oM.Spatial.Layouts.ReferencePoint.MiddleCenter:
                     return bounds.Centre();
                 case oM.Spatial.Layouts.ReferencePoint.MiddleRight:
@@ -477,6 +477,7 @@ namespace BH.Engine.Spatial
         /***************************************************/
     }
 }
+
 
 
 

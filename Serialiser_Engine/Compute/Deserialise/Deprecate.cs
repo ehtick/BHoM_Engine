@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -62,7 +62,7 @@ namespace BH.Engine.Serialiser
                 Engine.Base.Compute.RecordError($"The type {doc["_t"]} from version {(string.IsNullOrEmpty(version) ? "unknown" : version)} is unknown -> data returned as custom objects.");
 
             CustomObject customObj = DeserialiseCustomObject(doc, null, "", true);
-            customObj.CustomData["_t"] = doc["_t"];
+            customObj.CustomData["_t"] = doc["_t"].ToString();
             customObj.CustomData["_bhomVersion"] = version;
             return customObj;
         }
@@ -91,4 +91,5 @@ namespace BH.Engine.Serialiser
         /*******************************************/
     }
 }
+
 

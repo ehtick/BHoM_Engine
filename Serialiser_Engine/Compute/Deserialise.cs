@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -38,7 +38,7 @@ namespace BH.Engine.Serialiser
         /**** Public Methods                    ****/
         /*******************************************/
 
-        [Description("Used to support FromJson, not recomended to be used in isolation.")]
+        [Description("Used to support FromJson, not recommended to be used in isolation.")]
         public static object IDeserialise(this BsonValue bson)
         {
             return IDeserialise(bson, "", false);
@@ -124,6 +124,8 @@ namespace BH.Engine.Serialiser
                     return DeserialiseLong(bson);
                 case "System.UInt32": // unsigned integer (uint)
                     return DeserialiseUnsignedInteger(bson);
+                case "System.Numerics.Complex":
+                    return DeserialiseComplex(bson);
                 case "System.IntPtr":
                     return DeserialiseIntPtr(bson);
                 case "System.Object":
@@ -278,5 +280,6 @@ namespace BH.Engine.Serialiser
         /*******************************************/
     }
 }
+
 
 

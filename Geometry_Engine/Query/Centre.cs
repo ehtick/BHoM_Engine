@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -22,7 +22,9 @@
 
 using BH.oM.Geometry;
 using BH.oM.Base.Attributes;
+using BH.oM.Quantities.Attributes;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace BH.Engine.Geometry
 {
@@ -32,6 +34,10 @@ namespace BH.Engine.Geometry
         /**** Curves                                    ****/
         /***************************************************/
 
+        [Description("Gets the centre Point of an Arc.")]
+        [Input("arc", "The Arc to get the centre of.")]
+        [Input("tolerance", "The tolerance for the calculation.", typeof(Length))]
+        [Output("centre", "The centre Point of the Arc.")]
         public static Point Centre(this Arc arc, double tolerance = Tolerance.Distance)
         {
             return arc.CoordinateSystem.Origin;
@@ -41,6 +47,9 @@ namespace BH.Engine.Geometry
         /**** Surfaces                                    ****/
         /***************************************************/
 
+        [Description("Gets the centre Point of a BoundingBox.")]
+        [Input("box", "The BoundingBox to get the centre of.")]
+        [Output("centre", "The centre Point of the BoundingBox.")]
         public static Point Centre(this BoundingBox box)
         {
             return new Point { X = (box.Max.X + box.Min.X) / 2, Y = (box.Max.Y + box.Min.Y) / 2, Z = (box.Max.Z + box.Min.Z) / 2 };
@@ -50,6 +59,9 @@ namespace BH.Engine.Geometry
         /**** Mesh                                      ****/
         /***************************************************/
 
+        [Description("Gets the centre Points of all faces in a Mesh.")]
+        [Input("mesh", "The Mesh to get the face centres from.")]
+        [Output("centres", "The centre Points of all faces in the Mesh.")]
         public static List<Point> Centres(this Mesh mesh)
         {
             List<Face> faces = mesh.Faces;
@@ -77,8 +89,3 @@ namespace BH.Engine.Geometry
         /***************************************************/
     }
 }
-
-
-
-
-

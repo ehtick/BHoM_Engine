@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -21,7 +21,10 @@
  */
 
 using BH.oM.Geometry;
+using BH.oM.Base.Attributes;
+using BH.oM.Quantities.Attributes;
 using System;
+using System.ComponentModel;
 using System.Linq;
 
 namespace BH.Engine.Geometry
@@ -31,6 +34,13 @@ namespace BH.Engine.Geometry
         /***************************************************/
         /**** Public Methods                            ****/
         /***************************************************/
+        
+        [Description("Creates a Torus with the specified centre, axis, major radius, and minor radius.")]
+        [Input("centre", "The centre point of the torus.")]
+        [Input("axis", "The axis vector defining the torus's orientation.")]
+        [Input("radiusMajor", "The major radius of the torus (distance from centre to tube centre).", typeof(Length))]
+        [Input("radiusMinor", "The minor radius of the torus (radius of the tube).", typeof(Length))]
+        [Output("torus", "The created Torus.")]
         public static Torus Torus(Point centre, Vector axis, double radiusMajor = 0.0, double radiusMinor = 0.0)
         {
             return new Torus
@@ -46,8 +56,3 @@ namespace BH.Engine.Geometry
 
     }
 }
-
-
-
-
-

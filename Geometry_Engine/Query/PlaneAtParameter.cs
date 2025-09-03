@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -22,10 +22,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using BH.oM.Geometry;
- 
 using BH.oM.Base.Attributes;
+using BH.oM.Quantities.Attributes;
 
 namespace BH.Engine.Geometry
 {
@@ -35,6 +36,12 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
+        [Description("Gets the plane at a specific UV parameter location on a NurbsSurface.")]
+        [Input("surface", "The NurbsSurface to evaluate.")]
+        [Input("u", "The U parameter (0 to 1).")]
+        [Input("v", "The V parameter (0 to 1).")]
+        [Input("tolerance", "The tolerance for surface evaluation.", typeof(Length))]
+        [Output("planeAtParameter", "The plane at the specified UV parameter location.")]
         public static Plane PlaneAtParameter(this NurbsSurface surface, double u, double v, double tolerance = Tolerance.Distance)
         {
             var vectors = TangentAtParameter(surface, u, v, tolerance);
@@ -48,8 +55,3 @@ namespace BH.Engine.Geometry
 
     }
 }
-
-
-
-
-

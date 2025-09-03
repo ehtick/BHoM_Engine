@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -21,7 +21,10 @@
  */
 
 using BH.oM.Geometry;
+using BH.oM.Base.Attributes;
+using BH.oM.Quantities.Attributes;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace BH.Engine.Geometry
 {
@@ -31,6 +34,11 @@ namespace BH.Engine.Geometry
         /**** Public Methods - BoundingBox              ****/
         /***************************************************/
 
+        [Description("Checks if two BoundingBoxes overlap or intersect within the given tolerance.")]
+        [Input("box1", "The first BoundingBox to check.")]
+        [Input("box2", "The second BoundingBox to check.")]
+        [Input("tolerance", "The tolerance for the range check.", typeof(Length))]
+        [Output("result", "True if the BoundingBoxes are in range (overlapping), false otherwise.")]
         public static bool IsInRange(this BoundingBox box1, BoundingBox box2, double tolerance = Tolerance.Distance)
         {
             return (box1.Min.X <= box2.Max.X + tolerance && box2.Min.X <= box1.Max.X + tolerance &&
@@ -43,6 +51,11 @@ namespace BH.Engine.Geometry
         /**** Public Methods - Point                    ****/
         /***************************************************/
 
+        [Description("Checks if a Point is within the range of a BoundingBox.")]
+        [Input("point", "The Point to check.")]
+        [Input("box", "The BoundingBox to check against.")]
+        [Input("tolerance", "The tolerance for the range check.", typeof(Length))]
+        [Output("result", "True if the Point is within the BoundingBox range, false otherwise.")]
         public static bool IsInRange(this Point point, BoundingBox box, double tolerance = Tolerance.Distance)
         {
             return box.IsContaining(point, true, tolerance);
@@ -53,6 +66,11 @@ namespace BH.Engine.Geometry
         /**** Public Methods - Curve                    ****/
         /***************************************************/
 
+        [Description("Checks if any part of a curve is within the range of a BoundingBox.")]
+        [Input("curve", "The ICurve to check.")]
+        [Input("box", "The BoundingBox to check against.")]
+        [Input("tolerance", "The tolerance for the range check.", typeof(Length))]
+        [Output("result", "True if any part of the curve is within the BoundingBox range, false otherwise.")]
         public static bool IsInRange(this ICurve curve, BoundingBox box, double tolerance = Tolerance.Distance)
         {
             if (box.IsContaining(curve.IStartPoint()) || box.IsContaining(curve.IEndPoint()))
@@ -83,8 +101,3 @@ namespace BH.Engine.Geometry
         /***************************************************/
     }
 }
-
-
-
-
-

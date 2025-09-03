@@ -1,6 +1,6 @@
-/*
+﻿/*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -20,42 +20,38 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.oM.Analytical.Elements;
-using BH.oM.Geometry;
 using BH.oM.Base.Attributes;
-using BH.Engine.Geometry;
-using BH.Engine.Reflection;
-
-using System;
+using BH.oM.Verification;
 using System.Collections.Generic;
-using System.Linq;
 using System.ComponentModel;
 
-namespace BH.Engine.Analytical
+namespace BH.Engine.Verification
 {
     public static partial class Query
     {
         /***************************************************/
-        /**** Public Methods                            ****/
+        /****              Public Methods               ****/
         /***************************************************/
 
-        [Description("Determines whether a Panel's outline is triangular.")]
-        [Input("panel", "The IPanel to check if the outline is a triangular.")]
-        [Output("bool", "True for Panels with a triangular outline or false for Panels with a non-triangular outline.")]
-        public static bool IsOutlineTriangular<TEdge, TOpening>(this IPanel<TEdge, TOpening> panel)
-            where TEdge : IEdge
-            where TOpening : IOpening<TEdge>
+        [Description("Checks whether the provided " + nameof(ValueComparisonType) + " can be applied in equality comparisons.")]
+        [Input("comparisonType", nameof(ValueComparisonType) + " to check against applicability in equality comparisons.")]
+        [Output("isEquality", "True if the input " + nameof(ValueComparisonType) + " can be applied in equality comparisons, otherwise false.")]
+        public static bool IsEqualityComparisonType(this ValueComparisonType comparisonType)
         {
-            PolyCurve polycurve = ExternalPolyCurve(panel);
-
-            return polycurve.IsTriangular();
-
+            return m_EqualityComparisonTypes.Contains(comparisonType);
         }
 
+
+        /***************************************************/
+        /****              Private Methods              ****/
         /***************************************************/
 
+        private static readonly HashSet<ValueComparisonType> m_EqualityComparisonTypes = new HashSet<ValueComparisonType>
+        {
+            ValueComparisonType.EqualTo,
+            ValueComparisonType.NotEqualTo
+        };
+
+        /***************************************************/
     }
 }
-
-
-

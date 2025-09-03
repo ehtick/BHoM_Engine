@@ -1,6 +1,6 @@
-﻿/*
+/*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -51,7 +51,7 @@ namespace BH.Engine.Geometry
             double[,] Q = Identity(n);
             double[] S = new double[n];
 
-            // Initialize the rotation counter and the sweep counter
+            // Initialise the rotation counter and the sweep counter
             int count = 1;
             int sweep = 0;
 
@@ -72,7 +72,7 @@ namespace BH.Engine.Geometry
             // Orthogonalize A by plane rotations
             while (count > 0 && sweep < sweepmax)
             {
-                // Initialize rotation counter
+                // Initialise rotation counter
                 count = n * (n - 1) / 2;
 
                 for (int j = 0; j < n - 1; j++)

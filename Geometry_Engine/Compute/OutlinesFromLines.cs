@@ -1,6 +1,6 @@
-﻿/*
+/*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -38,10 +38,10 @@ namespace BH.Engine.Geometry
         /****              Public Methods               ****/
         /***************************************************/
 
-        [Description("Combines an unordered set of lines and turns them into closed cells, e.g. mesh edges will be combined into a set of outlines each representing one mesh cell.")]
-        [Input("lines", "Unordered set of lines to turn into closed cells.")]
+        [Description("Combines an unordered set of Lines and turns them into closed cells, e.g. Mesh edges will be combined into a set of outlines each representing one Mesh cell.")]
+        [Input("lines", "Unordered set of Lines to turn into closed cells.")]
         [Input("distanceTolerance", "Tolerance to use for geometrical processing.")]
-        [Output("outlines", "Closed outines created from the input lines.")]
+        [Output("closedOutlines", "Closed outlines created by combining the input Lines into cells.")]
         public static List<Polyline> OutlinesFromLines(this List<Line> lines, double distanceTolerance = Tolerance.Distance)
         {
             if (lines == null)

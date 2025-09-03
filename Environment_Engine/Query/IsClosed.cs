@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -39,10 +39,10 @@ namespace BH.Engine.Environment
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Determines whether the space is closed by ensuring all edges are connected to other elements")]
-        [Input("panels", "The collection of Environment Panels that represent the space to check")]
+        [Description("Determines whether the space is closed by ensuring all edges are connected to other elements.")]
+        [Input("panels", "The collection of Environment Panels that represent the space to check.")]
         [Input("tolerance", "The tolerance for determining whether the panels are intersecting.")]
-        [Output("isClosed", "True if the space is closed, false otherwise")]
+        [Output("isClosed", "True if the space is closed, false otherwise.")]
         public static bool IsClosed(this List<Panel> panels, double tolerance = Tolerance.Distance)
         {
             //Check that each edge is connected to at least one other edge
@@ -62,6 +62,7 @@ namespace BH.Engine.Environment
         }
     }
 }
+
 
 
 

@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -37,7 +37,7 @@ namespace BH.Engine.Spatial
 
         [Description("Maps the positions of a TaperedProfile to a domain of 0 and 1.")]
         [Input("taperedProfile", "The TaperedProfile to modify the position domain.")]
-        [Output("taperedProfile", "TaperedProfile with a position domain of 0 and 1")]
+        [Output("taperedProfile", "TaperedProfile with a position domain of 0 and 1.")]
         public static TaperedProfile MapPositionDomain(this TaperedProfile taperedProfile)
         {
             TaperedProfile newTaperedProfile = null;
@@ -57,6 +57,7 @@ namespace BH.Engine.Spatial
         }
     }
 }
+
 
 
 

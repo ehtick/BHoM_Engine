@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -20,13 +20,12 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.oM.Geometry;
-
-using System.Collections.Generic;
-using System.Linq;
-
 using BH.oM.Base.Attributes;
+using BH.oM.Geometry;
+using BH.oM.Quantities.Attributes;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 
 namespace BH.Engine.Geometry
 {
@@ -36,10 +35,12 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Returns a polyline defined by the points which result in deviations from a straight line only. For example, if a polyline has 3 points in a straight line, the middle point is removed as part of this cleaning process")]
-        [Input("polyline", "The polyline you wish to clean by removing unnecessary points")]
-        [Input("smallestAcceptableAngle", "The tolerance of the angle that defines a straight line. Default is set to the value defined by BH.oM.Geometry.Tolerance.Angle")]
-        [Output("polyline", "The cleaned polyline")]        
+        [Description("Returns a polyline defined by the points which result in deviations from a straight line only. For example, if a polyline has 3 points in a straight line, the middle point is removed as part of this cleaning process.")]
+        [Input("polyline", "The polyline you wish to clean by removing unnecessary points.")]
+        [Input("smallestAcceptableAngle", "The tolerance of the angle that defines a straight line. Default is set to the value defined by BH.oM.Geometry.Tolerance.Angle.")]
+        [Input("angleTolerance", "Angle tolerance for the operation.", typeof(Angle))]
+        [Input("distanceTolerance", "Distance tolerance for the operation.", typeof(Length))]
+        [Output("polyline", "The cleaned polyline.")]        
         public static Polyline RemoveLeastSignificantVertices(this Polyline polyline, double smallestAcceptableAngle = Tolerance.Angle, double angleTolerance = Tolerance.Angle, double distanceTolerance = Tolerance.Distance)
         {           
             List<Point> pnts = polyline.DiscontinuityPoints(distanceTolerance, angleTolerance);
@@ -91,10 +92,3 @@ namespace BH.Engine.Geometry
         /***************************************************/
     }    
 }
-
-
-
-
-
-
-

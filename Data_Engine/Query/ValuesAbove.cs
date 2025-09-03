@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -36,7 +36,7 @@ namespace BH.Engine.Data
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Gets all table rows with values exeeding the values provided. Values returned as CustomObjects")]
+        [Description("Gets all table rows with values exceeding the values provided. Values returned as CustomObjects.")]
         [Input("table", "The table to extract values from")]
         [Input("axes", "The axis of the table to match values for")]
         [Input("values", "The value of the axis to match with")]
@@ -58,7 +58,7 @@ namespace BH.Engine.Data
 
         /***************************************************/
 
-        [Description("Gets all table rows with values exeeding the values provided sorted by the sortAxis. Values returned as CustomObjects")]
+        [Description("Gets all table rows with values exceeding the values provided sorted by the sortAxis. Values returned as CustomObjects.")]
         [Input("table", "The table to extract values from")]
         [Input("axes", "The axis of the table to match values for")]
         [Input("values", "The value of the axis to match with")]
@@ -104,6 +104,7 @@ namespace BH.Engine.Data
         /***************************************************/
     }
 }
+
 
 
 

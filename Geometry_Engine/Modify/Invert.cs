@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -20,7 +20,9 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.oM.Base.Attributes;
 using BH.oM.Geometry;
+using System.ComponentModel;
 
 namespace BH.Engine.Geometry
 {
@@ -30,6 +32,9 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
+        [Description("Returns the inverse of the given transformation matrix.")]
+        [Input("transform", "The transformation matrix to invert.")]
+        [Output("inverse", "The inverted transformation matrix.")]
         public static TransformMatrix Invert(this TransformMatrix transform)
         {
             double[,] m = transform.Matrix;
@@ -65,8 +70,3 @@ namespace BH.Engine.Geometry
         /***************************************************/
     }
 }
-
-
-
-
-

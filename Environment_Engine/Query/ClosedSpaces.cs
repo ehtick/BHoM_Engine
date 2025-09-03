@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -44,9 +44,9 @@ namespace BH.Engine.Environment
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Returns a nested collection of Environment Panels that represent fully closed spaces")]
-        [Input("panelsAsSpaces", "A nested collection of Environment Panels representing spaces")]
-        [Output("panelsAsSpaces", "A nested collection of Environment Panels that represent fully closed spaces")]
+        [Description("Returns a nested collection of Environment Panels that represent fully closed spaces.")]
+        [Input("panelsAsSpaces", "A nested collection of Environment Panels representing spaces.")]
+        [Output("panelsAsSpaces", "A nested collection of Environment Panels that represent fully closed spaces.")]
         public static List<List<Panel>> ClosedSpaces(this List<List<Panel>> panelsAsSpaces)
         {
             List<List<Panel>> closedSpaces = new List<List<Panel>>();
@@ -61,6 +61,7 @@ namespace BH.Engine.Environment
         }
     }
 }
+
 
 
 

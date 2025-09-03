@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -34,9 +34,9 @@ namespace BH.Engine.Reflection
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Returns the constraint type from a generic type")]
-        [Input("genericType", "The generic type. Type is generic if Type.IsGenericParameter or Type.ContrainsGenericparameters is true")]
-        [Output("type", "The specific type constructed from the generic one")]
+        [Description("Returns the constraint type from a generic type.")]
+        [Input("genericType", "The generic type. Type is generic if Type.IsGenericParameter or Type.ContrainsGenericparameters is true.")]
+        [Output("type", "The specific type constructed from the generic one.")]
         public static Type MakeFromGeneric(this Type genericType)
         {
             if(genericType == null)
@@ -67,9 +67,9 @@ namespace BH.Engine.Reflection
 
         /***************************************************/
 
-        [Description("Replaces the generic parameters with parameters whose type is their constraint, and returns a new MethodInfo from those")]
-        [Input("genericMethod", "The generic method. Method is generic if MethodInfo.ContainsGenericParameter is true")]
-        [Output("method", "The specific method constructed from the generic one")]
+        [Description("Replaces the generic parameters with parameters whose type is their constraint, and returns a new MethodInfo from those.")]
+        [Input("genericMethod", "The generic method. Method is generic if MethodInfo.ContainsGenericParameter is true.")]
+        [Output("method", "The specific method constructed from the generic one.")]
         public static MethodInfo MakeFromGeneric(this MethodInfo genericMethod)
         {
             if(genericMethod == null)
@@ -88,6 +88,7 @@ namespace BH.Engine.Reflection
         }
     }
 }
+
 
 
 

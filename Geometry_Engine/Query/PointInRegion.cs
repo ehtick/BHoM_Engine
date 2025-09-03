@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -22,8 +22,10 @@
 
 using BH.oM.Geometry;
 using BH.oM.Base.Attributes;
+using BH.oM.Quantities.Attributes;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace BH.Engine.Geometry
 {
@@ -33,6 +35,11 @@ namespace BH.Engine.Geometry
         /**** Public Methods - Curves                   ****/
         /***************************************************/
 
+        [Description("Finds a semi-arbitrary Point that lies within the region defined by a closed curve.")]
+        [Input("curve", "The closed ICurve defining the region.")]
+        [Input("acceptOnEdge", "Whether a point that lies on the edge of the region is considered valid.")]
+        [Input("tolerance", "The tolerance for containment checks.", typeof(Length))]
+        [Output("interiorPoint", "A Point within the region, or null if no valid point is found.")]
         public static Point PointInRegion(this ICurve curve, bool acceptOnEdge = false, double tolerance = Tolerance.Distance)
         {
             Point point = curve.ICentroid(tolerance);
@@ -67,7 +74,3 @@ namespace BH.Engine.Geometry
         /***************************************************/
     }
 }
-
-
-
-

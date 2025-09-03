@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -35,7 +35,7 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Curvature of the NurbsCurve at the parameter t, where t is a normalised parameter. Points towards the center of a fitted circle at the parameter with a magnitude equal to the inverse of the circles radius.")]
+        [Description("Curvature of the NurbsCurve at the parameter t, where t is a normalised parameter. Points towards the centre of a fitted circle at the parameter with a magnitude equal to the inverse of the circles radius.")]
         [Input("curve", "Curve to evaluate.")]
         [Input("t", "Parameter to evaluate at. Should be between 0 and 1. For values outside the range, the closest value will be used.")]
         [Output("curvature", "Curvature of the NurbsCurve at the parameter t.")]
@@ -81,8 +81,3 @@ namespace BH.Engine.Geometry
 
     }
 }
-
-
-
-
-

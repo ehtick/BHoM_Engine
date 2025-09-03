@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -26,6 +26,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Numerics;
 using System.Reflection;
 
 namespace BH.Engine.Base
@@ -63,6 +64,10 @@ namespace BH.Engine.Base
                     return type;
 
                 type = System.Type.GetType(name);
+
+                if (type == null)
+                    type = System.Type.GetType(unQualifiedName);    //Fallback for when deserialising a type from a later net runtime to a lower net runtime. Can be critical when going between softwares of different net runtimes.
+
                 if (type == null && name.EndsWith("&"))
                 {
                     type = Type(name.TrimEnd(new char[] { '&' }), true);
@@ -94,6 +99,7 @@ namespace BH.Engine.Base
 
         private static Dictionary<string, Type> m_ExplicitSystemTypes = new Dictionary<string, Type>
         {
+            ["System.Numerics.Complex"] = typeof(System.Numerics.Complex),
             ["System.Drawing.Color"] = typeof(System.Drawing.Color),
             ["System.Text.RegularExpressions.Regex"] = typeof(System.Text.RegularExpressions.Regex),
             ["System.Drawing.Bitmap"] = typeof(System.Drawing.Bitmap),
@@ -105,6 +111,7 @@ namespace BH.Engine.Base
         /*******************************************/
     }
 }
+
 
 
 

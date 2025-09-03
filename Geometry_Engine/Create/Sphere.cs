@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -21,7 +21,10 @@
  */
 
 using BH.oM.Geometry;
+using BH.oM.Base.Attributes;
+using BH.oM.Quantities.Attributes;
 using System;
+using System.ComponentModel;
 using System.Linq;
 
 namespace BH.Engine.Geometry
@@ -32,6 +35,10 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
+        [Description("Creates a Sphere with the specified centre and radius.")]
+        [Input("centre", "The centre point of the sphere.")]
+        [Input("radius", "The radius of the sphere.", typeof(Length))]
+        [Output("sphere", "The created Sphere.")]
         public static Sphere Sphere(Point centre, double radius)
         {
             return new Sphere
@@ -42,8 +49,3 @@ namespace BH.Engine.Geometry
         }
     }
 }
-
-
-
-
-

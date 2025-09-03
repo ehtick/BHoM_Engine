@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -41,8 +41,8 @@ namespace BH.Engine.Geometry
 
         [Description("Checks if a Geometry is null and outputs relevant error message.")]
         [Input("geometry", "The Geometry to test for null.")]
-        [Input("methodName", "The name of the method to reference in the error message.")]
         [Input("msg", "Optional message to be returned in addition to the generated error message.")]
+        [Input("methodName", "The name of the method to reference in the error message.")]
         [Output("isNull", "True if the Geometry is null.")]
         public static bool IsNull(this IGeometry geometry, string msg = "", [CallerMemberName] string methodName = "")
         {
@@ -62,6 +62,3 @@ namespace BH.Engine.Geometry
 
     }
 }
-
-
-

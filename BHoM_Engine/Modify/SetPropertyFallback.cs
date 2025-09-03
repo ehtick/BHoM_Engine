@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -21,35 +21,50 @@
  */
 
 using System;
-using System.Linq;
 using System.Collections.Generic;
 using System.ComponentModel;
-using BH.oM.Base.Attributes;
+using System.Linq;
 using BH.oM.Base;
-using BH.oM.Geometry;
-using BH.oM.Data.Collections;
+using BH.oM.Base.Attributes;
 
-namespace BH.Engine.Data
+namespace BH.Engine.Base
 {
-    public static partial class Create
+    public static partial class Modify
     {
         /***************************************************/
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Create a leaf node for a DomainTree.")]
-        [Input("data", "The data to store in the DomainTree leaf.")]
-        [Input("domainBox", "A DomainBox that encompasses the data.")]
-        [Output("leaf", "A leaf node for a DomainTree.")]
-        public static DomainTree<T> DomainTreeLeaf<T>(T data, DomainBox domainBox)
+        [Description("Fallback method to set a property of a BHoM object. This will try to set the property either as a fragment or into CustomData.")]
+        [Input("obj", "Object to set the value for.")]
+        [Input("propertyName", "Name of the property to set the value of.")]
+        [Input("value", "New value of the property.")]
+        [Input("isSilent", "If true, no warning will be recorded when the property is set in CustomData.")]
+        [Output("result", "New object with its property changed to the new value.")]
+        public static IBHoMObject SetPropertyFallback(this IBHoMObject obj, string propertyName, object value, bool isSilent = false)
         {
-            return new DomainTree<T>() { Values = new List<T>() { data }, DomainBox = domainBox };
+            if (value is IFragment)
+            {
+                // Handle fragments
+                obj.Fragments.AddOrReplace(value as IFragment); 
+            }
+            else
+            {
+                // Otherwise add to custom data
+                obj.CustomData[propertyName] = value;
+
+                if (!isSilent)
+                    Compute.RecordWarning($"{obj} does not contain any property with the name {propertyName}. The value is being set as custom data.");
+            }
+                
+            return obj;
         }
 
         /***************************************************/
-
     }
 }
+
+
 
 
 

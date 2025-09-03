@@ -1,6 +1,6 @@
-/*
+﻿/*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -20,66 +20,41 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.Engine.Reflection;
-using BH.oM.Base;
 using BH.oM.Base.Attributes;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.IO;
-using System.IO.Pipes;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace BH.Engine.Versioning
+namespace BH.Engine.Verification
 {
     public static partial class Query
     {
         /***************************************************/
-        /**** Public Methods                            ****/
+        /****             Interface Methods             ****/
         /***************************************************/
 
-        [Description("Provide the list of BHoM versions covered by an upgrader")]
-        [Output("versions", "BHoM versions covered by an upgrader.")]
-        public static List<string> UpgraderVersions()
+        [Description("Unpacks the object in preparation to solve a formula.")]
+        [Input("obj", "Object to unpack.")]
+        [Output("unpacked", "Input object unpacked and ready to use in formula solution.")]
+        public static object IFormulaComponent(this object obj)
         {
-            if (m_UpgraderVersions != null)
-                return m_UpgraderVersions;
+            if (obj == null)
+                return null;
 
-            string upgraderFolder = Path.Combine(Base.Query.BHoMFolder(), "..", "Upgrades");
-            if (!Directory.Exists(upgraderFolder))
-                return new List<string>();
-
-            m_UpgraderVersions = Directory.GetDirectories(upgraderFolder, "BHoMUpgrader*", SearchOption.TopDirectoryOnly).Select(folder =>
-            {
-                string number = Path.GetFileName(folder).Replace("BHoMUpgrader", "");
-                return number.Insert(number.Length - 1, ".");
-            })
-            .OrderBy(x =>
-            {
-                double n = 0;
-                double.TryParse(x, out n);
-                return n;
-            })
-            .ToList();
-
-            return m_UpgraderVersions;
+            return BH.Engine.Base.Compute.RunExtensionMethod(obj, nameof(FormulaComponent));
         }
 
 
         /***************************************************/
-        /**** Private Fields                            ****/
+        /****              Public Methods               ****/
         /***************************************************/
 
-        private static List<string> m_UpgraderVersions = null;
+        [Description("Unpacks the object in preparation to solve a formula.")]
+        [Input("obj", "Object to unpack.")]
+        [Output("unpacked", "Input object unpacked and ready to use in formula solution.")]
+        public static object FormulaComponent(this object obj)
+        {
+            return obj;
+        }
 
         /***************************************************/
     }
 }
-
-
-
-

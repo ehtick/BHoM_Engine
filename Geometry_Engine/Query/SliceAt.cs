@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -21,7 +21,10 @@
  */
 
 using BH.oM.Geometry;
+using BH.oM.Base.Attributes;
+using BH.oM.Quantities.Attributes;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace BH.Engine.Geometry
 {
@@ -32,6 +35,13 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
+        [Description("Creates an IntegrationSlice by slicing a collection of curves at a specified location along a plane.")]
+        [Input("edges", "The collection of ICurves to slice.")]
+        [Input("location", "The location along the plane normal to slice at.", typeof(Length))]
+        [Input("width", "The width of the integration slice.", typeof(Length))]
+        [Input("p", "The plane defining the slicing direction.")]
+        [Input("tolerance", "The tolerance for geometric calculations.", typeof(Length))]
+        [Output("slice", "The resulting IntegrationSlice.")]
         public static IntegrationSlice SliceAt(this IList<ICurve> edges, double location, double width, Plane p, double tolerance = Tolerance.Distance)
         {
             List<Point> y = new List<Point>();
@@ -75,8 +85,3 @@ namespace BH.Engine.Geometry
         /***************************************************/
     }
 }
-
-
-
-
-

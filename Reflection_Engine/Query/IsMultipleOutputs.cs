@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -35,7 +35,7 @@ namespace BH.Engine.Reflection
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Return true if a C# method has multiple outputs")]
+        [Description("Return true if a C# method has multiple outputs.")]
         public static bool IsMultipleOutputs(this MethodBase method)
         {
             return (method is MethodInfo) && (typeof(oM.Base.IOutput).IsAssignableFrom(((MethodInfo)method).ReturnType));
@@ -44,6 +44,7 @@ namespace BH.Engine.Reflection
         /***************************************************/
     }
 }
+
 
 
 

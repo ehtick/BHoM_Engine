@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -37,7 +37,7 @@ namespace BH.Engine.Graphics
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Coverts a gradient to a stepped gradient by extracting colours in intervals.")]
+        [Description("Converts a gradient to a stepped gradient by extracting colours in intervals.")]
         [Input("gradient", "The gradient to convert. If it is already a stepped gradient, no action will be taken.")]
         [Input("steps", "(Optional, defaults to -1) Number of steps to be used. If -1, the markers of the provided gradient will be used.")]
         [Output("stepGradient", "The new stepped gradient.")]
@@ -73,5 +73,6 @@ namespace BH.Engine.Graphics
         /***************************************************/
     }
 }
+
 
 

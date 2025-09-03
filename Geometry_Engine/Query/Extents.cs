@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -21,6 +21,9 @@
  */
 
 using BH.oM.Geometry;
+using BH.oM.Base.Attributes;
+using BH.oM.Quantities.Attributes;
+using System.ComponentModel;
 
 namespace BH.Engine.Geometry
 {
@@ -30,6 +33,9 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
+        [Description("Gets the extents of a BoundingBox as a Vector representing its dimensions.")]
+        [Input("box", "The BoundingBox to get the extents from.")]
+        [Output("extents", "A Vector representing the width, height, and depth of the BoundingBox.")]
         public static Vector Extents(this BoundingBox box)
         {
             return new Vector { X = box.Max.X - box.Min.X, Y = box.Max.Y - box.Min.Y, Z = box.Max.Z - box.Min.Z };
@@ -38,8 +44,3 @@ namespace BH.Engine.Geometry
         /***************************************************/
     }
 }
-
-
-
-
-

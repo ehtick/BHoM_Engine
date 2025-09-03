@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -42,9 +42,9 @@ namespace BH.Engine.Environment
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Returns the inclination of a generic Environment Object")]
-        [Input("environmentObject", "Any object implementing the IEnvironmentObject interface that can have its inclination queried")]
-        [Output("inclination", "The inclination of the environment object")]
+        [Description("Returns the inclination of a generic Environment Object.")]
+        [Input("environmentObject", "Any object implementing the IEnvironmentObject interface that can have its inclination queried.")]
+        [Output("inclination", "The inclination of the environment object.")]
         public static double Inclination(this IEnvironmentObject environmentObject)
         {
             if (environmentObject == null)
@@ -64,6 +64,7 @@ namespace BH.Engine.Environment
         }
     }
 }
+
 
 
 

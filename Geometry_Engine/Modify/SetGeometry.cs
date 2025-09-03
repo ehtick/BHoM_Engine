@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -22,6 +22,9 @@
 
 using BH.Engine.Base;
 using BH.oM.Geometry;
+using BH.oM.Base.Attributes;
+using BH.oM.Quantities.Attributes;
+using System.ComponentModel;
 
 namespace BH.Engine.Geometry
 {
@@ -31,6 +34,10 @@ namespace BH.Engine.Geometry
         /****               Public Methods              ****/
         /***************************************************/
 
+        [Description("Sets the geometry of a Point by replacing it with a new Point.")]
+        [Input("point", "The original Point to replace.")]
+        [Input("newPoint", "The new Point geometry to set.")]
+        [Output("point", "The new Point geometry.")]
         public static Point SetGeometry(this Point point, Point newPoint)
         {
             return newPoint;
@@ -38,6 +45,10 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Sets the geometry of a Line by replacing it with a new curve.")]
+        [Input("curve", "The original Line to replace.")]
+        [Input("newCurve", "The new curve geometry to set.")]
+        [Output("curve", "The new curve geometry.")]
         public static ICurve SetGeometry(this Line curve, ICurve newCurve)
         {
             return newCurve;
@@ -45,6 +56,10 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Sets the geometry of an Arc by replacing it with a new curve.")]
+        [Input("curve", "The original Arc to replace.")]
+        [Input("newCurve", "The new curve geometry to set.")]
+        [Output("curve", "The new curve geometry.")]
         public static ICurve SetGeometry(this Arc curve, ICurve newCurve)
         {
             return newCurve;
@@ -52,6 +67,10 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Sets the geometry of a Circle by replacing it with a new curve.")]
+        [Input("curve", "The original Circle to replace.")]
+        [Input("newCurve", "The new curve geometry to set.")]
+        [Output("curve", "The new curve geometry.")]
         public static ICurve SetGeometry(this Circle curve, ICurve newCurve)
         {
             return newCurve;
@@ -59,6 +78,10 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Sets the geometry of an Ellipse by replacing it with a new curve.")]
+        [Input("curve", "The original Ellipse to replace.")]
+        [Input("newCurve", "The new curve geometry to set.")]
+        [Output("curve", "The new curve geometry.")]
         public static ICurve SetGeometry(this Ellipse curve, ICurve newCurve)
         {
             return newCurve;
@@ -66,6 +89,10 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Sets the geometry of a NurbsCurve by replacing it with a new curve.")]
+        [Input("curve", "The original NurbsCurve to replace.")]
+        [Input("newCurve", "The new curve geometry to set.")]
+        [Output("curve", "The new curve geometry.")]
         public static ICurve SetGeometry(this NurbsCurve curve, ICurve newCurve)
         {
             return newCurve;
@@ -73,6 +100,10 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Sets the geometry of a Polyline by replacing it with a new curve.")]
+        [Input("curve", "The original Polyline to replace.")]
+        [Input("newCurve", "The new curve geometry to set.")]
+        [Output("curve", "The new curve geometry.")]
         public static ICurve SetGeometry(this Polyline curve, ICurve newCurve)
         {
             return newCurve;
@@ -80,6 +111,10 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Sets the geometry of a PolyCurve by replacing it with a new curve.")]
+        [Input("curve", "The original PolyCurve to replace.")]
+        [Input("newCurve", "The new curve geometry to set.")]
+        [Output("curve", "The new curve geometry.")]
         public static ICurve SetGeometry(this PolyCurve curve, ICurve newCurve)
         {
             return newCurve ;
@@ -89,6 +124,10 @@ namespace BH.Engine.Geometry
         /****              Interface Methods            ****/
         /***************************************************/
 
+        [Description("Sets the geometry of any ICurve by replacing it with a new curve.")]
+        [Input("curve", "The original ICurve to replace.")]
+        [Input("newCurve", "The new curve geometry to set.")]
+        [Output("curve", "The new curve geometry.")]
         public static ICurve ISetGeometry(this ICurve curve, ICurve newCurve)
         {
             return SetGeometry(curve as dynamic, newCurve);
@@ -97,8 +136,3 @@ namespace BH.Engine.Geometry
         /***************************************************/
     }
 }
-
-
-
-
-

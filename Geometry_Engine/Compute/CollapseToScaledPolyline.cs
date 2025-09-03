@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -34,13 +34,13 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Collapses a PolyCurve to a polyline where curved segments are split into Polyline segments for computations. Where their partitioning is based on both their curvature and size, ergo; shorter segment less partitions, very curved segment more partitions")]
-        [Input("curve", "The curve to collapse")]
-        [Input("relativeAngleTolerance", "relativeAngleTolerance is the angleTolerance for a unit circle, the tolerance value will vary by: toleranceScaleFactor over curvature")]
-        [Input("toleranceScaleFactor", "toleranceScaleFactor is the value that decides how much the angleTolerance varies due to curvature")]
-        [Input("maxDivisionsPerSegment", "The maximum number of segment each sub-curve can be broken into")]
-        [Input("scale", "the radius of a baseline circle for the angle tolerance, smaller circles will have less segments and bigger more. Default of 0 means the program will determine an appropriate radius for the PolyCurve")]
-        [Output("C", "A polyline approximating the provided curve")]
+        [Description("Collapses a PolyCurve to a polyline where curved segments are split into Polyline segments for computations. Where their partitioning is based on both their curvature and size, ergo; shorter segment less partitions, very curved segment more partitions.")]
+        [Input("curve", "The curve to collapse.")]
+        [Input("relativeAngleTolerance", "relativeAngleTolerance is the angleTolerance for a unit circle, the tolerance value will vary by: toleranceScaleFactor over curvature.")]
+        [Input("toleranceScaleFactor", "toleranceScaleFactor is the value that decides how much the angleTolerance varies due to curvature.")]
+        [Input("maxDivisionsPerSegment", "The maximum number of segment each sub-curve can be broken into.")]
+        [Input("scale", "the radius of a baseline circle for the angle tolerance, smaller circles will have less segments and bigger more. Default of 0 means the program will determine an appropriate radius for the PolyCurve.")]
+        [Output("C", "A polyline approximating the provided curve.")]
         public static Polyline CollapseToScaledPolyline(this PolyCurve curve, double relativeAngleTolerance = 0.04, double toleranceScaleFactor = 0.001, int maxDivisionsPerSegment = 200, double scale = 0)
         {
             if (relativeAngleTolerance <= 0)
@@ -120,7 +120,3 @@ namespace BH.Engine.Geometry
 
     }
 }
-
-
-
-

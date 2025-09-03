@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -235,6 +235,10 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Checks if the PolySurface is planar, i.e. all of its parts fit in a single plane. Check is done by evaluating if all the surfaces in the PolySurface are planar within the provided tolerance.")]
+        [Input("surface", "The PolySurface to check for planarity.")]
+        [Input("tolerance", "Distance tolerance for planarity validation.", typeof(Length))]
+        [Output("isPlanar", "Returns true if the provided PolySurface is planar, i.e. all of its surfaces are planar within tolerance.")]
         public static bool IsPlanar(this PolySurface surface, double tolerance = Tolerance.Distance)
         {
             foreach (ISurface s in surface.Surfaces)
@@ -261,6 +265,10 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Checks if the CompositeGeometry is planar, i.e. all of its parts fit in a single plane. Check is done by evaluating if all the elements in the group are planar within the provided tolerance.")]
+        [Input("group", "The CompositeGeometry to check for planarity.")]
+        [Input("tolerance", "Distance tolerance for planarity validation.", typeof(Length))]
+        [Output("isPlanar", "Returns true if the provided CompositeGeometry is planar, i.e. all of its elements are planar within tolerance.")]
         public static bool IsPlanar(this CompositeGeometry group, double tolerance = Tolerance.Distance)
         {
             foreach (IGeometry element in group.Elements)
@@ -298,6 +306,3 @@ namespace BH.Engine.Geometry
         /***************************************************/
     }
 }
-
-
-

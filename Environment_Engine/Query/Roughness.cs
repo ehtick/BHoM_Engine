@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -44,9 +44,9 @@ namespace BH.Engine.Environment
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Returns the average roughness of a construction")]
-        [Input("construction", "A Construction object")]
-        [Output("roughness", "The average roughness of the construction")]
+        [Description("Returns the average roughness of a construction.")]
+        [Input("construction", "A Construction object.")]
+        [Output("roughness", "The average roughness of the construction.")]
         public static BHM.Roughness Roughness(this Construction construction)
         {
             if (construction == null || construction.Layers.Count == 0)
@@ -62,9 +62,9 @@ namespace BH.Engine.Environment
             return (BHM.Roughness)(totalRoughness / 2);
         }
 
-        [Description("Returns the numerical roughness of a material")]
-        [Input("material", "A Material object")]
-        [Output("roughness", "The numerical roughness of the material")]
+        [Description("Returns the numerical roughness of a material.")]
+        [Input("material", "A Material object.")]
+        [Output("roughness", "The numerical roughness of the material.")]
         public static double Roughness(this Material material)
         {
             if (material == null)
@@ -95,6 +95,7 @@ namespace BH.Engine.Environment
         }
     }
 }
+
 
 
 

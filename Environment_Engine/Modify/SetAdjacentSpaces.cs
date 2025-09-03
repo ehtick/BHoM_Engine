@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -37,10 +37,10 @@ namespace BH.Engine.Environment
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Returns a single Environment Panel with the provided space names added as the connecting spaces")]
-        [Input("panel", "A single Environment Panel to add the space names to")]
-        [Input("spaceNames", "The collection of names of the spaces the panel is connected to")]
-        [Output("panel", "A modified Environment Panel with the provided space names listed as the connecting spaces")]
+        [Description("Returns a single Environment Panel with the provided space names added as the connecting spaces.")]
+        [Input("panel", "A single Environment Panel to add the space names to.")]
+        [Input("spaceNames", "The collection of names of the spaces the panel is connected to.")]
+        [Output("panel", "A modified Environment Panel with the provided space names listed as the connecting spaces.")]
         public static Panel SetAdjacentSpaces(this Panel panel, List<string> spaceNames)
         {
             if(panel == null)
@@ -55,6 +55,7 @@ namespace BH.Engine.Environment
         }
     }
 }
+
 
 
 

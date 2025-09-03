@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -45,7 +45,7 @@ namespace BH.Engine.Facade
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Returns 2D Geometry representing the frame's projected elevation extents")]
+        [Description("Returns 2D Geometry representing the frame's projected elevation extents.")]
         [Input("opening", "The opening to get the frame geometry for")]
         [Output("geo", "The projected elevation extents of the frame")]
 
@@ -87,6 +87,7 @@ namespace BH.Engine.Facade
 
     }
 }
+
 
 
 

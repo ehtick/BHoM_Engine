@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -39,9 +39,9 @@ namespace BH.Engine.Environment
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Returns a collection of vertices for an Environment Panel")]
-        [Input("panel", "An Environment Panel")]
-        [Output("points", "A collection of BHoM Geometry Points which are the vertices of the panel")]
+        [Description("Returns a collection of vertices for an Environment Panel.")]
+        [Input("panel", "An Environment Panel.")]
+        [Output("points", "A collection of BHoM Geometry Points which are the vertices of the panel.")]
         public static List<Point> Vertices(this Panel panel)
         {
             if(panel == null)
@@ -53,14 +53,14 @@ namespace BH.Engine.Environment
             return panel.Polyline().IControlPoints();
         }
 
-        [Description("Returns a collection of vertices for a collection of Environment Panels representing a space")]
-        [Input("panelsAsSpace", "A collection of Environment Panels representing a space")]
-        [Output("points", "A collection of BHoM Geometry Points which are the vertices of the space")]
+        [Description("Returns a collection of vertices for a collection of Environment Panels representing a space.")]
+        [Input("panelsAsSpace", "A collection of Environment Panels representing a space.")]
+        [Output("points", "A collection of BHoM Geometry Points which are the vertices of the space.")]
         public static List<Point> Vertices(this List<Panel> panelsAsSpace)
         {
             if(panelsAsSpace == null)
             {
-                BH.Engine.Base.Compute.RecordError("Cannot query the verticies of panels that are null.");
+                BH.Engine.Base.Compute.RecordError("Cannot query the vertices of panels that are null.");
                 return null;
             }
 
@@ -73,6 +73,7 @@ namespace BH.Engine.Environment
         }
     }
 }
+
 
 
 

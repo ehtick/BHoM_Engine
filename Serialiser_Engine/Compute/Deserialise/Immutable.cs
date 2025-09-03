@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -85,7 +85,7 @@ namespace BH.Engine.Serialiser
                         IImmutable result = ctor.Invoke(arguments.ToArray()) as IImmutable;
 
                         if (result != null)
-                            return SetProperties(doc, targetType, result, version, isUpgraded) as IImmutable;
+                            return SetProperties(doc, targetType, result, version, isUpgraded, matches.Select(x => x.Properties.First().Name)) as IImmutable;
                     }
                 }
 
@@ -116,4 +116,5 @@ namespace BH.Engine.Serialiser
         /*******************************************/
     }
 }
+
 

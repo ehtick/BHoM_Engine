@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -44,7 +44,7 @@ namespace BH.Engine.Versioning
         /***************************************************/
 
         [Description("Provide a string representation of a method as it used for versioning by the PreviousVersion attribute.")]
-        [Input("method", "Method to generate the key for")]
+        [Input("method", "Method to generate the key for.")]
         [Output("key", "String representation of the method as it will be used by the PreviousVersion attribute.")]
         public static string VersioningKey(this MethodBase method)
         {
@@ -70,6 +70,7 @@ namespace BH.Engine.Versioning
         /***************************************************/
     }
 }
+
 
 
 

@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -62,9 +62,9 @@ namespace BH.Engine.Analytical
 
         /***************************************************/
 
-        [Description("Gets the boundary from an IRegion defining the boundary of the element as the subparts of the perimiter curve. Method required for all IElement2Ds.")]
+        [Description("Gets the boundary from an IRegion defining the boundary of the element as the subparts of the perimeter curve. Method required for all IElement2Ds.")]
         [Input("region", "The IRegion to get outline elements from.")]
-        [Output("elements", "Outline elements of the IRegion, i.e. the subparts of the Perimiter curve.")]
+        [Output("elements", "Outline elements of the IRegion, i.e. the subparts of the Perimeter curve.")]
         public static List<IElement1D> OutlineElements1D(this IRegion region)
         {
             if(region == null)
@@ -79,6 +79,7 @@ namespace BH.Engine.Analytical
         /***************************************************/
     }
 }
+
 
 
 

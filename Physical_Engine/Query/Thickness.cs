@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -38,17 +38,17 @@ namespace BH.Engine.Physical
         /***************************************************/
         /**** Public Methods                            ****/
         /***************************************************/
-        [Description("Returns the thickness of a generic construction")]
-        [Input("construction", "A generic Construction object")]
-        [Output("thickness", "The total thickness of the generic construction as a sum of all its layers")]
+        [Description("Returns the thickness of a generic construction.")]
+        [Input("construction", "A generic Construction object.")]
+        [Output("thickness", "The total thickness of the generic construction as a sum of all its layers.")]
         public static double IThickness(this IConstruction construction)
         {
             return Thickness(construction as dynamic);
         }
 
-        [Description("Returns the thickness of a construction")]
-        [Input("construction", "A Construction object")]
-        [Output("thickness", "The total thickness of the construction as a sum of all its layers")]
+        [Description("Returns the thickness of a construction.")]
+        [Input("construction", "A Construction object.")]
+        [Output("thickness", "The total thickness of the construction as a sum of all its layers.")]
         public static double Thickness(this Construction construction)
         {
             if(construction == null)
@@ -70,6 +70,7 @@ namespace BH.Engine.Physical
         }
     }
 }
+
 
 
 

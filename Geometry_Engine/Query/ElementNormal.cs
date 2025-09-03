@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -35,10 +35,10 @@ namespace BH.Engine.Geometry
         /*** Public Methods -One dimentional Element Normal*/
         /***************************************************/
 
-        [Description("Gets the Normal/local Z-axis from a element")]
-        [Input("curve", "The curve to evaluate the Normal from")]
-        [Input("orientationAngle", "How much the normal is rotated about the curves axis in radians")]
-        [Output("elementNormal", "The Normal/local Z-axis of a element")]
+        [Description("Gets the Normal/local Z-axis from a element.")]
+        [Input("curve", "The curve to evaluate the Normal from.")]
+        [Input("orientationAngle", "How much the normal is rotated about the curves axis in radians.")]
+        [Output("elementNormal", "The Normal/local Z-axis of a element.")]
         public static Vector ElementNormal(this ICurve curve, double orientationAngle)
         {
             if (curve.IIsLinear())
@@ -80,8 +80,3 @@ namespace BH.Engine.Geometry
 
     }
 }
-
-
-
-
-

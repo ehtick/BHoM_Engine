@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -21,7 +21,10 @@
  */
 
 using BH.oM.Geometry;
+using BH.oM.Base.Attributes;
+using BH.oM.Quantities.Attributes;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace BH.Engine.Geometry
 {
@@ -31,6 +34,9 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
+        [Description("Gets the number of control points in the U and V directions of a NurbsSurface.")]
+        [Input("surf", "The NurbsSurface to get the UV count from.")]
+        [Output("counts", "A list containing the number of control points in U and V directions [U count, V count].")]
         public static List<int> UVCount(this NurbsSurface surf)
         {
             return new List<int> { surf.UKnots.Count - surf.UDegree + 1, surf.VKnots.Count - surf.VDegree + 1 };
@@ -39,8 +45,3 @@ namespace BH.Engine.Geometry
         /***************************************************/
     }
 }
-
-
-
-
-

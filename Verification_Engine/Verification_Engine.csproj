@@ -8,15 +8,15 @@
     <Authors>BHoM</Authors>
     <Copyright>Copyright © https://github.com/BHoM</Copyright>
     <RootNamespace>BH.Engine.Verification</RootNamespace>
-    <FileVersion>8.0.0.0</FileVersion>
+    <FileVersion>8.3.0.0</FileVersion>
+	<GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+	<OutputPath>..\Build\</OutputPath>
+	<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>..\Build\</OutputPath>
-  </PropertyGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="xcopy &quot;$(TargetDir)$(TargetFileName)&quot;  &quot;C:\ProgramData\BHoM\Assemblies&quot; /Y" />
+	  <Exec Command="xcopy &quot;$(TargetDir)$(TargetFileName)&quot;  &quot;C:\ProgramData\BHoM\Assemblies&quot; /Y&#xD;&#xA;xcopy &quot;$(TargetDir)Microsoft.CodeAnalysis.CSharp.Scripting.dll&quot;  &quot;C:\ProgramData\BHoM\Assemblies&quot; /Y&#xD;&#xA;xcopy &quot;$(TargetDir)Microsoft.CodeAnalysis.Scripting.dll&quot;  &quot;C:\ProgramData\BHoM\Assemblies&quot; /Y" />
   </Target>
 
   <ItemGroup>
@@ -26,10 +26,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="3.4.0" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BHoM_Engine\BHoM_Engine.csproj" />
+    <ProjectReference Include="..\Data_Engine\Data_Engine.csproj" />
     <ProjectReference Include="..\Diffing_Engine\Diffing_Engine.csproj" />
   </ItemGroup>
 
@@ -39,18 +42,8 @@
       <Private>false</Private>
       <SpecificVersion>false</SpecificVersion>
     </Reference>
-    <Reference Include="BHoM_Engine">
-      <HintPath>$(ProgramData)\BHoM\Assemblies\BHoM_Engine.dll</HintPath>
-      <Private>false</Private>
-      <SpecificVersion>false</SpecificVersion>
-    </Reference>
     <Reference Include="Data_oM">
       <HintPath>$(ProgramData)\BHoM\Assemblies\Data_oM.dll</HintPath>
-      <Private>false</Private>
-      <SpecificVersion>false</SpecificVersion>
-    </Reference>
-    <Reference Include="Data_Engine">
-      <HintPath>$(ProgramData)\BHoM\Assemblies\Data_Engine.dll</HintPath>
       <Private>false</Private>
       <SpecificVersion>false</SpecificVersion>
     </Reference>

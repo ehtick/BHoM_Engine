@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -21,9 +21,12 @@
  */
 
 using BH.Engine.Base;
+using BH.oM.Base.Attributes;
 using BH.oM.Geometry;
+using BH.oM.Quantities.Attributes;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace BH.Engine.Geometry
@@ -34,6 +37,10 @@ namespace BH.Engine.Geometry
         /****          public Methods - Lines           ****/
         /***************************************************/
 
+        [Description("Clusters collinear lines into groups.")]
+        [Input("lines", "The collection of lines to cluster.")]
+        [Input("tolerance", "The tolerance to use for collinearity checks. Default is Tolerance.Distance.", typeof(Length))]
+        [Output("lineClusters", "A collection of lists of collinear lines. Each list contains lines that are collinear with respect to the first line in the list.")]
         public static List<List<Line>> ClusterCollinear(this List<Line> lines, double tolerance = Tolerance.Distance)
         {
             List<List<Line>> lineClusters = new List<List<Line>>();
@@ -60,8 +67,3 @@ namespace BH.Engine.Geometry
         /***************************************************/
     }
 }
-
-
-
-
-

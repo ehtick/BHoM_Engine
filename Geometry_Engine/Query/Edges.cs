@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -21,8 +21,11 @@
  */
 
 using BH.oM.Geometry;
+using BH.oM.Base.Attributes;
+using BH.oM.Quantities.Attributes;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace BH.Engine.Geometry
@@ -33,6 +36,9 @@ namespace BH.Engine.Geometry
         /**** Public Methods - Bounding Box             ****/
         /***************************************************/
 
+        [Description("Gets all the edges of a BoundingBox as a collection of Lines.")]
+        [Input("box", "The BoundingBox to get the edges from.")]
+        [Output("edges", "The 12 edge Lines that form the BoundingBox.")]
         public static List<Line> Edges(this BoundingBox box)
         {
             Point corner1 = box.Min;
@@ -65,6 +71,9 @@ namespace BH.Engine.Geometry
         /**** Public Methods - Meshes                   ****/
         /***************************************************/
 
+        [Description("Gets all the unique edges of a Mesh as a collection of Lines.")]
+        [Input("mesh", "The Mesh to get the edges from.")]
+        [Output("edges", "The unique edge Lines of the Mesh.")]
         public static List<Line> Edges(this Mesh mesh)
         {
             List<Face> faces = mesh.Faces;
@@ -102,6 +111,10 @@ namespace BH.Engine.Geometry
         /**** Public Methods - Faces                    ****/
         /***************************************************/
         
+        [Description("Gets the edges of a specific Face within a Mesh as a collection of Lines.")]
+        [Input("face", "The Face to get the edges from.")]
+        [Input("mesh", "The Mesh that contains the Face vertices.")]
+        [Output("edges", "The edge Lines of the Face.")]
         public static List<Line> Edges(this Face face, Mesh mesh)
         {
             List<Line> edges = new List<Line>();
@@ -121,6 +134,9 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Gets the edge curves of any ISurface by combining external and internal edges.")]
+        [Input("surface", "The ISurface to get the edges from.")]
+        [Output("edges", "The edge curves of the surface.")]
         public static List<ICurve> Edges(this ISurface surface)
         {
             List<ICurve> edges = surface.IExternalEdges();
@@ -131,8 +147,3 @@ namespace BH.Engine.Geometry
         /***************************************************/
     }
 }
-
-
-
-
-

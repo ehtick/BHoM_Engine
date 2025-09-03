@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -36,11 +36,11 @@ namespace BH.Engine.Environment
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Returns the angle to north of a given environmental object on an xyPlane")]
-        [Input("environmentObject", "Any object implementing the IEnvironmentObject interface that can have its orientation queried")]
+        [Description("Returns the angle to north of a given environmental object on an xyPlane.")]
+        [Input("environmentObject", "Any object implementing the IEnvironmentObject interface that can have its orientation queried.")]
         [Input("northAngle", "The angle in radians for north. Default is 0.")]
         [Input("returnAzimuthAngle", "Set to true to return the azimuth angle from north, instead of the angle between north and the object normal. Default is false.")]
-        [Output("orientation", "The orientation of the Environment Object")]
+        [Output("orientation", "The orientation of the Environment Object.")]
         public static double? Orientation(this IEnvironmentObject environmentObject, double northAngle = 0.0, bool returnAzimuthAngle = false)
         {
             if(environmentObject == null)
@@ -67,6 +67,7 @@ namespace BH.Engine.Environment
         }
     }
 }
+
 
 
 

@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -38,9 +38,9 @@ namespace BH.Engine.Environment
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Returns the minimum altitude of an Environment Object as the minimum z value from the bounding box of the geometry")]
-        [Input("environmentObject", "Any object implementing the IEnvironmentObject interface that can have an altitude")]
-        [Output("altitude", "The altitude of the object")]
+        [Description("Returns the minimum altitude of an Environment Object as the minimum z value from the bounding box of the geometry.")]
+        [Input("environmentObject", "Any object implementing the IEnvironmentObject interface that can have an altitude.")]
+        [Output("altitude", "The altitude of the object.")]
         public static double Altitude(this IEnvironmentObject environmentObject)
         {
             if (environmentObject == null)
@@ -56,6 +56,7 @@ namespace BH.Engine.Environment
         }
     }
 }
+
 
 
 

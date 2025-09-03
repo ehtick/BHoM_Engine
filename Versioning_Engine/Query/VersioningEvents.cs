@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -43,7 +43,7 @@ namespace BH.Engine.Versioning
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Provide a list of all the versioning upgrades that occured this session.")]
+        [Description("Provide a list of all the versioning upgrades that occurred this session.")]
         [Output("events", "List of all exiting events describing a versioning upgrade.")]
         public static List<VersioningEvent> VersioningEvents()
         {
@@ -53,6 +53,7 @@ namespace BH.Engine.Versioning
         /***************************************************/
     }
 }
+
 
 
 

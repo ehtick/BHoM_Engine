@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -46,6 +46,20 @@ namespace BH.Engine.Serialiser
                 return;
             }
 
+            HashSet<string> toIgnore = new HashSet<string>();
+            if (value.Fragments == null || value.Fragments.Count == 0)
+                toIgnore.Add("Fragments");
+            if (value.Tags == null || value.Tags.Count == 0)
+                toIgnore.Add("Tags");
+            if (value.CustomData == null || value.CustomData.Count == 0)
+                toIgnore.Add("CustomData");
+
+            if (value is IDynamicObject)
+            {
+                SerialiseDynamicObject(value as IDynamicObject, writer, targetType, toIgnore);
+                return;
+            }
+
             writer.WriteStartDocument();
 
             writer.WriteName("_t");
@@ -53,22 +67,7 @@ namespace BH.Engine.Serialiser
 
             foreach (PropertyInfo prop in value.GetType().GetProperties())
             {
-                bool include = true;
-
-                switch (prop.Name)
-                {
-                    case "Fragments":
-                        include = (value.Fragments != null && value.Fragments.Count > 0);
-                        break;
-                    case "Tags":
-                        include = (value.Tags != null && value.Tags.Count > 0);
-                        break;
-                    case "CustomData":
-                        include = (value.CustomData != null && value.CustomData.Count > 0);
-                        break;
-                }
-
-                if(include)
+                if(!toIgnore.Contains(prop.Name))
                 {
                     writer.WriteName(prop.Name);
                     ISerialise(prop.GetValue(value), writer, prop.PropertyType);
@@ -80,4 +79,5 @@ namespace BH.Engine.Serialiser
 
     }
 }
+
 

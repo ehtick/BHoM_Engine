@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -116,7 +116,7 @@ namespace BH.Engine.Base
         [Input("obj", "Objects the string should be calculated for.")]
         [Input("cc", "HashConfig, options for the hash calculation.")]
         [Input("nestingLevel", "Nesting level of the property.")]
-        [Input("currentPropertyFullName", "(Optional) Indicates the 'property path' of the current object, e.g. `BH.oM.Structure.Elements.Bar.Start.Point.X`")]
+        [Input("currentPropertyFullName", "(Optional) Indicates the 'property path' of the current object, e.g. `BH.oM.Structure.Elements.Bar.Start.Point.X`.")]
         private static string HashString(object obj, BaseComparisonConfig cc, int nestingLevel, string currentPropertyFullName = null)
         {
             string definingString = "";

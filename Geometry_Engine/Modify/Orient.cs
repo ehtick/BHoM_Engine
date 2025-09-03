@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -36,11 +36,11 @@ namespace BH.Engine.Geometry
         /****         public Generic Interface          ****/
         /***************************************************/
 
-        [Description("Orients geometry from one coordinate sytem to another")]
-        [Input("geometry", "Geometry to be transformed")]
-        [Input("csFrom", "Coordinate system in which geometry is now")]
-        [Input("csTo", "Coordinate system in which we want geometry to be")]
-        [Output("G", "Geometry in new coordinate system")]
+        [Description("Orients geometry from one coordinate sytem to another.")]
+        [Input("geometry", "Geometry to be transformed.")]
+        [Input("csFrom", "Coordinate system in which geometry is now.")]
+        [Input("csTo", "Coordinate system in which we want geometry to be.")]
+        [Output("G", "Geometry in new coordinate system.")]
         public static T Orient<T>(this T geometry, Cartesian csFrom, Cartesian csTo) where T : IGeometry
         {
             TransformMatrix orientationMatrix = Create.OrientationMatrix(csFrom, csTo);
@@ -50,7 +50,3 @@ namespace BH.Engine.Geometry
         /***************************************************/
     }
 }
-
-
-
-

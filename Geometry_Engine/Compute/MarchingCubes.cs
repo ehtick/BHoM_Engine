@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -72,7 +72,7 @@ namespace BH.Engine.Geometry
                 List<List<Polyline>> pLines = MarchingSquares(meshAndValues.Item1, meshAndValues.Item2, isoValues).Select(x => x.Join()).ToList();
 
                 // Create faces from the polyline
-                // Note that each vertex may be added twice here from neighboring cells
+                // Note that each vertex may be added twice here from neighbouring cells
                 for (int j = 0; j < isoValues.Count; j++)
                 {
                     foreach (Polyline polyline in pLines[j])
@@ -107,8 +107,3 @@ namespace BH.Engine.Geometry
 
     }
 }
-
-
-
-
-

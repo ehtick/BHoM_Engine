@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -35,15 +35,16 @@ namespace BH.Engine.Environment
 {
     public static partial class Query
     {
-        [Description("Returns a collection of unique Result Cases from a collection of MeshResult objects")]
-        [Input("meshResults", "A collection of Environment Mesh Results to obtain the unique result cases from")]
-        [Output("uniqueResultCases", "The collection of unique result cases from the Mesh Results")]
+        [Description("Returns a collection of unique Result Cases from a collection of MeshResult objects.")]
+        [Input("meshResults", "A collection of Environment Mesh Results to obtain the unique result cases from.")]
+        [Output("uniqueResultCases", "The collection of unique result cases from the Mesh Results.")]
         public static List<IComparable> UniqueResultCases(this List<MeshResult> meshResults)
         {
             return meshResults.Select(x => x.ResultCase).Distinct().ToList();
         }
     }
 }
+
 
 
 

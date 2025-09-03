@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -34,9 +34,9 @@ namespace BH.Engine.Environment
 {
     public static partial class Query
     {
-        [Description("Returns a collection of space names the panels are connected to")]
-        [Input("panels", "A collection of Environment Panels")]
-        [Output("spaceNames", "A collection of space names the panels are connected to")]
+        [Description("Returns a collection of space names the panels are connected to.")]
+        [Input("panels", "A collection of Environment Panels.")]
+        [Output("spaceNames", "A collection of space names the panels are connected to.")]
         public static List<string> UniqueSpaceNames(this List<Panel> panels)
         {
             List<string> spaceNames = new List<string>();
@@ -47,6 +47,7 @@ namespace BH.Engine.Environment
         }
     }
 }
+
 
 
 

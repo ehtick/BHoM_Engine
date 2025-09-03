@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -35,13 +35,13 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Gets the point at the global x-value for a line passing through point a and b")]
-        [Input("a", "One of the points the line passes through")]
-        [Input("b", "One of the points the line passes through")]
-        [Input("x", "The global x coordinate to evaluate the line at")]
-        [Input("tol", "The tolerance for deciding the line is parallel to the Y-axis")]
-        [Output("pt", "The Point at x on the line passing through the two points")]
-        public static Point PointAtX(Point a, Point b, double x, double tol = Tolerance.MicroDistance)
+        [Description("Gets the point at the global x-value for a line passing through point a and b.")]
+        [Input("a", "One of the points the line passes through.")]
+        [Input("b", "One of the points the line passes through.")]
+        [Input("x", "The global x coordinate to evaluate the line at.")]
+        [Input("tol", "The tolerance for deciding the line is parallel to the Y-axis.")]
+        [Output("pt", "The Point at x on the line passing through the two points.")]
+        public static Point PointAtX(this Point a, Point b, double x, double tol = Tolerance.MicroDistance)
         {
             if (Math.Abs(b.X - a.X) < tol)
                 return null;
@@ -58,7 +58,3 @@ namespace BH.Engine.Geometry
 
     }
 }
-
-
-
-

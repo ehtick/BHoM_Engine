@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -35,6 +35,8 @@ using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Data;
 using System.Linq;
+using System.Numerics;
+using BH.oM.Geometry;
 
 namespace BH.Tests.Engine.Serialiser
 {
@@ -353,6 +355,26 @@ namespace BH.Tests.Engine.Serialiser
 
         /***************************************************/
 
+        [Test]
+        [Description("Helper method to test serialisation and deserialisation of Complex number objects.")]
+        public void SystemTypesToFromJsonComplex()
+        {
+            Complex complex = new Complex(1, 2);
+
+            string json = BH.Engine.Serialiser.Convert.ToJson(complex);
+            Assert.IsNotNull(json);
+
+            object ret = BH.Engine.Serialiser.Convert.FromJson(json);
+            Assert.IsNotNull(ret);
+            Assert.IsInstanceOf<Complex>(ret);
+
+            Complex deserialised = (Complex)ret;
+            Assert.That(deserialised.Real, Is.EqualTo(complex.Real).Within(Tolerance.MicroDistance));
+            Assert.That(deserialised.Imaginary, Is.EqualTo(complex.Imaginary).Within(Tolerance.MicroDistance));
+        }
+
+        /***************************************************/
+
         [Description("Helper method to test serialisation and deserialisation of various types as properties of CustomData.")]
         private void SystemTypesToFromJsonCustomDataProperty<T>(T value)
         {
@@ -515,6 +537,7 @@ namespace BH.Tests.Engine.Serialiser
         /***************************************************/
     }
 }
+
 
 
 

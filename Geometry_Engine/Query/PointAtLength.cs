@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -21,8 +21,10 @@
  */
 
 using System;
+using System.ComponentModel;
 using BH.oM.Geometry;
 using BH.oM.Base.Attributes;
+using BH.oM.Quantities.Attributes;
 
 namespace BH.Engine.Geometry
 {
@@ -32,6 +34,10 @@ namespace BH.Engine.Geometry
         /**** Public Methods - Curves                   ****/
         /***************************************************/
 
+        [Description("Gets the Point on an Arc at the specified length along the curve.")]
+        [Input("curve", "The Arc to get the point from.")]
+        [Input("length", "The length along the curve to get the point at.", typeof(Length))]
+        [Output("pointAtLength", "The Point at the specified length.")]
         public static Point PointAtLength(this Arc curve, double length)
         {
             return curve.PointAtParameter(length / curve.Length());
@@ -39,6 +45,10 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Gets the Point on a Circle at the specified length along the curve.")]
+        [Input("curve", "The Circle to get the point from.")]
+        [Input("length", "The length along the curve to get the point at.", typeof(Length))]
+        [Output("pointAtLength", "The Point at the specified length.")]
         public static Point PointAtLength(this Circle curve, double length)
         {
             double alfa = 2 * Math.PI * length / curve.Length();
@@ -49,6 +59,10 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Gets the Point on a Line at the specified length along the curve.")]
+        [Input("curve", "The Line to get the point from.")]
+        [Input("length", "The length along the curve to get the point at.", typeof(Length))]
+        [Output("pointAtLength", "The Point at the specified length.")]
         public static Point PointAtLength(this Line curve, double length)
         {
             return PointAtParameter(curve, length / curve.Length());
@@ -56,6 +70,10 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Gets the Point on a PolyCurve at the specified length along the curve.")]
+        [Input("curve", "The PolyCurve to get the point from.")]
+        [Input("length", "The length along the curve to get the point at.", typeof(Length))]
+        [Output("pointAtLength", "The Point at the specified length.")]
         public static Point PointAtLength(this PolyCurve curve, double length)
         {
             double parameter = length / curve.Length();
@@ -64,6 +82,10 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Gets the Point on a Polyline at the specified length along the curve.")]
+        [Input("curve", "The Polyline to get the point from.")]
+        [Input("length", "The length along the curve to get the point at.", typeof(Length))]
+        [Output("pointAtLength", "The Point at the specified length.")]
         public static Point PointAtLength(this Polyline curve, double length)
         {
             double parameter = length / curve.Length();
@@ -75,6 +97,10 @@ namespace BH.Engine.Geometry
         /**** Public Methods - Interfaces               ****/
         /***************************************************/
 
+        [Description("Gets the Point on any ICurve at the specified length along the curve.")]
+        [Input("curve", "The ICurve to get the point from.")]
+        [Input("length", "The length along the curve to get the point at.", typeof(Length))]
+        [Output("pointAtLength", "The Point at the specified length.")]
         public static Point IPointAtLength(this ICurve curve, double length)
         {
             if (length > curve.ILength())
@@ -97,6 +123,3 @@ namespace BH.Engine.Geometry
         /***************************************************/
     }
 }
-
-
-

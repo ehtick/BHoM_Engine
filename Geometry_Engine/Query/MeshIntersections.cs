@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -22,8 +22,10 @@
 
 using BH.oM.Geometry;
 using BH.oM.Base.Attributes;
+using BH.oM.Quantities.Attributes;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace BH.Engine.Geometry
 {
@@ -33,14 +35,25 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
+        [PreviousVersion("8.3", "BH.Engine.Geometry.Query.MeshIntersection(BH.oM.Geometry.Plane, BH.oM.Geometry.Mesh, System.Double)")]
+        [Description("Finds the intersection line between a Plane and a Mesh. Currently not implemented.")]
+        [Input("p", "The Plane to intersect with the Mesh.")]
+        [Input("mesh", "The Mesh to intersect with the Plane.")]
+        [Input("tolerance", "The tolerance for the intersection calculation.", typeof(Length))]
+        [Output("line", "The intersection Line between the Plane and Mesh.")]
         [NotImplemented]
-        public static Line MeshIntersection(this Plane p, Mesh mesh, double tolerance = Tolerance.Distance)
+        public static Line MeshIntersections(this Plane p, Mesh mesh, double tolerance = Tolerance.Distance)
         {
             throw new NotImplementedException();
         }
 
         /***************************************************/
 
+        [Description("Finds the intersection Points between a Line and a Mesh using ray-triangle intersection.")]
+        [Input("curve", "The Line to intersect with the Mesh.")]
+        [Input("mesh", "The Mesh to intersect with the Line.")]
+        [Input("tolerance", "The tolerance for the intersection calculation.", typeof(Length))]
+        [Output("points", "The intersection Points between the Line and Mesh faces.")]
         public static List<Point> MeshIntersections(this Line curve, Mesh mesh, double tolerance = Tolerance.Distance)
         {
             // Outputs
@@ -111,6 +124,11 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Finds the intersection Points between a Polyline and a Mesh by checking each segment.")]
+        [Input("curve", "The Polyline to intersect with the Mesh.")]
+        [Input("mesh", "The Mesh to intersect with the Polyline.")]
+        [Input("tolerance", "The tolerance for the intersection calculation.", typeof(Length))]
+        [Output("points", "The intersection Points between the Polyline segments and Mesh faces.")]
         public static List<Point> MeshIntersections(this Polyline curve, Mesh mesh, double tolerance = Tolerance.Distance)
         {
             List<Point> points = new List<Point>();
@@ -126,6 +144,11 @@ namespace BH.Engine.Geometry
         /**** Public Methods - Interfaces               ****/
         /***************************************************/
 
+        [Description("Finds the intersection Points between any ICurve and a Mesh.")]
+        [Input("curve", "The ICurve to intersect with the Mesh.")]
+        [Input("mesh", "The Mesh to intersect with the curve.")]
+        [Input("tolerance", "The tolerance for the intersection calculation.", typeof(Length))]
+        [Output("points", "The intersection Points between the curve and Mesh faces.")]
         public static List<Point> IMeshIntersections(this ICurve curve, Mesh mesh, double tolerance = Tolerance.Distance)
         {
             return MeshIntersections(curve as dynamic, mesh);
@@ -145,6 +168,3 @@ namespace BH.Engine.Geometry
         /***************************************************/
     }
 }
-
-
-

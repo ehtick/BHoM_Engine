@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -22,8 +22,10 @@
 
 using BH.oM.Geometry;
 using BH.oM.Base.Attributes;
+using BH.oM.Quantities.Attributes;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace BH.Engine.Geometry
 {
@@ -33,6 +35,9 @@ namespace BH.Engine.Geometry
         /**** Public  Methods - Curves                  ****/
         /***************************************************/
 
+        [Description("Converts a PolyCurve to a Polyline by connecting the endpoints of its sub-curves.")]
+        [Input("curve", "The PolyCurve to convert. Must contain only Line segments.")]
+        [Output("polyline", "The resulting Polyline, or null if the PolyCurve contains non-linear segments.")]
         public static Polyline ToPolyline(this PolyCurve curve)
         {
             if (curve.Curves.Count == 0)
@@ -52,6 +57,9 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Converts a Line to a Polyline with two control points.")]
+        [Input("curve", "The Line to convert.")]
+        [Output("polyline", "The resulting Polyline with start and end points as control points.")]
         public static Polyline ToPolyline(this Line curve)
         {
             return new Polyline { ControlPoints = new List<Point> { curve.Start, curve.End } };
@@ -59,6 +67,9 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Returns the same Polyline (identity conversion).")]
+        [Input("curve", "The Polyline to return.")]
+        [Output("polyline", "The same Polyline as input.")]
         public static Polyline ToPolyline(this Polyline curve)
         {
             return curve;
@@ -69,6 +80,9 @@ namespace BH.Engine.Geometry
         /**** Public Methods - Interface                ****/
         /***************************************************/
 
+        [Description("Converts any ICurve to a Polyline using dynamic dispatch.")]
+        [Input("curve", "The ICurve to convert to a Polyline.")]
+        [Output("polyline", "The resulting Polyline, or null if conversion is not possible.")]
         public static Polyline IToPolyline(this ICurve curve)
         {
             return ToPolyline(curve as dynamic);
@@ -88,6 +102,3 @@ namespace BH.Engine.Geometry
         /***************************************************/
     }
 }
-
-
-

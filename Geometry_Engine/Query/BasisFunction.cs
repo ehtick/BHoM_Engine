@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -75,7 +75,7 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
-        [Description("Finds the function value of f(t) in the knot-span (i,n)")]
+        [Description("Finds the function value of f(t) in the knot-span (i,n).")]
         private static double LinearKnotInterpelation(List<double> knots, int i, int n, double t)
         {
             double sKnot = knots[Math.Max(Math.Min(i, knots.Count - 1), 0)];
@@ -90,8 +90,3 @@ namespace BH.Engine.Geometry
         /***************************************************/
     }
 }
-
-
-
-
-

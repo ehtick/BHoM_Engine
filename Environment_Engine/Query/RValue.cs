@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -42,9 +42,9 @@ namespace BH.Engine.Environment
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Returns the RValue of a construction layer")]
-        [Input("layer", "A Layer object")]
-        [Output("rValue", "The rValue of the layer calculated as the layers thickness divided by the materials conductivity")]
+        [Description("Returns the RValue of a construction layer.")]
+        [Input("layer", "A Layer object.")]
+        [Output("rValue", "The rValue of the layer calculated as the layers thickness divided by the materials conductivity.")]
         public static double RValue(this Layer layer)
         {
             if(layer == null)
@@ -64,6 +64,7 @@ namespace BH.Engine.Environment
         }
     }
 }
+
 
 
 

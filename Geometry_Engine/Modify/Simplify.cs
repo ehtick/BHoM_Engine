@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -21,7 +21,10 @@
  */
 
 using BH.oM.Geometry;
+using BH.oM.Base.Attributes;
+using BH.oM.Quantities.Attributes;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace BH.Engine.Geometry
 {
@@ -31,6 +34,11 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
+        [Description("Simplifies a Polyline by removing redundant control points based on distance and angle tolerances.")]
+        [Input("polyline", "The Polyline to simplify.")]
+        [Input("distanceTolerance", "The distance tolerance for removing duplicate points.", typeof(Length))]
+        [Input("angleTolerance", "The angle tolerance for removing collinear points.", typeof(Angle))]
+        [Output("polyline", "The simplified Polyline.")]
         public static Polyline Simplify(this Polyline polyline, double distanceTolerance = Tolerance.Distance, double angleTolerance = Tolerance.Angle)
         {
             bool isClosed = polyline.IsClosed(distanceTolerance);
@@ -59,7 +67,3 @@ namespace BH.Engine.Geometry
         /***************************************************/
     }
 }
-
-
-
-

@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -21,7 +21,10 @@
  */
 
 using BH.oM.Geometry;
+using BH.oM.Base.Attributes;
+using BH.oM.Quantities.Attributes;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace BH.Engine.Geometry
@@ -32,6 +35,9 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
+        [Description("Calculates the average (centroid) Point from a collection of Points.")]
+        [Input("points", "The collection of Points to average.")]
+        [Output("point", "The average Point (centroid) of the input collection.")]
         public static Point Average(this IEnumerable<Point> points)
         {
             int count = points.Count();
@@ -48,6 +54,9 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Calculates the average Vector from a collection of Vectors.")]
+        [Input("vs", "The collection of Vectors to average.")]
+        [Output("vector", "The average Vector of the input collection.")]
         public static Vector Average(this List<Vector> vs)
         {
             int count = vs.Count();
@@ -65,8 +74,3 @@ namespace BH.Engine.Geometry
         /***************************************************/
     }
 }
-
-
-
-
-

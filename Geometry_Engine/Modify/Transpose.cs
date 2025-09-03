@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -21,6 +21,9 @@
  */
 
 using BH.oM.Geometry;
+using BH.oM.Base.Attributes;
+using BH.oM.Quantities.Attributes;
+using System.ComponentModel;
 
 namespace BH.Engine.Geometry
 {
@@ -30,6 +33,9 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
+        [Description("Calculates the transpose of a TransformMatrix.")]
+        [Input("transform", "The TransformMatrix to transpose.")]
+        [Output("transposed", "The transposed TransformMatrix.")]
         public static TransformMatrix Transpose(this TransformMatrix transform)
         {
             return new TransformMatrix { Matrix = transform.Matrix.Transpose() };
@@ -37,6 +43,9 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Calculates the transpose of a 2D matrix represented as a double array.")]
+        [Input("matrix", "The 2D matrix to transpose.")]
+        [Output("transposed", "The transposed matrix.")]
         public static double[,] Transpose(this double[,] matrix)
         {
             int h = matrix.GetLength(0);
@@ -55,8 +64,3 @@ namespace BH.Engine.Geometry
         /***************************************************/
     }
 }
-
-
-
-
-

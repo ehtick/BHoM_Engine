@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -31,11 +31,11 @@ namespace BH.Engine.Geometry
 {
     public static partial class Compute
     {
-        [Description("Map a Fibonacci lattice onto the surface of a sphere and return the vectors to each equidistant sample point")]
-        [Input("nSamples", "Number of samples")]
-        [MultiOutput(0, "theta", "Polar angle of each point (θ)")]
-        [MultiOutput(1, "phi", "Azimuth angle for each point (ρ)")]
-        [MultiOutput(2, "vectors", "Vectors to sample points")]
+        [Description("Map a Fibonacci lattice onto the surface of a sphere and return the vectors to each equidistant sample point.")]
+        [Input("nSamples", "Number of samples.")]
+        [MultiOutput(0, "theta", "Polar angle of each point (θ).")]
+        [MultiOutput(1, "phi", "Azimuth angle for each point (ρ).")]
+        [MultiOutput(2, "vectors", "Vectors to sample points.")]
         public static Output<List<double>, List<double>, List<Vector>> FibonacciSphere(int nSamples)
         {
             if (nSamples <= 0)
@@ -78,6 +78,3 @@ namespace BH.Engine.Geometry
         }
     }
 }
-
-
-

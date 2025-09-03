@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -21,8 +21,10 @@
  */
 
 using System.Collections.Generic;
+using System.ComponentModel;
 using BH.oM.Geometry;
 using BH.oM.Base.Attributes;
+using BH.oM.Quantities.Attributes;
 
 namespace BH.Engine.Geometry
 {
@@ -32,6 +34,9 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
+        [Description("Gets the degree of a NurbsCurve.")]
+        [Input("curve", "The NurbsCurve to get the degree from.")]
+        [Output("degree", "The degree of the NURBS curve.")]
         public static int Degree(this NurbsCurve curve)
         {
             return curve.Knots.Count - curve.ControlPoints.Count + 1;
@@ -40,8 +45,3 @@ namespace BH.Engine.Geometry
         /***************************************************/
     }
 }
-
-
-
-
-

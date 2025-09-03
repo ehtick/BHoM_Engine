@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -35,7 +35,7 @@ namespace BH.Engine.Graphics
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Computes and returns the BoundingBox the SVGObject which is the concatenated BoudingBox of all Shapes contained within the object.")]
+        [Description("Computes and returns the BoundingBox of the SVGObject which is the concatenated BoundingBox of all Shapes contained within the object.")]
         public static BoundingBox Bounds(this SVGObject svg)
         {
             if(svg == null)
@@ -74,7 +74,7 @@ namespace BH.Engine.Graphics
 
         /***************************************************/
 
-        [Description("Returns the BoundingBox the SVGDocuments which is the Canvas.")]
+        [Description("Returns the BoundingBox of the SVGDocument which is the Canvas.")]
         public static BoundingBox Bounds(this SVGDocument svg)
         {
             if (svg == null)
@@ -135,7 +135,7 @@ namespace BH.Engine.Graphics
 
         /***************************************************/
 
-        [Description("Computes and returns the BoundingBox of the RenderGeometry as the bounding box of the its Geometry.")]
+        [Description("Computes and returns the BoundingBox of the RenderGeometry as the bounding box of its Geometry.")]
         public static BoundingBox Bounds(this RenderGeometry renderGeometry)
         {
             if (renderGeometry == null)
@@ -179,6 +179,7 @@ namespace BH.Engine.Graphics
         /***************************************************/
     }
 }
+
 
 
 

@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -38,10 +38,10 @@ namespace BH.Engine.Environment
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Returns a nested collection of Environment Panels which contain the search panel")]
-        [Input("panel", "An Environment Panel to find within the search panels")]
-        [Input("panelsAsSpaces", "The nested collection of Environment Panels that represent the spaces to search from")]
-        [Output("panelsAsSpaces", "A nested collection of Environment Panels which contain the search panel")]
+        [Description("Returns a nested collection of Environment Panels which contain the search panel.")]
+        [Input("panel", "An Environment Panel to find within the search panels.")]
+        [Input("panelsAsSpaces", "The nested collection of Environment Panels that represent the spaces to search from.")]
+        [Output("panelsAsSpaces", "A nested collection of Environment Panels which contain the search panel.")]
         public static List<List<Panel>> AdjacentSpaces(this Panel panel, List<List<Panel>> panelsAsSpaces)
         {
             //Get the lists which contain this building element
@@ -49,6 +49,7 @@ namespace BH.Engine.Environment
         }
     }
 }
+
 
 
 

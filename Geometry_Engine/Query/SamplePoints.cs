@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -21,7 +21,10 @@
  */
 
 using System.Collections.Generic;
+using System.ComponentModel;
 using BH.oM.Geometry;
+using BH.oM.Base.Attributes;
+using BH.oM.Quantities.Attributes;
 using System;
 
 namespace BH.Engine.Geometry
@@ -32,6 +35,10 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
+        [Description("Samples Points along a curve at regular distance intervals along the curve.")]
+        [Input("curve", "The ICurve to sample points from.")]
+        [Input("step", "The distance step between sample points.", typeof(Length))]
+        [Output("samplePoints", "The sampled Points along the curve.")]
         public static List<Point> SamplePoints(this ICurve curve, double step)
         {
             if (step <= 0)
@@ -51,6 +58,10 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Samples a specified number of Points evenly distributed along a curve.")]
+        [Input("curve", "The ICurve to sample points from.")]
+        [Input("number", "The number of points to sample.")]
+        [Output("samplePoints", "The sampled Points evenly distributed along the curve.")]
         public static List<Point> SamplePoints(this ICurve curve, int number)
         {
             if (number <= 0)
@@ -73,8 +84,3 @@ namespace BH.Engine.Geometry
         /***************************************************/
     }
 }
-
-
-
-
-

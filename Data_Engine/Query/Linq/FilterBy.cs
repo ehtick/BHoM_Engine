@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -36,13 +36,13 @@ namespace BH.Engine.Data
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Filters a list of objects to output only those with a property value matching that input")]
-        [Input("objects", "List of objects to be filtered. All objects in the list should be of similar type")]
-        [Input("propertyName", "The name of the property to filter the objects by")]
-        [Input("value", "The value of the selected property to filter the objects by")]
+        [Description("Filters a list of objects to output only those with a property value matching that input.")]
+        [Input("objects", "List of objects to be filtered. All objects in the list should be of similar type.")]
+        [Input("propertyName", "The name of the property to filter the objects by.")]
+        [Input("value", "The value of the selected property to filter the objects by.")]
         [Input("ignoreStringCase", "Ignore upper/lower case letters if the property filtered by is a text/string.")]
-        [Input("exactStringMatch", "If true checks if the property filtered by contains the text value (filtering must be a string/text)")]
-        [Output("filteredObjects", "The collection of objects that match the given filter conditions")]
+        [Input("exactStringMatch", "If true checks if the property filtered by contains the text value (filtering must be a string/text).")]
+        [Output("filteredObjects", "The collection of objects that match the given filter conditions.")]
         public static List<T> FilterBy<T>(this List<T> objects, string propertyName, object value, bool ignoreStringCase = false, bool exactStringMatch = true)
         {
             if (objects == null || objects.Count == 0)
@@ -112,6 +112,7 @@ namespace BH.Engine.Data
 
     }
 }
+
 
 
 

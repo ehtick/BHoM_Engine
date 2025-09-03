@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -43,7 +43,7 @@ namespace BH.Engine.Geometry
         [Description("Returns a signature of the input geometry, useful for distance-based comparisons and diffing." +
             "\nThe hash is computed as an array representing the coordinate of significant points taken on the geometry." +
             "\nThe number of points is reduced to the minimum essential to determine uniquely any geometry." +
-            "\nAdditionally, the resulting points are transformed based on the source geometry type, to remove or minimize collisions." +
+            "\nAdditionally, the resulting points are transformed based on the source geometry type, to remove or minimise collisions." +
             "\n(Any transformation so performed is translational only, in order to support geometrical tolerance, i.e. numerical distance, when comparing GeometryHashes downstream).")]
         [Input("igeometry", "Geometry you want to compute the hash array for.")]
         [Input("comparisonConfig", "Configurations on how the hash array is computed, with options for numerical approximation, type exceptions and many others.")]
@@ -58,7 +58,7 @@ namespace BH.Engine.Geometry
         [Description("Returns a signature of the input geometry, useful for distance-based comparisons and diffing." +
             "\nThe hash is computed as an array representing the coordinate of significant points taken on the geometry." +
             "\nThe number of points is reduced to the minimum essential to determine uniquely any geometry." +
-            "\nAdditionally, the resulting points are transformed based on the source geometry type, to remove or minimize collisions." +
+            "\nAdditionally, the resulting points are transformed based on the source geometry type, to remove or minimise collisions." +
             "\n(Any transformation so performed is translational only, in order to support geometrical tolerance, i.e. numerical distance, when comparing GeometryHashes downstream).")]
         [Input("igeometry", "Geometry you want to compute the hash array for.")]
         [Input("comparisonConfig", "Configurations on how the hash array is computed, with options for numerical approximation, type exceptions and many others.")]
@@ -708,12 +708,12 @@ namespace BH.Engine.Geometry
             if (cc == null || string.IsNullOrWhiteSpace(propFullName))
                 return true;
 
-            // Skip if the property is among the PropertyExceptions.
+            // Skip if the property is amongst the PropertyExceptions.
             if ((cc.PropertyExceptions?.Any(pe => propFullName.EndsWith(pe) || propFullName.WildcardMatch(pe)) ?? false))
                 return false;
 
             // If the PropertiesToConsider contains at least a value, ensure that this property is "compatible" with at least one of them.
-            // Compatible means to check not only that the current propFullName is among the propertiesToInclude;
+            // Compatible means to check not only that the current propFullName is amongst the propertiesToInclude;
             // we need to consider this propFullName ALSO IF there is at least one PropertyToInclude that specifies a property that is a child of the current propFullName.
             if ((cc.PropertiesToConsider?.Any() ?? false) &&
                 !cc.PropertiesToConsider.Any(ptc => ptc.StartsWith(propFullName) || propFullName.StartsWith(ptc))) // we want to make sure that we do not exclude sub-properties to include, hence the OR condition.

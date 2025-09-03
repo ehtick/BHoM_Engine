@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -52,6 +52,8 @@ namespace BH.Engine.Geometry
         [Description("Creates a random CompositeGeometry based on a seed. If no seed is provided, a random one will be generated. If Box is provided, the resulting geometry will be contained within the box.")]
         [Input("seed", "Input seed for random generation. If -1 is provided, a random seed will be generated.")]
         [Input("box", "Optional containing box. The geometry created will be limited to the bounding box. If no box is provided, values between 0 and 1 will be used when generating properties for the geometry.")]
+        [Input("minNbParts", "Minimum number of parts to generate.")]
+        [Input("maxNbParts", "Maximum number of parts to generate.")]
         [Output("geom", "The generated random CompositeGeometry.")]
         public static CompositeGeometry RandomCompositeGeometry(int seed = -1, BoundingBox box = null, int minNbParts = 1, int maxNbParts = 10)
         {
@@ -66,6 +68,8 @@ namespace BH.Engine.Geometry
         [Description("Creates a random CompositeGeometry using the provided Random class. If Box is provided, the resulting geometry will be contained within the box.")]
         [Input("rnd", "Random object to be used to generate the random geometry.")]
         [Input("box", "Optional containing box. The geometry created will be limited to the bounding box. If no box is provided, values between 0 and 1 will be used when generating properties for the geometry.")]
+        [Input("minNbParts", "Minimum number of parts to generate.")]
+        [Input("maxNbParts", "Maximum number of parts to generate.")]
         [Output("geom", "The generated random CompositeGeometry.")]
         public static CompositeGeometry RandomCompositeGeometry(Random rnd, BoundingBox box = null, int minNbParts = 1, int maxNbParts = 10)
         {
@@ -78,8 +82,3 @@ namespace BH.Engine.Geometry
         /***************************************************/
     }
 }
-
-
-
-
-

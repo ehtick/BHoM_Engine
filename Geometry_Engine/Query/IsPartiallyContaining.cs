@@ -34,7 +34,7 @@ namespace BH.Engine.Geometry
         [Description("Determines whether a polyline contains any of the points provided. True if at least 1 point is contained by the polyline.")]
         [Input("polyline", "A polyline container to determine the boundaries of being contained.")]
         [Input("points", "A collection of points to check whether any of them are contained by the polyline.")]
-        [Input("acceptOnEdge", "Determine whether to accept a point on the edge of the polyline as being contained or not. Default false")]
+        [Input("acceptOnEdge", "Determine whether to accept a point on the edge of the polyline as being contained or not. Default false.")]
         [Output("partiallyContained", "True if at least one of the provided points is contained by the polyline, false if none of the points are.")]
         public static bool IsPartiallyContaining(this Polyline polyline, List<Point> points, bool acceptOnEdge = false)
         {
@@ -48,8 +48,3 @@ namespace BH.Engine.Geometry
         }
     }
 }
-
-
-
-
-

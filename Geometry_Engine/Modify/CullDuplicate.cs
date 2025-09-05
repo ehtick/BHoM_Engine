@@ -20,15 +20,13 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.oM.Base.Attributes;
+using BH.oM.Geometry;
+using BH.oM.Quantities.Attributes;
 using System;
 using System.Collections.Generic;
-
-using System.Linq;
-
-using BH.oM.Geometry;
-
-using BH.oM.Base.Attributes;
 using System.ComponentModel;
+using System.Linq;
 
 namespace BH.Engine.Geometry
 {
@@ -38,9 +36,10 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Removes duplicate lines from the collection")]
-        [Input("lines", "The nested collection of lines to cull duplicates from")]
-        [Output("lines", "A collection of lines with no duplicates")]
+        [Description("Removes duplicate lines from the collection. Lines are considered the same if both of their endpoints lie within tolerance distance from each other, regardless of line direction.")]
+        [Input("lines", "The nested collection of lines to cull duplicates from.")]
+        [Input("tolerance", "Maximum allowed distance between end points for the lines to be considered the same.", typeof(Length))]
+        [Output("lines", "A collection of lines with no duplicates.")]
         public static List<Line> CullDuplicateLines(this List<Line> lines, double tolerance = Tolerance.Distance)
         {
             double sqTol = tolerance * tolerance;
@@ -61,9 +60,3 @@ namespace BH.Engine.Geometry
         }
     }
 }
-
-
-
-
-
-

@@ -37,10 +37,10 @@ namespace BH.Engine.Geometry
         /***************************************************/
 
         [Description("Creates a Vector Basis with three orthogonal Vectors. Will ensure that x and y-vectors are orthogonal. This means the y-vector of the basis might be different than the one provided"
-            +"/n x-vector is garantiued to stay the same. z-vector of basis will be calculated as x cross y. Method does not work for parallel vectors")]
+            +"/n x-vector is garantiued to stay the same. z-vector of basis will be calculated as x cross y. Method does not work for parallel vectors.")]
         [Input("x", "x-vector of the basis. Basis is guaranteed to have a unit vector in this direction as its x-axis.")]
         [Input("y", "y-vector of the basis. Method will ensure that this vector in orthogonal to the x-axis.")]
-        [Output("Basis", "An orthogonal vector basis with all unit vectors")]
+        [Output("Basis", "An orthogonal vector basis with all unit vectors.")]
         public static Basis Basis(Vector x, Vector y)
         {
             x = x.Normalise();
@@ -66,9 +66,3 @@ namespace BH.Engine.Geometry
         /***************************************************/
     }
 }
-
-
-
-
-
-

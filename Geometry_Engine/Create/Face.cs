@@ -21,6 +21,9 @@
  */
 
 using BH.oM.Geometry;
+using BH.oM.Base.Attributes;
+using BH.oM.Quantities.Attributes;
+using System.ComponentModel;
 
 namespace BH.Engine.Geometry
 {
@@ -30,6 +33,12 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
+        [Description("Creates a Face from vertex indices, supporting both triangular and quad faces.")]
+        [Input("a", "Index of the first vertex.")]
+        [Input("b", "Index of the second vertex.")]
+        [Input("c", "Index of the third vertex.")]
+        [Input("d", "Index of the fourth vertex. Use -1 for triangular faces.")]
+        [Output("face", "The created Face.")]
         public static Face Face(int a, int b, int c, int d = -1)
         {
             return new Face
@@ -44,9 +53,3 @@ namespace BH.Engine.Geometry
         /***************************************************/
     }
 }
-
-
-
-
-
-

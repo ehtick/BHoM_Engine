@@ -38,8 +38,3 @@ namespace BH.Engine.Geometry
         public Point UnconnectedPoint { get; set; } = null;
     }
 }
-
-
-
-
-

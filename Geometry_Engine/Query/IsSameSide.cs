@@ -21,7 +21,10 @@
  */
 
 using BH.oM.Geometry;
+using BH.oM.Base.Attributes;
+using BH.oM.Quantities.Attributes;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace BH.Engine.Geometry
@@ -32,6 +35,12 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
+        [Description("Checks if two Points are on the same side of a Plane.")]
+        [Input("p1", "The first Point to check.")]
+        [Input("plane", "The Plane to check against.")]
+        [Input("p2", "The second Point to check.")]
+        [Input("tolerance", "The distance tolerance for the check.", typeof(Length))]
+        [Output("sameSide", "True if both Points are on the same side of the Plane, false otherwise.")]
         public static bool IsSameSide(this Point p1, Plane plane, Point p2, double tolerance = Tolerance.Distance)
         {
             double d1 = plane.Normal.DotProduct(p1 - plane.Origin);
@@ -42,6 +51,11 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Checks if all Points in a collection are on the same side of a Plane.")]
+        [Input("points", "The collection of Points to check.")]
+        [Input("plane", "The Plane to check against.")]
+        [Input("tolerance", "The distance tolerance for the check.", typeof(Length))]
+        [Output("sameSide", "True if all Points are on the same side of the Plane, false otherwise.")]
         public static bool IsSameSide(this IList<Point> points, Plane plane, double tolerance = Tolerance.Distance)
         {
             if (points.Count() < 2)
@@ -64,9 +78,3 @@ namespace BH.Engine.Geometry
         /***************************************************/
     }
 }
-
-
-
-
-
-

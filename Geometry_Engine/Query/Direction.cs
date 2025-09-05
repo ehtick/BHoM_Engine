@@ -21,7 +21,10 @@
  */
 
 using BH.oM.Geometry;
+using BH.oM.Base.Attributes;
+using BH.oM.Quantities.Attributes;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace BH.Engine.Geometry
 {
@@ -31,6 +34,10 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
+        [Description("Gets the direction Vector of a Line as a normalised Vector from start to end.")]
+        [Input("line", "The Line to get the direction from.")]
+        [Input("tolerance", "The tolerance for checking if the line has zero length.", typeof(Length))]
+        [Output("direction", "The normalised direction Vector of the Line.")]
         public static Vector Direction(this Line line, double tolerance = Tolerance.Distance)
         {
             if (line.Start.SquareDistance(line.End) <= tolerance * tolerance)
@@ -42,9 +49,3 @@ namespace BH.Engine.Geometry
         /***************************************************/
     }
 }
-
-
-
-
-
-

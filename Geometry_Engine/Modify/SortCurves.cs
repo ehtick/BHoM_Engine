@@ -22,8 +22,11 @@
 
 using BH.Engine.Base;
 using BH.oM.Geometry;
+using BH.oM.Base.Attributes;
+using BH.oM.Quantities.Attributes;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace BH.Engine.Geometry
@@ -34,6 +37,10 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
+        [Description("Sorts the curves within a PolyCurve to ensure they are connected end-to-end in the correct order.")]
+        [Input("curve", "The PolyCurve with curves to sort.")]
+        [Input("tolerance", "The tolerance for determining curve connectivity.", typeof(Length))]
+        [Output("curve", "The PolyCurve with sorted curves.")]
         public static PolyCurve SortCurves(this PolyCurve curve, double tolerance = Tolerance.Distance)
         {
             if (curve.Curves.Count < 2)
@@ -96,9 +103,3 @@ namespace BH.Engine.Geometry
         /***************************************************/
     }
 }
-
-
-
-
-
-

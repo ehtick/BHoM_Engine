@@ -258,15 +258,15 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
-        private static int Direction(Point center, Point a, double tol = Tolerance.Distance)
+        private static int Direction(Point centre, Point a, double tol = Tolerance.Distance)
         {
-            if (center.X + tol < a.X)
+            if (centre.X + tol < a.X)
                 return 0;   //to the right
-            if (center.X - tol > a.X)
+            if (centre.X - tol > a.X)
                 return 2;   //to the left
-            if (center.Y + tol < a.Y)
+            if (centre.Y + tol < a.Y)
                 return 1;   // over
-            if (center.Y - tol > a.Y)
+            if (centre.Y - tol > a.Y)
                 return 3;   // under
             return -100;  // the same
         }
@@ -275,8 +275,3 @@ namespace BH.Engine.Geometry
 
     }
 }
-
-
-
-
-

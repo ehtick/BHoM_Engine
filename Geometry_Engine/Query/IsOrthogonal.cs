@@ -52,7 +52,3 @@ namespace BH.Engine.Geometry
 
     }
 }
-
-
-
-

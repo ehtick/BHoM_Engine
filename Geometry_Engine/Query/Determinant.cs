@@ -21,7 +21,10 @@
  */
 
 using BH.oM.Geometry;
+using BH.oM.Base.Attributes;
+using BH.oM.Quantities.Attributes;
 using System;
+using System.ComponentModel;
 
 namespace BH.Engine.Geometry
 {
@@ -33,6 +36,9 @@ namespace BH.Engine.Geometry
 
         // Strongly inspired by https://www.geeksforgeeks.org/determinant-of-a-matrix/
 
+        [Description("Calculates the determinant of a TransformMatrix.")]
+        [Input("matrix", "The TransformMatrix to calculate the determinant of.")]
+        [Output("determinant", "The determinant value of the matrix.")]
         public static double Determinant(this TransformMatrix matrix)
         {
             return Determinant(matrix.Matrix, 0);
@@ -40,6 +46,9 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Calculates the determinant of a square matrix represented as a 2D array.")]
+        [Input("mat", "The square matrix to calculate the determinant of.")]
+        [Output("determinant", "The determinant value of the matrix.")]
         public static double Determinant(this double[,] mat)
         {
             return Determinant(mat, 0);
@@ -60,7 +69,7 @@ namespace BH.Engine.Geometry
             if (n == 0)
                 n = N;
 
-            double D = 0; // Initialize result
+            double D = 0; // Initialise result
 
             // If a single item matrix
             if (n == 1)
@@ -124,9 +133,3 @@ namespace BH.Engine.Geometry
         /***************************************************/
     }
 }
-
-
-
-
-
-

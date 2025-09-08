@@ -191,17 +191,17 @@ namespace BH.Engine.Geometry
                 return double.NaN;
             }
 
-            // Check if this is a rational curve (has non-uniform weights)
-            bool isRational = curve.Weights.Any(w => Math.Abs(w - 1.0) > tolerance);
+            // Check derivative smoothness to determine integration method
+            bool hasSmootDerivatives = HasSmoothDerivatives(curve, tolerance);
 
-            if (isRational)
+            if (hasSmootDerivatives)
             {
-                // Use more sophisticated integration for rational curves
-                return AdaptiveRationalCurveLength(curve, tolerance);
+                // Use Gauss-Legendre quadrature for smooth curves
+                return GaussLegendreArcLength(curve, 0.0, 1.0, tolerance, 16);
             }
             else
             {
-                // Use standard integration for non-rational curves
+                // Use adaptive Simpson's rule for curves with rapidly changing derivatives
                 return AdaptiveSimpsonArcLength(curve, 0.0, 1.0, tolerance);
             }
         }
@@ -349,16 +349,46 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
-        [Description("Calculates the length of a rational NURBS curve using adaptive integration with parameter redistribution.")]
-        private static double AdaptiveRationalCurveLength(NurbsCurve curve, double tolerance)
+        [Description("Checks if a NURBS curve has smooth derivatives by sampling derivative magnitudes.")]
+        private static bool HasSmoothDerivatives(NurbsCurve curve, double tolerance)
         {
-            // For rational curves, the parameter distribution is non-uniform
-            // We need to use a more sophisticated approach
+            // Sample derivative magnitudes at several points to assess smoothness
+            int numSamples = 101; // Sample at 0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875, 1.0
+            double[] derivMagnitudes = new double[numSamples];
 
-            // Strategy: Use Gauss-Legendre quadrature with adaptive subdivision
-            // This is more accurate for rational curves than simple Simpson's rule
+            for (int i = 0; i < numSamples; i++)
+            {
+                double t = i / (double)(numSamples - 1);
+                derivMagnitudes[i] = DerivativeMagnitude(curve, t);
+            }
 
-            return GaussLegendreArcLength(curve, 0.0, 1.0, tolerance, 16); // Start with 16-point quadrature
+            // Check for smoothness criteria:
+            // 1. No zero or very small derivatives (indicates potential singularities)
+            double minDerivMag = derivMagnitudes.Min();
+            if (minDerivMag < tolerance) // Allow some small derivatives but not near-zero
+                return false;
+
+            // 2. Relatively consistent derivative magnitudes (smooth variation)
+            double maxDerivMag = derivMagnitudes.Max();
+            double derivativeRatio = maxDerivMag / minDerivMag;
+
+            // If derivative magnitude varies by more than factor of 10, consider it non-smooth
+            if (derivativeRatio > 10.0)
+                return false;
+
+            // 3. Check for rapid changes between adjacent samples
+            for (int i = 1; i < numSamples; i++)
+            {
+                double ratio = Math.Max(derivMagnitudes[i], derivMagnitudes[i - 1]) /
+                              Math.Min(derivMagnitudes[i], derivMagnitudes[i - 1]);
+
+                // If adjacent derivatives differ by more than factor of 3, consider non-smooth
+                if (ratio > 3.0)
+                    return false;
+            }
+
+            // If all checks pass, the curve has smooth derivatives
+            return true;
         }
 
         /***************************************************/

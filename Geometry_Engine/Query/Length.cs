@@ -191,10 +191,16 @@ namespace BH.Engine.Geometry
                 return double.NaN;
             }
 
-            // Check derivative smoothness to determine integration method
-            bool hasSmootDerivatives = HasSmoothDerivatives(curve, tolerance);
+            // Align tolerance to the scale of the curve
+            BoundingBox bounds = curve.ControlPoints.Bounds();
+            double diagonal = (bounds.Max - bounds.Min).Length();
+            int exponent = (int)Math.Floor(Math.Log10(diagonal));
+            tolerance = tolerance * Math.Pow(10, exponent);
 
-            if (hasSmootDerivatives)
+            // Check derivative smoothness to determine integration method
+            bool hasSmoothDerivatives = HasSmoothDerivatives(curve, tolerance);
+
+            if (hasSmoothDerivatives)
             {
                 // Use Gauss-Legendre quadrature for smooth curves
                 return GaussLegendreArcLength(curve, 0.0, 1.0, tolerance, 16);
@@ -334,7 +340,7 @@ namespace BH.Engine.Geometry
         [Description("Computes the magnitude of the first derivative of a NurbsCurve at parameter t.")]
         private static double DerivativeMagnitude(NurbsCurve curve, double t)
         {
-            // Get the unnormalized first derivative vector at parameter t
+            // Get the unnormalised first derivative vector at parameter t
             List<Vector> derivatives = curve.DerivativesAtParameter(1, t, true);
             if (derivatives == null || derivatives.Count < 2)
                 return 0.0;
@@ -353,7 +359,7 @@ namespace BH.Engine.Geometry
         private static bool HasSmoothDerivatives(NurbsCurve curve, double tolerance)
         {
             // Sample derivative magnitudes at several points to assess smoothness
-            int numSamples = 101; // Sample at 0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875, 1.0
+            int numSamples = 101; // Sample at 0.01 intervals
             double[] derivMagnitudes = new double[numSamples];
 
             for (int i = 0; i < numSamples; i++)

@@ -20,13 +20,13 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.oM.Geometry;
 using BH.oM.Base.Attributes;
+using BH.oM.Geometry;
+using BH.oM.Quantities.Attributes;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.ComponentModel;
-using BH.oM.Quantities.Attributes;
+using System.Linq;
 
 namespace BH.Engine.Geometry
 {
@@ -105,7 +105,7 @@ namespace BH.Engine.Geometry
             double a = Math.Max(curve.Radius1, curve.Radius2);
             double b = Math.Min(curve.Radius1, curve.Radius2);
 
-            double h = (a - b)/ (a + b);
+            double h = (a - b) / (a + b);
             h *= h;
 
             //When h is equal to 1, the ellipse is a line
@@ -154,7 +154,7 @@ namespace BH.Engine.Geometry
                 return 4 * hypotenus;
             }
 
-            return length; 
+            return length;
         }
 
         /***************************************************/
@@ -175,6 +175,35 @@ namespace BH.Engine.Geometry
         public static double SquareLength(this Line curve)
         {
             return (curve.Start - curve.End).SquareLength();
+        }
+
+        /***************************************************/
+
+        [Description("Calculates the length of a NurbsCurve using numerical integration.")]
+        [Input("curve", "The NurbsCurve to calculate the length of.")]
+        [Input("tolerance", "Tolerance for the numerical integration. Smaller values give more accurate results but take longer to compute.", typeof(Length))]
+        [Output("length", "The length of the NurbsCurve.", typeof(Length))]
+        public static double Length(this NurbsCurve curve, double tolerance = Tolerance.Distance)
+        {
+            if (curve == null)
+            {
+                BH.Engine.Base.Compute.RecordError("Cannot query length as the geometry is null.");
+                return double.NaN;
+            }
+
+            // Check if this is a rational curve (has non-uniform weights)
+            bool isRational = curve.Weights.Any(w => Math.Abs(w - 1.0) > tolerance);
+
+            if (isRational)
+            {
+                // Use more sophisticated integration for rational curves
+                return AdaptiveRationalCurveLength(curve, tolerance);
+            }
+            else
+            {
+                // Use standard integration for non-rational curves
+                return AdaptiveSimpsonArcLength(curve, 0.0, 1.0, tolerance);
+            }
         }
 
         /***************************************************/
@@ -243,6 +272,173 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
         /**** Private Methods                           ****/
+        /***************************************************/
+
+        [Description("Computes the arc length of a NurbsCurve using adaptive Simpson's rule integration.")]
+        private static double AdaptiveSimpsonArcLength(NurbsCurve curve, double a, double b, double tolerance)
+        {
+            // Initial Simpson's rule approximation
+            double c = (a + b) / 2.0;
+            double h = b - a;
+
+            double fa = DerivativeMagnitude(curve, a);
+            double fb = DerivativeMagnitude(curve, b);
+            double fc = DerivativeMagnitude(curve, c);
+
+            // Check for degenerate cases
+            if (fa <= 0 && fb <= 0 && fc <= 0)
+            {
+                Engine.Base.Compute.RecordWarning("All derivative magnitudes are zero or negative. The curve may be degenerate.");
+                return 0.0;
+            }
+
+            double s = (h / 6.0) * (fa + 4.0 * fc + fb);
+
+            return AdaptiveSimpsonArcLengthRecursive(curve, a, b, tolerance, s, fa, fb, fc, 20);
+        }
+
+        /***************************************************/
+
+        [Description("Recursive helper for adaptive Simpson's rule integration.")]
+        private static double AdaptiveSimpsonArcLengthRecursive(NurbsCurve curve, double a, double b, double tolerance, double s, double fa, double fb, double fc, int depth)
+        {
+            if (depth <= 0)
+                return s; // Maximum recursion depth reached
+
+            double c = (a + b) / 2.0;
+            double h = b - a;
+            double d = (a + c) / 2.0;
+            double e = (c + b) / 2.0;
+
+            double fd = DerivativeMagnitude(curve, d);
+            double fe = DerivativeMagnitude(curve, e);
+
+            double sleft = (h / 12.0) * (fa + 4.0 * fd + fc);
+            double sright = (h / 12.0) * (fc + 4.0 * fe + fb);
+            double s2 = sleft + sright;
+
+            double sqTolerance = tolerance * tolerance;
+
+            // More conservative error estimate for better accuracy
+            double error = Math.Abs(s2 - s);
+            if (error <= 15.0 * tolerance || h < sqTolerance) // Also stop if interval is too small
+                return s2 + (s2 - s) / 15.0; // Richardson extrapolation
+
+            // Subdivide further
+            return AdaptiveSimpsonArcLengthRecursive(curve, a, c, tolerance / 2.0, sleft, fa, fc, fd, depth - 1) +
+                   AdaptiveSimpsonArcLengthRecursive(curve, c, b, tolerance / 2.0, sright, fc, fb, fe, depth - 1);
+        }
+
+        /***************************************************/
+
+        [Description("Computes the magnitude of the first derivative of a NurbsCurve at parameter t.")]
+        private static double DerivativeMagnitude(NurbsCurve curve, double t)
+        {
+            // Get the unnormalized first derivative vector at parameter t
+            List<Vector> derivatives = curve.DerivativesAtParameter(1, t, true);
+            if (derivatives == null || derivatives.Count < 2)
+                return 0.0;
+
+            Vector firstDerivative = derivatives[1]; // Index 1 is the first derivative
+            if (firstDerivative == null)
+                return 0.0;
+
+            // Return the magnitude of the derivative vector
+            return firstDerivative.Length();
+        }
+
+        /***************************************************/
+
+        [Description("Calculates the length of a rational NURBS curve using adaptive integration with parameter redistribution.")]
+        private static double AdaptiveRationalCurveLength(NurbsCurve curve, double tolerance)
+        {
+            // For rational curves, the parameter distribution is non-uniform
+            // We need to use a more sophisticated approach
+
+            // Strategy: Use Gauss-Legendre quadrature with adaptive subdivision
+            // This is more accurate for rational curves than simple Simpson's rule
+
+            return GaussLegendreArcLength(curve, 0.0, 1.0, tolerance, 16); // Start with 16-point quadrature
+        }
+
+        /***************************************************/
+
+        [Description("Computes arc length using Gauss-Legendre quadrature with adaptive subdivision.")]
+        private static double GaussLegendreArcLength(NurbsCurve curve, double a, double b, double tolerance, int numPoints)
+        {
+            // Gauss-Legendre nodes and weights for different orders
+            double[] nodes, weights;
+            GetGaussLegendreNodesAndWeights(numPoints, out nodes, out weights);
+
+            double sum = 0.0;
+            double halfRange = (b - a) * 0.5;
+            double midPoint = (a + b) * 0.5;
+
+            // Transform integration interval [a,b] to [-1,1] and integrate
+            for (int i = 0; i < numPoints; i++)
+            {
+                double t = midPoint + halfRange * nodes[i];
+                double derivMag = DerivativeMagnitude(curve, t);
+                sum += weights[i] * derivMag;
+            }
+
+            double result = halfRange * sum;
+
+            // Adaptive refinement: compare with lower-order quadrature
+            if (numPoints >= 8)
+            {
+                double coarseResult = GaussLegendreArcLength(curve, a, b, tolerance * 10, numPoints / 2);
+                double error = Math.Abs(result - coarseResult);
+
+                if (error > tolerance && (b - a) > tolerance)
+                {
+                    // Subdivide the interval
+                    double mid = (a + b) * 0.5;
+                    double leftResult = GaussLegendreArcLength(curve, a, mid, tolerance * 0.5, numPoints);
+                    double rightResult = GaussLegendreArcLength(curve, mid, b, tolerance * 0.5, numPoints);
+                    return leftResult + rightResult;
+                }
+            }
+
+            return result;
+        }
+
+        /***************************************************/
+
+        [Description("Gets Gauss-Legendre quadrature nodes and weights for numerical integration.")]
+        private static void GetGaussLegendreNodesAndWeights(int n, out double[] nodes, out double[] weights)
+        {
+            // Pre-computed Gauss-Legendre nodes and weights for common orders
+            switch (n)
+            {
+                case 4:
+                    nodes = new double[] { -0.8611363115940526, -0.3399810435848563, 0.3399810435848563, 0.8611363115940526 };
+                    weights = new double[] { 0.3478548451374538, 0.6521451548625461, 0.6521451548625461, 0.3478548451374538 };
+                    break;
+                case 8:
+                    nodes = new double[] { -0.9602898564975363, -0.7966664774136267, -0.5255324099163290, -0.1834346424956498,
+                                          0.1834346424956498, 0.5255324099163290, 0.7966664774136267, 0.9602898564975363 };
+                    weights = new double[] { 0.1012285362903763, 0.2223810344533745, 0.3137066458778873, 0.3626837833783620,
+                                           0.3626837833783620, 0.3137066458778873, 0.2223810344533745, 0.1012285362903763 };
+                    break;
+                case 16:
+                    nodes = new double[] { -0.9894009349916499, -0.9445750230732326, -0.8656312023878318, -0.7554044083550030,
+                                          -0.6178762444026438, -0.4580167776572274, -0.2816035507792589, -0.0950125098376374,
+                                          0.0950125098376374, 0.2816035507792589, 0.4580167776572274, 0.6178762444026438,
+                                          0.7554044083550030, 0.8656312023878318, 0.9445750230732326, 0.9894009349916499 };
+                    weights = new double[] { 0.0271524594117541, 0.0622535239386479, 0.0951585116824928, 0.1246289712555339,
+                                            0.1495959888165767, 0.1691565193950025, 0.1826034150449236, 0.1894506104550685,
+                                            0.1894506104550685, 0.1826034150449236, 0.1691565193950025, 0.1495959888165767,
+                                            0.1246289712555339, 0.0951585116824928, 0.0622535239386479, 0.0271524594117541 };
+                    break;
+                default:
+                    // Fallback to 4-point quadrature
+                    nodes = new double[] { -0.8611363115940526, -0.3399810435848563, 0.3399810435848563, 0.8611363115940526 };
+                    weights = new double[] { 0.3478548451374538, 0.6521451548625461, 0.6521451548625461, 0.3478548451374538 };
+                    break;
+            }
+        }
+
         /***************************************************/
 
         [Description("Calculates the square binomial cooefficients used in the infinite series of the ellipse length calculation.")]

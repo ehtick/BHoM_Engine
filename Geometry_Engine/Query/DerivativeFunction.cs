@@ -20,13 +20,10 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using System;
-using System.ComponentModel;
 using BH.oM.Base.Attributes;
+using System;
 using System.Collections.Generic;
-using BH.oM.Geometry;
-using BH.oM.Base;
-using System.Linq;
+using System.ComponentModel;
 
 namespace BH.Engine.Geometry
 {
@@ -112,8 +109,8 @@ namespace BH.Engine.Geometry
                         a[s2, 0] = a[s1, 0] / ndu[pk + 1, rk];
                         d = a[s2, 0] * ndu[rk, pk];
                     }
-                    int j1, j2;
 
+                    int j1, j2;
                     if (rk >= -1)
                         j1 = 1;
                     else
@@ -142,7 +139,6 @@ namespace BH.Engine.Geometry
                     s2 = jTemp;
                 }
             }
-
 
             List<List<double>> dersList = new List<List<double>>();
 

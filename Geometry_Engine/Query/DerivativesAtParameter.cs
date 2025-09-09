@@ -26,7 +26,6 @@ using BH.oM.Geometry;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 
 namespace BH.Engine.Geometry
 {
@@ -57,16 +56,17 @@ namespace BH.Engine.Geometry
             Output<List<double[]>, bool> cw_isRational = curve.ControlPoints.ToDoubleArray(curve.Weights);
             List<double[]> cw = cw_isRational.Item1;
             bool isRational = cw_isRational.Item2;
-            
+
             //Compute the derivatives for the homogenous/cartesian coordinates coordinates
             List<double[]> cwDers = CurveDerivatives(curve.Knots, degree, cw, numberOfDerivates, t);
 
             return cwDers.ToCartesianDerivatesCurve(isRational);
         }
 
+        /***************************************************/
 
         [Description("Gets the vectors that are the derivatives of the surface at the point of u, v, where u and v are normalised parameters.\n"
-                    +"Outer list index correspond to the derivative in u direction and inner list index to the derivative in v direction, i.e. index 0,0 is no derivative (position) and index 1,0 is the 1st derivative in u direction.")]
+                    + "Outer list index correspond to the derivative in u direction and inner list index to the derivative in v direction, i.e. index 0,0 is no derivative (position) and index 1,0 is the 1st derivative in u direction.")]
         [Input("surface", "Surface to evaluate.")]
         [Input("u", "Parameter to evaluate at. Should be between 0 and 1. For values outside the range, the closest value will be used.")]
         [Input("v", "Parameter to evaluate at. Should be between 0 and 1. For values outside the range, the closest value will be used.")]
@@ -85,7 +85,7 @@ namespace BH.Engine.Geometry
 
             List<List<double[]>> ptsArray = new List<List<double[]>>();
 
-            var uvCount = surface.UVCount();
+            List<int> uvCount = surface.UVCount();
 
             int uIndexAddtion = KnotSpan(surface.UKnots, surface.UDegree, u) - surface.UDegree + 1;
             int vIndexAddtion = KnotSpan(surface.VKnots, surface.VDegree, v) - surface.VDegree + 1;
@@ -165,6 +165,49 @@ namespace BH.Engine.Geometry
 
             return surfaceDerivatives;
         }
+
+        /***************************************************/
+
+        public static List<List<Vector>> DerivativesAtParameters(this NurbsCurve curve, int nbDers, List<double> ts)
+        {
+            int degree = curve.Degree();
+            int du = Math.Min(degree, nbDers);
+            Output<List<double[]>, bool> cw_isRational = curve.ControlPoints.ToDoubleArray(curve.Weights);
+            List<double[]> cw = cw_isRational.Item1;
+            bool isRational = cw_isRational.Item2;
+            List<List<double[]>> derPts = DerivativePoints(curve.Knots, cw, du, degree);
+
+            int span = degree - 1;
+
+            List<List<Vector>> derivatives = new List<List<Vector>>();
+
+            int dim = isRational ? 4 : 3;
+
+            foreach (double t in ts)
+            {
+                List<double[]> current = new List<double[]>();
+
+                while (t > curve.Knots[span + 1] && span < curve.Knots.Count - degree)
+                    span++;
+
+                List<List<double>> allBasis = AllBasisFunctions(curve.Knots, span, degree, t);
+
+                for (int k = 0; k <= du; k++)
+                {
+                    double[] v = new double[dim];
+                    for (int j = 0; j <= degree - k; j++)
+                    {
+                        //v += allBasis[degree - k][j] * derPts[k][span - degree + 1 + j];
+                        AddMultiply(v, derPts[k][span - degree + 1 + j], allBasis[degree - k][j]);
+                    }
+                    current.Add(v);
+                }
+                derivatives.Add(current.ToCartesianDerivatesCurve(isRational));
+            }
+
+            return derivatives;
+        }
+
 
         /***************************************************/
         /**** Private Methods                           ****/
@@ -280,9 +323,6 @@ namespace BH.Engine.Geometry
         }
 
         /***************************************************/
-
-        
     }
-
 }
 

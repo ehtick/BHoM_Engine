@@ -1,0 +1,93 @@
+﻿using BH.oM.Base;
+using BH.oM.Geometry;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace BH.Engine.Geometry
+{
+    public static partial class Query
+    {
+        public static Output<Point, double> AreaAndCentroid(this NurbsCurve curve, double tolerance = Tolerance.Distance)
+        {
+            if (curve == null)
+            {
+                Base.Compute.RecordError("Curve is null, cannot evaluate area and centroid.");
+                return new Output<Point, double> { Item1 = null, Item2 = double.NaN };
+            }
+
+            if (!curve.IsClosed(tolerance))
+            {
+                Base.Compute.RecordError("Curve is not closed, cannot evaluate area and centroid.");
+                return new Output<Point, double> { Item1 = null, Item2 = double.NaN };
+            }
+
+            Plane plane = curve.ControlPoints.FitPlane(tolerance);
+            if (curve.ControlPoints.Any(p => p.Distance(plane) > tolerance))
+            {
+                Base.Compute.RecordError("Curve is not planar, cannot evaluate area and centroid.");
+                return new Output<Point, double> { Item1 = null, Item2 = double.NaN };
+            }
+
+            Vector x;
+            Point orgin = curve.ControlPoints[0];
+            int n = 1;
+            do
+            {
+                x = curve.ControlPoints[n] - orgin;
+                n++;
+            } while (x.SquareLength() < tolerance * tolerance && n < curve.ControlPoints.Count);
+
+            // Level equal to 100 based on empirical testing and discussion with @isaknaslundbh
+            int level = 100;
+
+            double totalA = 0;
+            double totalX = 0;
+            double totalY = 0;
+
+            Output<List<double>, List<double>> gausPairs = curve.Knots.GaussPairs(curve.Degree(), level);
+            List<double> values = gausPairs.Item1;
+            List<double> weights = gausPairs.Item2;
+
+            for (int i = 0; i < values.Count; i++)
+            {
+                List<Vector> der = curve.DerivativesAtParameter(1, values[i], false);
+                Vector v = der[0];
+                Vector v_p = der[1];
+                double w = weights[i];
+
+                totalA += 0.5 * (v.X * v_p.Y - v.Y * v_p.X) * w;
+                totalX += 0.5 * (v.X * v.X * v_p.Y) * w;
+                totalY += -0.5 * (v.Y * v.Y * v_p.X) * w;
+            }
+
+            return new Output<Point, double> { Item1 = new Point { X = totalX / totalA, Y = totalY / totalA }, Item2 = Math.Abs(totalA) };
+        }
+
+        public static Output<Point, double> AreaAndCentroid(this NurbsSurface surface)
+        {
+            // Level equal to 100 based on empirical testing and discussion with @isaknaslundbh
+            int level = 100;
+
+            Output<List<double>, List<double>> uGausPairs = surface.UKnots.GaussPairs(surface.UDegree, level);
+            Output<List<double>, List<double>> vGausPairs = surface.VKnots.GaussPairs(surface.VDegree, level);
+
+            double total = 0;
+            Point centroid = new Point();
+
+            for (int i = 0; i < uGausPairs.Item1.Count; i++)
+            {
+                for (int j = 0; j < vGausPairs.Item1.Count; j++)
+                {
+                    List<List<Vector>> der = surface.DerivativesAtParameter(1, uGausPairs.Item1[i], vGausPairs.Item1[j], false);
+                    Vector cross = der[0][1].CrossProduct(der[1][0]);
+                    double area = cross.Length() * uGausPairs.Item2[i] * vGausPairs.Item2[j];
+                    centroid += der[0][0] * area;
+                    total += area;
+                }
+            }
+
+            return new Output<Point, double> { Item1 = centroid / total, Item2 = total };
+        }
+    }
+}

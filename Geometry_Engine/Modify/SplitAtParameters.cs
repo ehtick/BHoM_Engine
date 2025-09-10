@@ -41,8 +41,9 @@ namespace BH.Engine.Geometry
             if (ts.Count > 1)
                 ts = ts.OrderBy(x => x).ToList();
 
+            bool isClosed = false;
             //If curve is closed, first t should change the seam
-            if (curve.IsClosed())
+            if (isClosed = curve.IsClosed())
             {
                 curve = ChangeSeam(curve, ts[0], tolerance);
                 if (ts.Count == 1)
@@ -80,6 +81,10 @@ namespace BH.Engine.Geometry
             for (int i = 0; i < ts.Count; i++)
             {
                 double t = ts[i];
+
+                if (!isClosed && (t == 0 || t == 1))
+                    continue;
+
                 int r = insertions[i];
                 int endSpan = endSpan = Geometry.Query.KnotSpan(knots, degree, t) + 1;
 

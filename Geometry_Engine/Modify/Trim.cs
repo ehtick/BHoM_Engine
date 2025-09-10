@@ -67,8 +67,21 @@ namespace BH.Engine.Geometry
             List<NurbsCurve> splitCurves = SplitAtParameters(curve, new List<double> { t0, t1 }, tolerance);
 
             bool isClosed = curve.IsClosed(tolerance);
-            int splitCount = isClosed ? 2 : 3;
-            int resultIndex = isClosed ? 0 : 1;
+
+            int splitCount = 3;
+            int resultIndex = 1;
+            if (isClosed)
+            {
+                splitCount = 2;
+                resultIndex = 0;
+            }
+            else if (t0 == tMin)
+            {
+                splitCount = 2;
+                resultIndex = 0;
+            }
+            else if (t1 == tMax)
+                splitCount = 2;
 
             if (splitCurves.Count == splitCount)
                 return splitCurves[resultIndex];

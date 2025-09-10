@@ -33,10 +33,10 @@ namespace BH.Engine.Geometry
 
         public static NurbsCurve Reparatremise(this NurbsCurve curve)
         {
-            int degree = curve.ControlPoints.Count - 1;
+            int degree = curve.Degree();
             double min = curve.Knots[degree - 1];
             double max = curve.Knots[curve.Knots.Count - degree];
-            return new NurbsCurve { ControlPoints = curve.ControlPoints, Weights = curve.Weights, Knots = curve.Knots.Select(t => min + (max - min) * t).ToList() };
+            return new NurbsCurve { ControlPoints = curve.ControlPoints, Weights = curve.Weights, Knots = curve.Knots.Select(t => (t - min) / (max - min)).ToList() };
         }
 
         /***************************************************/

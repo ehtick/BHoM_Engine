@@ -39,11 +39,21 @@ namespace BH.Engine.Geometry
                 return null;
             }
 
-            if (t0 < 0 || t0 > 1 || t1 < 0 || t1 > 1)
+            double[] domain = curve.Domain();
+            double tMin = domain[0];
+            double tMax = domain[1];
+
+            if (t0 < tMin - tolerance || t1 > tMax + tolerance)
             {
                 BH.Engine.Base.Compute.RecordError("Trim parameters must be in the range [0, 1].");
                 return null;
             }
+
+            if (t0 - tMin <= tolerance)
+                t0 = tMin;
+
+            if (tMax - t1 <= tolerance)
+                t1 = tMax;
 
             if (t0 >= t1 - tolerance)
             {
@@ -51,14 +61,20 @@ namespace BH.Engine.Geometry
                 return null;
             }
 
+            if (t0 == tMin && t1 == tMax)
+                return curve;
+
             List<NurbsCurve> splitCurves = SplitAtParameters(curve, new List<double> { t0, t1 }, tolerance);
-            if (splitCurves.Count == 3)
-                return splitCurves[1];
-            else
-            {
-                BH.Engine.Base.Compute.RecordError("Curve could not be trimmed due to an error in splitting.");
-                return null;
-            }
+
+            bool isClosed = curve.IsClosed(tolerance);
+            int splitCount = isClosed ? 2 : 3;
+            int resultIndex = isClosed ? 0 : 1;
+
+            if (splitCurves.Count == splitCount)
+                return splitCurves[resultIndex];
+
+            BH.Engine.Base.Compute.RecordError("Curve could not be trimmed due to an error in splitting.");
+            return null;
 
             /***************************************************/
         }

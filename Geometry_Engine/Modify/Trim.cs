@@ -39,15 +39,18 @@ namespace BH.Engine.Geometry
                 return null;
             }
 
+            double tMin, tMax;
             if (normalisedParameter)
             {
-                t0 = Convert.ToKnotDomain(t0, curve.Knots, curve.Degree());
-                t1 = Convert.ToKnotDomain(t1, curve.Knots, curve.Degree());
+                tMin = 0;
+                tMax = 1;
             }
-
-            double[] domain = curve.Domain();
-            double tMin = domain[0];
-            double tMax = domain[1];
+            else
+            {
+                double[] domain = curve.Domain();
+                tMin = domain[0];
+                tMax = domain[1];
+            }
 
             if (t0 < tMin - tolerance || t1 > tMax + tolerance)
             {

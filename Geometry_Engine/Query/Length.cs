@@ -189,7 +189,7 @@ namespace BH.Engine.Geometry
             List<double> values = gausPairs.Item1;
             List<double> weights = gausPairs.Item2;
 
-            List<List<Vector>> ders = curve.DerivativesAtParameters(1, values);
+            List<List<Vector>> ders = curve.DerivativesAtParameters(1, values, false);
 
             double total = 0;
             for (int i = 0; i < weights.Count; i++)

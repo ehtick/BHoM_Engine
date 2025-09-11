@@ -1,5 +1,6 @@
 ﻿using BH.oM.Base;
 using BH.oM.Geometry;
+using BH.oM.Geometry.CoordinateSystem;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,12 +30,24 @@ namespace BH.Engine.Geometry
                 return new Output<Point, double> { Item1 = null, Item2 = double.NaN };
             }
 
+            // Orient the curve to the XY plane
+            Vector localX = Vector.XAxis;
+            if (1 - Math.Abs(localX.DotProduct(plane.Normal)) < tolerance)
+                localX = Vector.YAxis;
+
+            localX = localX.CrossProduct(plane.Normal);
+            Vector localY = plane.Normal.CrossProduct(localX);
+            Cartesian cs = new Cartesian(plane.Origin, localX, localY, plane.Normal);
+            TransformMatrix orientationToXY = cs.OrientationMatrix(new Cartesian());
+
+            curve = curve.Transform(orientationToXY);
+
             Vector x;
-            Point orgin = curve.ControlPoints[0];
+            Point origin = curve.ControlPoints[0];
             int n = 1;
             do
             {
-                x = curve.ControlPoints[n] - orgin;
+                x = curve.ControlPoints[n] - origin;
                 n++;
             } while (x.SquareLength() < tolerance * tolerance && n < curve.ControlPoints.Count);
 
@@ -61,7 +74,8 @@ namespace BH.Engine.Geometry
                 totalY += -0.5 * (v.Y * v.Y * v_p.X) * w;
             }
 
-            return new Output<Point, double> { Item1 = new Point { X = totalX / totalA, Y = totalY / totalA }, Item2 = Math.Abs(totalA) };
+            Point centroid = new Point { X = totalX / totalA, Y = totalY / totalA }.Transform(orientationToXY.Invert());
+            return new Output<Point, double> { Item1 = centroid, Item2 = Math.Abs(totalA) };
         }
 
         public static Output<Point, double> AreaAndCentroid(this NurbsSurface surface)

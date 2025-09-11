@@ -55,17 +55,21 @@ namespace BH.Engine.Geometry
                     ts.RemoveAt(0);
             }
 
-            List<double[]> cw = curve.ControlPoints.Zip(curve.Weights, (p, w) => new double[] { p.X * w, p.Y * w, p.Z * w, w }).ToList();
+            var ctrlPts = Convert.ToDoubleArray(curve.ControlPoints, curve.Weights);    //Convert to control points
+            bool isRational = ctrlPts.Item2;
+            List<double[]> cw = ctrlPts.Item1;
             List<double> knots = curve.Knots;
             int degree = curve.Degree();
 
-            List<int> insertions = new List<int>();
+            //Ensure the curve is clamped
+            var clamped = EnsureClamped(cw, knots, degree);
+            cw = clamped.Item1;
+            knots = clamped.Item2;
 
             for (int i = 0; i < ts.Count; i++)
             {
                 int r = degree - Query.KnotMultiplicity(knots, ts[i]);
                 Output<List<double>, List<double[]>> inserted = InsertKnot(degree, knots, cw, ts[i], r);    //insert each knot degree amount of times
-                insertions.Add(r);
                 cw = inserted.Item2;
                 knots = inserted.Item1;
             }
@@ -74,18 +78,16 @@ namespace BH.Engine.Geometry
 
             int startSpan = 0;
             int startPtIndex = 0;
-            List<double> tmpKnots, tmpWeights;
-            List<Point> tmpCtrlPts;
+            List<double> tmpKnots;
 
             //add from left to right segments up to last split point
             for (int i = 0; i < ts.Count; i++)
             {
                 double t = ts[i];
 
-                if (!isClosed && (t == 0 || t == 1))
+                if (t == 0 || t == 1)
                     continue;
 
-                int r = insertions[i];
                 int endSpan = endSpan = Geometry.Query.KnotSpan(knots, degree, t) + 1;
 
                 tmpKnots = new List<double>();
@@ -97,18 +99,9 @@ namespace BH.Engine.Geometry
 
                 int endIndex = endSpan - degree + 1;
 
-                tmpWeights = new List<double>();
-                tmpCtrlPts = new List<Point>();
+                var ptsAndWeight = Convert.ToPointAndWeight(cw.GetRange(startPtIndex, endIndex-startPtIndex), isRational);
 
-                for (int j = startPtIndex; j < endIndex; j++)
-                {
-                    double[] ptW = cw[j];
-                    double w = ptW[3];
-                    tmpCtrlPts.Add(new Point() { X = ptW[0] / w, Y = ptW[1] / w, Z = ptW[2] / w });
-                    tmpWeights.Add(w);
-                }
-
-                splitCurves.Add(new NurbsCurve { Knots = tmpKnots, ControlPoints = tmpCtrlPts, Weights = tmpWeights });
+                splitCurves.Add(new NurbsCurve { Knots = tmpKnots, ControlPoints = ptsAndWeight.Item1, Weights = ptsAndWeight.Item2 });
 
                 startSpan = endSpan - degree;
                 startPtIndex = endIndex - 1;
@@ -122,20 +115,13 @@ namespace BH.Engine.Geometry
                 tmpKnots.Add(knots[j]);
             }
 
-            tmpWeights = new List<double>();
-            tmpCtrlPts = new List<Point>();
-            for (int j = startPtIndex; j < cw.Count; j++)
-            {
-                double[] ptW = cw[j];
-                double w = ptW[3];
-                tmpCtrlPts.Add(new Point() { X = ptW[0] / w, Y = ptW[1] / w, Z = ptW[2] / w });
-                tmpWeights.Add(w);
-            }
+            var ptsAndWeightEnd = Convert.ToPointAndWeight(cw.GetRange(startPtIndex, cw.Count - startPtIndex), isRational);
 
-            splitCurves.Add(new NurbsCurve { Knots = tmpKnots, ControlPoints = tmpCtrlPts, Weights = tmpWeights });
+            splitCurves.Add(new NurbsCurve { Knots = tmpKnots, ControlPoints = ptsAndWeightEnd.Item1, Weights = ptsAndWeightEnd.Item2 });
 
             return splitCurves;
         }
+
 
         /***************************************************/
     }

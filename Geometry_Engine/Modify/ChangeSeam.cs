@@ -57,7 +57,7 @@ namespace BH.Engine.Geometry
             int degree = curve.Degree();
             if (isPeriodic)
             {
-                Output<List<double[]>, List<double>> clamped = ClampPeriodic(cw, knots, degree);
+                Output<List<double[]>, List<double>> clamped = EnsureClamped(cw, knots, degree);
                 cw = clamped.Item1;
                 knots = clamped.Item2;
             }
@@ -106,31 +106,6 @@ namespace BH.Engine.Geometry
 
 
         /***************************************************/
-        /**** Private Methods                            ****/
-        /***************************************************/
 
-        public static Output<List<double[]>, List<double>> ClampPeriodic(List<double[]> cw, List<double> knots, int degree)
-        {
-            int startSpan = degree - 1;
-            Output<List<double>, List<double[]>> startInsert = InsertKnot(degree, knots, cw, knots[startSpan], degree, startSpan, 0);
-            int endSpan = startInsert.Item1.Count - degree - 1;
-            Output<List<double>, List<double[]>> endInsert = InsertKnot(degree, startInsert.Item1, startInsert.Item2, startInsert.Item1[endSpan + 1], degree, endSpan, 0);
-
-            List<double[]> newPts = new List<double[]>();
-            List<double> newKnots = new List<double>();
-
-            for (int i = degree; i < endInsert.Item1.Count - degree; i++)
-            {
-                newKnots.Add(endInsert.Item1[i]);
-            }
-
-            for (int i = degree; i < endInsert.Item2.Count - degree; i++)
-            {
-                newPts.Add(endInsert.Item2[i]);
-            }
-            return new Output<List<double[]>, List<double>> { Item1 = newPts, Item2 = newKnots };
-        }
-
-        /***************************************************/
     }
 }

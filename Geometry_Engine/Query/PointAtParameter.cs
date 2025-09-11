@@ -224,21 +224,25 @@ namespace BH.Engine.Geometry
         [Input("u", "The parameter to evaluate along the u domain. Should be between 0 and 1. For values outside the range, the closest value will be used.")]
         [Input("v", "The parameter to evaluate along the v domain. Should be between 0 and 1. For values outside the range, the closest value will be used.")]
         [Output("pt", "The point at the provided parameters.")]
-        public static Point PointAtParameter(this NurbsSurface surface, double u, double v)
+        public static Point PointAtParameter(this NurbsSurface surface, double u, double v, bool normalisedParameter = true)
         {
             if (surface.IsNull())
                 return null;
 
+            if (normalisedParameter)
+            {
+                u = Convert.ToKnotDomain(u, surface.UKnots, surface.UDegree);
+                v = Convert.ToKnotDomain(v, surface.VKnots, surface.VDegree);
+            }
+
             int uDegree = surface.UDegree;
             System.Collections.ObjectModel.ReadOnlyCollection<double> uKnots = surface.UKnots;
-            u = Convert.ToKnotDomain(u, surface.UKnots, surface.UDegree);
 
             int uSpan = uKnots.KnotSpan(uDegree, u);
             List<double> uBasisFunctions = uKnots.BasisFunctions(uSpan, uDegree, u);
 
             int vDegree = surface.VDegree;
             System.Collections.ObjectModel.ReadOnlyCollection<double> vKnots = surface.VKnots;
-            v = Convert.ToKnotDomain(v, surface.VKnots, surface.VDegree);
 
             int vSpan = vKnots.KnotSpan(vDegree, v);
             List<double> vBasisFunctions = vKnots.BasisFunctions(vSpan, vDegree, v);

@@ -80,6 +80,12 @@ namespace BH.Engine.Geometry
 
         public static Output<Point, double> AreaAndCentroid(this NurbsSurface surface)
         {
+            if (surface.InnerTrims.Count != 0 || surface.OuterTrims.Count != 0)
+            {
+                Base.Compute.RecordError("Trimmed surfaces are not supported, cannot evaluate area and centroid.");
+                return new Output<Point, double> { Item1 = null, Item2 = double.NaN };
+            }
+
             // Level equal to 100 based on empirical testing and discussion with @isaknaslundbh
             int level = 100;
 

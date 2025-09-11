@@ -20,8 +20,10 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.oM.Base.Attributes;
 using BH.oM.Geometry;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace BH.Engine.Geometry
 {
@@ -31,9 +33,32 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
+        [Description("Gets the domain of a NurbsCurve.")]
+        [Input("curve", "The NurbsCurve to get the domain from.")]
+        [Output("domain", "The domain of the NURBS curve as an array [min, max].")]
         public static double[] Domain(this NurbsCurve curve)
         {
             return curve.Knots.Domain(curve.Degree());
+        }
+
+        /***************************************************/
+
+        [Description("Gets the U domain of a NurbsSurface.")]
+        [Input("surface", "The NurbsSurface to get the U domain from.")]
+        [Output("domain", "The U domain of the NURBS surface as an array [min, max].")]
+        public static double[] UDomain(this NurbsSurface surface)
+        {
+            return surface.UKnots.Domain(surface.UDegree);
+        }
+
+        /***************************************************/
+
+        [Description("Gets the V domain of a NurbsSurface.")]
+        [Input("surface", "The NurbsSurface to get the V domain from.")]
+        [Output("domain", "The V domain of the NURBS surface as an array [min, max].")]
+        public static double[] VDomain(this NurbsSurface surface)
+        {
+            return surface.VKnots.Domain(surface.VDegree);
         }
 
         /***************************************************/

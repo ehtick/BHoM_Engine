@@ -39,7 +39,7 @@ namespace BH.Engine.Geometry
         [Output("Vector which is the k'th derivative of the curve at the point of t.")]
         public static Vector DerivativeAtParameter(this NurbsCurve curve, double t, int k, bool normalisedParameter = true)
         {
-            return curve.DerivativesAtParameter(k, t, normalisedParameter)[k];
+            return curve.DerivativesAtParameter(k + 1, t, normalisedParameter)[k];
         }
 
         /***************************************************/

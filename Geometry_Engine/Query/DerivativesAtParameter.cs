@@ -58,8 +58,6 @@ namespace BH.Engine.Geometry
                 t = Convert.ToKnotDomain(t, curve.Knots, degree);
             }
 
-            numberOfDerivates = Math.Min(numberOfDerivates, degree);
-
             //Construct list of homogenous controlpoints as double[] where the the first three values correspond to the coordinates sclaed by the weight and 4th value correspond to the weights
             Output<List<double[]>, bool> cw_isRational = curve.ControlPoints.ToDoubleArray(curve.Weights);
             List<double[]> cw = cw_isRational.Item1;
@@ -106,11 +104,11 @@ namespace BH.Engine.Geometry
                 double uMin = surface.UKnots[surface.UDegree - 1];
                 double uMax = surface.UKnots[surface.UKnots.Count - surface.UDegree];
                 uDomainScaling = uMax - uMin;
-                
+
                 double vMin = surface.VKnots[surface.VDegree - 1];
                 double vMax = surface.VKnots[surface.VKnots.Count - surface.VDegree];
                 vDomainScaling = vMax - vMin;
-                
+
                 u = Convert.ToKnotDomain(u, surface.UKnots, surface.UDegree);
                 v = Convert.ToKnotDomain(v, surface.VKnots, surface.VDegree);
             }
@@ -203,10 +201,10 @@ namespace BH.Engine.Geometry
                     for (int l = 0; l <= numberOfDerivates - k; l++)
                     {
                         if (k == 0 && l == 0) continue; // Skip position (no derivative)
-                        
+
                         double vScalingPower = Math.Pow(vDomainScaling, l);
                         double totalScaling = uScalingPower * vScalingPower;
-                        
+
                         if (k < surfaceDerivatives.Count && l < surfaceDerivatives[k].Count)
                         {
                             surfaceDerivatives[k][l] *= totalScaling;
@@ -263,9 +261,15 @@ namespace BH.Engine.Geometry
                     }
                     current.Add(v);
                 }
-                
+
+                // Add zero derivatives for orders higher than the degree
+                for (int k = du + 1; k <= nbDers; k++)
+                {
+                    current.Add(new double[dim]);
+                }
+
                 List<Vector> currentDerivatives = current.ToCartesianDerivatesCurve(isRational);
-                
+
                 // Apply chain rule scaling for normalized parameters
                 if (normalisedParameter)
                 {
@@ -276,7 +280,7 @@ namespace BH.Engine.Geometry
                         scalingPower *= domainScaling;
                     }
                 }
-                
+
                 derivatives.Add(currentDerivatives);
             }
 

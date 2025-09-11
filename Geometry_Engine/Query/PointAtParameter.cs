@@ -20,13 +20,11 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.oM.Geometry;
 using BH.oM.Base.Attributes;
+using BH.oM.Geometry;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.ComponentModel;
-using BH.oM.Quantities.Attributes;
 
 namespace BH.Engine.Geometry
 {
@@ -36,7 +34,7 @@ namespace BH.Engine.Geometry
         /**** Public Methods - Curves                   ****/
         /***************************************************/
 
-        [Description("Gets out the Point at the normalised angle parameter t on the curve. t should be between 0 and 1 where 0 corresponds to StartAngle and 1 corresponds to EndAngle.\n" + 
+        [Description("Gets out the Point at the normalised angle parameter t on the curve. t should be between 0 and 1 where 0 corresponds to StartAngle and 1 corresponds to EndAngle.\n" +
                      "For a circular Arc this is equivalent to the point at the normalised length paramter where 0 is the StartPoint and 1 is EndPoint.")]
         [Input("curve", "The Arc to evaluate.")]
         [Input("t", "The normalised length/angle parameter to evaluate. Should be a value between 0 and 1.")]
@@ -78,7 +76,7 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
-        [Description("Gets out the Point at the normalised angle parameter t on the curve. t should be between 0 and 1 where 0 corresponds to 0 angle and 1 corresponds to a full lap of 2*PI radians.\n" + 
+        [Description("Gets out the Point at the normalised angle parameter t on the curve. t should be between 0 and 1 where 0 corresponds to 0 angle and 1 corresponds to a full lap of 2*PI radians.\n" +
                      "Note that for a general case this does not correspond to a normalised length parameter along the curve, i.e. t value 1/3 does not (for the general case) give the point at 1/3 length around the perimiter but rather the point at the angle parameter corresponding to 1/3 of a full lap.")]
         [Input("curve", "The Ellipse to evaluate.")]
         [Input("t", "The normalised angle parameter to evaluate. Should be a value between 0 and 1.")]
@@ -127,15 +125,16 @@ namespace BH.Engine.Geometry
         [Input("curve", "The NurbsCurve to evaluate.")]
         [Input("t", "Parameter to get the Point at. Should be between 0 and 1. For values outside the range, the closest value will be used.")]
         [Output("pt", "The point at the provided parameter.")]
-        public static Point PointAtParameter(this NurbsCurve curve, double t)
+        public static Point PointAtParameter(this NurbsCurve curve, double t, bool normalisedParameter = true)
         {
             if (curve.IsNull())
                 return null;
 
             int degree = curve.Degree();
-            var knots = curve.Knots;
+            List<double> knots = curve.Knots;
 
-            t = Convert.ToKnotDomain(t, curve.Knots, degree);
+            if (normalisedParameter)
+                t = Convert.ToKnotDomain(t, curve.Knots, degree);
 
             int span = knots.KnotSpan(degree, t);
             List<double> basisFunctions = knots.BasisFunctions(span, degree, t);
@@ -150,6 +149,7 @@ namespace BH.Engine.Geometry
                 pt += curve.ControlPoints[ptIndex] * basisWeight;
                 sum += basisWeight;
             }
+
             return pt / sum;
         }
 
@@ -230,14 +230,14 @@ namespace BH.Engine.Geometry
                 return null;
 
             int uDegree = surface.UDegree;
-            var uKnots = surface.UKnots;
+            System.Collections.ObjectModel.ReadOnlyCollection<double> uKnots = surface.UKnots;
             u = Convert.ToKnotDomain(u, surface.UKnots, surface.UDegree);
 
             int uSpan = uKnots.KnotSpan(uDegree, u);
             List<double> uBasisFunctions = uKnots.BasisFunctions(uSpan, uDegree, u);
 
             int vDegree = surface.VDegree;
-            var vKnots = surface.VKnots;
+            System.Collections.ObjectModel.ReadOnlyCollection<double> vKnots = surface.VKnots;
             v = Convert.ToKnotDomain(v, surface.VKnots, surface.VDegree);
 
             int vSpan = vKnots.KnotSpan(vDegree, v);
@@ -246,7 +246,7 @@ namespace BH.Engine.Geometry
             int uIndexAddtion = uSpan - uDegree + 1;
             int vIndexAddtion = vSpan - vDegree + 1;
 
-            var uvCount = surface.UVCount();
+            List<int> uvCount = surface.UVCount();
 
             double a = 0;
             Point result = new Point();

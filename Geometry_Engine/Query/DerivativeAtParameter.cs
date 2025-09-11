@@ -20,12 +20,9 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.oM.Geometry;
 using BH.oM.Base.Attributes;
-using System;
-using System.Collections.Generic;
+using BH.oM.Geometry;
 using System.ComponentModel;
-using System.Linq;
 
 namespace BH.Engine.Geometry
 {
@@ -40,9 +37,9 @@ namespace BH.Engine.Geometry
         [Input("t", "Parameter to evaluate at. Should be between 0 and 1. For values outside the range, the closest value will be used.")]
         [Input("k", "Degree of the derivation.")]
         [Output("Vector which is the k'th derivative of the curve at the point of t.")]
-        public static Vector DerivativeAtParameter(this NurbsCurve curve, double t, int k)
+        public static Vector DerivativeAtParameter(this NurbsCurve curve, double t, int k, bool normalisedParameter = true)
         {
-            return curve.DerivativesAtParameter(k, t, true)[k];
+            return curve.DerivativesAtParameter(k, t, normalisedParameter)[k];
         }
 
         /***************************************************/
@@ -54,9 +51,9 @@ namespace BH.Engine.Geometry
         [Input("k", "Degree of derivative for u.")]
         [Input("l", "Degree of derivative for v.")]
         [Output("Vector which is the k'th derivative of the surface at the point of t.")]
-        public static Vector DerivativeAtParameter(this NurbsSurface surface, double u, double v, int k, int l)
+        public static Vector DerivativeAtParameter(this NurbsSurface surface, double u, double v, int k, int l, bool normalisedParameter = true)
         {
-            return surface.DerivativesAtParameter(k + l, u, v, true)[k][l];
+            return surface.DerivativesAtParameter(k + l, u, v, normalisedParameter)[k][l];
         }
 
         /***************************************************/

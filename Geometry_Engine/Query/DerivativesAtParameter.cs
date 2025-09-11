@@ -26,6 +26,7 @@ using BH.oM.Geometry;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 
 namespace BH.Engine.Geometry
 {
@@ -168,7 +169,7 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
-        public static List<List<Vector>> DerivativesAtParameters(this NurbsCurve curve, int nbDers, List<double> ts)
+        public static List<List<Vector>> DerivativesAtParameters(this NurbsCurve curve, int nbDers, List<double> ts, bool normalisedParameter = true)
         {
             int degree = curve.Degree();
             int du = Math.Min(degree, nbDers);
@@ -182,6 +183,9 @@ namespace BH.Engine.Geometry
             List<List<Vector>> derivatives = new List<List<Vector>>();
 
             int dim = isRational ? 4 : 3;
+
+            if (normalisedParameter)
+                ts = ts.Select(t => Convert.ToKnotDomain(t, curve.Knots, curve.Degree())).ToList();
 
             foreach (double t in ts)
             {
@@ -214,7 +218,7 @@ namespace BH.Engine.Geometry
         /***************************************************/
 
         [Description("Computes the non vanishing Curve derivatives. Method is c# implementation of method found in the Nurbs Book.")]
-        private static List<double[]> CurveDerivatives(this IReadOnlyList<double> knots, int degree, List<double[]> pts, int numberOfDers, double t)
+        private static List<double[]> CurveDerivatives(this IList<double> knots, int degree, List<double[]> pts, int numberOfDers, double t)
         {
 
             int maxDers = Math.Min(degree, numberOfDers);
@@ -250,7 +254,7 @@ namespace BH.Engine.Geometry
         /***************************************************/
 
         [Description("Computes the non vanishing Surface derivatives. Method is C# implementation of method found in the Nurbs Book.")]
-        private static List<List<double[]>> SurfaceDerivatives(this IReadOnlyList<double> knotsU, IReadOnlyList<double> knotsV, int degreeU, int degreeV, List<List<double[]>> pts, int numberOfDers, double u, double v)
+        private static List<List<double[]>> SurfaceDerivatives(this IList<double> knotsU, IList<double> knotsV, int degreeU, int degreeV, List<List<double[]>> pts, int numberOfDers, double u, double v)
         {
 
             int dim = pts[0][0].Length;

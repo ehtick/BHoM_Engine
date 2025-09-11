@@ -31,12 +31,18 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
-        public static NurbsCurve Trim(this NurbsCurve curve, double t0, double t1, double tolerance = Tolerance.Distance)
+        public static NurbsCurve Trim(this NurbsCurve curve, double t0, double t1, bool normalisedParameter = true, double tolerance = Tolerance.Distance)
         {
             if (curve == null)
             {
                 BH.Engine.Base.Compute.RecordError("Can't trim a null curve.");
                 return null;
+            }
+
+            if (normalisedParameter)
+            {
+                t0 = Convert.ToKnotDomain(t0, curve.Knots, curve.Degree());
+                t1 = Convert.ToKnotDomain(t1, curve.Knots, curve.Degree());
             }
 
             double[] domain = curve.Domain();
@@ -64,7 +70,7 @@ namespace BH.Engine.Geometry
             if (t0 == tMin && t1 == tMax)
                 return curve;
 
-            List<NurbsCurve> splitCurves = SplitAtParameters(curve, new List<double> { t0, t1 }, false, tolerance);
+            List<NurbsCurve> splitCurves = SplitAtParameters(curve, new List<double> { t0, t1 }, normalisedParameter, tolerance);
 
             bool isClosed = curve.IsClosed(tolerance);
 

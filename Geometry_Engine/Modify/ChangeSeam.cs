@@ -33,12 +33,18 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
-        public static NurbsCurve ChangeSeam(this NurbsCurve curve, double t, double tolerance = Tolerance.Distance)
+        public static NurbsCurve ChangeSeam(this NurbsCurve curve, double t, bool normalisedParameter = true, double tolerance = Tolerance.Distance)
         {
             if (curve == null)
                 return null;
 
-            if (t <= 0 || t >= 1)
+            int degree = curve.Degree();
+
+            if (normalisedParameter)
+                t = Convert.ToKnotDomain(t, curve.Knots, degree);
+
+            double[] domain = curve.Knots.Domain(degree);
+            if (t <= domain[0] || t >= domain[1])
                 return curve;
 
             bool isPeriodic = curve.IsPeriodic();
@@ -54,7 +60,6 @@ namespace BH.Engine.Geometry
             List<double[]> cw = curve.ControlPoints.Zip(curve.Weights, (p, w) => new double[] { p.X * w, p.Y * w, p.Z * w, w }).ToList();
             List<double> knots = curve.Knots;
 
-            int degree = curve.Degree();
             if (isPeriodic)
             {
                 Output<List<double[]>, List<double>> clamped = EnsureClamped(cw, knots, degree);

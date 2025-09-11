@@ -64,7 +64,7 @@ namespace BH.Engine.Geometry
             if (t0 == tMin && t1 == tMax)
                 return curve;
 
-            List<NurbsCurve> splitCurves = SplitAtParameters(curve, new List<double> { t0, t1 }, tolerance);
+            List<NurbsCurve> splitCurves = SplitAtParameters(curve, new List<double> { t0, t1 }, false, tolerance);
 
             bool isClosed = curve.IsClosed(tolerance);
 

@@ -33,7 +33,7 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
-        public static List<NurbsCurve> SplitAtParameters(this NurbsCurve curve, List<double> ts, double tolerance = Tolerance.Distance)
+        public static List<NurbsCurve> SplitAtParameters(this NurbsCurve curve, List<double> ts, bool normalisedParameter = true, double tolerance = Tolerance.Distance)
         {
             if (ts.Count == 0)
                 return new List<NurbsCurve> { curve };
@@ -41,11 +41,14 @@ namespace BH.Engine.Geometry
             if (ts.Count > 1)
                 ts = ts.OrderBy(x => x).ToList();
 
-            bool isClosed = false;
+            int degree = curve.Degree();
+            if (normalisedParameter)
+                ts = ts.Select(t => Convert.ToKnotDomain(t, curve.Knots, degree)).ToList();
+
             //If curve is closed, first t should change the seam
-            if (isClosed = curve.IsClosed())
+            if (curve.IsClosed())
             {
-                curve = ChangeSeam(curve, ts[0], tolerance);
+                curve = ChangeSeam(curve, ts[0], false, tolerance); //Always calling with false for normalised parameters, as already handled above.
                 if (ts.Count == 1)
                 {
                     BH.Engine.Base.Compute.RecordWarning("Input curve is closed. No split performed, seam has been changed to the input parameter instead.");
@@ -59,7 +62,6 @@ namespace BH.Engine.Geometry
             bool isRational = ctrlPts.Item2;
             List<double[]> cw = ctrlPts.Item1;
             List<double> knots = curve.Knots;
-            int degree = curve.Degree();
 
             //Ensure the curve is clamped
             var clamped = EnsureClamped(cw, knots, degree);
@@ -80,12 +82,13 @@ namespace BH.Engine.Geometry
             int startPtIndex = 0;
             List<double> tmpKnots;
 
+            double[] domain = knots.Domain(degree);
             //add from left to right segments up to last split point
             for (int i = 0; i < ts.Count; i++)
             {
                 double t = ts[i];
 
-                if (t == 0 || t == 1)
+                if (t - double.Epsilon <= domain[0] || t + double.Epsilon >= domain[1])
                     continue;
 
                 int endSpan = endSpan = Geometry.Query.KnotSpan(knots, degree, t) + 1;

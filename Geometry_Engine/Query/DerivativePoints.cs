@@ -48,7 +48,7 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
-        public static List<List<double[]>> DerivativePoints(this IReadOnlyList<double> knots, List<double[]> cw, int numDers, int degree)
+        public static List<List<double[]>> DerivativePoints(this IList<double> knots, List<double[]> cw, int numDers, int degree)
         {
             int n = cw.Count;
             List<List<double[]>> derivativePts = new List<List<double[]>>();

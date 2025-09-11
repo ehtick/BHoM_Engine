@@ -59,7 +59,7 @@ namespace BH.Engine.Geometry
         [Input("degree", "Degree of the Curve/Surface in the direction of the provided knots.")]
         [Input("t", "The parameter to evaluate.")]
         [Output("basis", "The basis functions of the knot vector for the given parameter in the given span.")]
-        public static List<double> BasisFunctions(this IReadOnlyList<double> knots, int span, int degree, double t)
+        public static List<double> BasisFunctions(this IList<double> knots, int span, int degree, double t)
         {
             List<double> basis = Enumerable.Repeat(0.0, degree + 1).ToList();
             basis[0] = 1.0;

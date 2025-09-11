@@ -23,7 +23,6 @@
 using BH.oM.Base;
 using BH.oM.Base.Attributes;
 using BH.oM.Geometry;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -41,7 +40,7 @@ namespace BH.Engine.Geometry
         [Input("weights", "Corresponding weights. SHould be a list of the same length as the points.")]
         [MultiOutput(0, "arrs", "THe points converted to double[], either in cartesian or homogenous coordinates, depending on if the curve is rational or not.")]
         [MultiOutput(1, "isRational", "Returns true if the points are rational, i.e. any of the weights are not equal to one.")]
-        public static Output<List<double[]>, bool> ToDoubleArray(this IReadOnlyList<Point> points, IReadOnlyList<double> weights)
+        public static Output<List<double[]>, bool> ToDoubleArray(this IList<Point> points, IList<double> weights)
         {
             return ToDoubleArray(points, weights, false);
         }
@@ -54,7 +53,7 @@ namespace BH.Engine.Geometry
         [Input("planar", "Only considers the x and y coordinates of the points if true. If false, x, y and z coordinates of the points are put in the array.")]
         [MultiOutput(0, "arrs", "THe points converted to double[], either in cartesian or homogenous coordinates, depending on if the curve is rational or not.")]
         [MultiOutput(1, "isRational", "Returns true if the points are rational, i.e. any of the weights are not equal to one.")]
-        public static Output<List<double[]>, bool> ToDoubleArray(this IReadOnlyList<Point> points, IReadOnlyList<double> weights, bool planar)
+        public static Output<List<double[]>, bool> ToDoubleArray(this IList<Point> points, IList<double> weights, bool planar)
         {
             if (weights == null)
             {
@@ -75,7 +74,7 @@ namespace BH.Engine.Geometry
         [Input("planar", "Only considers the x and y coordinates of the points if true. If false, x, y and z coordinates of the points are put in the array.")]
         [MultiOutput(0, "arrs", "THe points converted to double[], either in cartesian or homogenous coordinates, depending on if the curve is rational or not.")]
         [MultiOutput(1, "isRational", "Returns true if the points are rational, i.e. any of the weights are not equal to one.")]
-        public static Output<List<double[]>, bool> ToDoubleArray(this IReadOnlyList<Point> points, IReadOnlyList<double> weights, bool isRational, bool planar)
+        public static Output<List<double[]>, bool> ToDoubleArray(this IList<Point> points, IList<double> weights, bool isRational, bool planar)
         {
             if (points == null || weights == null)
             {

@@ -20,14 +20,13 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using BH.oM.Geometry;
 using BH.oM.Base;
 using BH.oM.Base.Attributes;
-using System.ComponentModel;
+using BH.oM.Geometry;
 using BH.oM.Quantities.Attributes;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace BH.Engine.Geometry
 {
@@ -129,7 +128,7 @@ namespace BH.Engine.Geometry
         [Description("Gets out the Tangent Vector at the parameter t on the curve.\n" +
              "Note that for a general case this does not correspond to a normalised length parameter along the curve.")]
         [Input("curve", "The NurbsCurve to evaluate.")]
-        [Input("t", "The parameter to evaluate.")]
+        [Input("t", "The parameter to evaluate. Should be a value between 0 and 1.")]
         [Input("tolerance", "Distance tolerance to be used in the method.", typeof(Length))]
         [Output("tan", "The tangent vector at the provided parameter.")]
         [PreviousInputNames("t", "parameter")]
@@ -203,7 +202,7 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
-        [Description("Computes and returns the Tangent Vectors along the NurbsSurface U and V directions at parameters u and v. u and v  should both be between 0 and 1, where 0 is the parameter at the first edge and 1 is the parameter at the oposite edge.\n" + 
+        [Description("Computes and returns the Tangent Vectors along the NurbsSurface U and V directions at parameters u and v. u and v  should both be between 0 and 1, where 0 is the parameter at the first edge and 1 is the parameter at the oposite edge.\n" +
                      "No acound is taken for any surface trims which means the tangents returned could be inside an opening or ouside the outer trim.")]
         [Input("surface", "The NurbsSurface to evaluate.")]
         [Input("u", "Parameter along the first (U) direction of the surface.")]

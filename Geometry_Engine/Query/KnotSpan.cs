@@ -20,13 +20,9 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.oM.Base;
 using BH.oM.Base.Attributes;
-using BH.oM.Geometry;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 
 namespace BH.Engine.Geometry
 {
@@ -41,7 +37,7 @@ namespace BH.Engine.Geometry
         [Input("degree", "Degree of the Curve/Surface in the direction of the provided knots.")]
         [Input("t", "The parameter to evaluate.")]
         [Output("span", "The index of the span of the knotvector in which the parameter t resides.")]
-        public static int KnotSpan(this IReadOnlyList<double> knots, int degree, double t)
+        public static int KnotSpan(this IList<double> knots, int degree, double t)
         {
             int n = knots.Count - degree;
 

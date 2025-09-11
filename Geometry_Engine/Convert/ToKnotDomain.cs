@@ -20,13 +20,9 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.oM.Base;
 using BH.oM.Base.Attributes;
-using BH.oM.Geometry;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 
 namespace BH.Engine.Geometry
 {
@@ -41,7 +37,7 @@ namespace BH.Engine.Geometry
         [Input("knots", "Knot vector to extract domain from.")]
         [Input("degree", "Degree of the curve/surface to which the knot vector belong in the direction of the knot vector.")]
         [Output("t", "Parameter in the domain of the knot vector.")]
-        public static double ToKnotDomain(double t, IReadOnlyList<double> knots, int degree)
+        public static double ToKnotDomain(double t, IList<double> knots, int degree)
         {
             if (knots == null)
                 return 0;

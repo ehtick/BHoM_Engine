@@ -30,7 +30,7 @@ namespace BH.Engine.Geometry
         /***************************************************/
         /**** Public Methods                            ****/
         /***************************************************/
-        public static int KnotMultiplicity(this IReadOnlyList<double> knots, double t)
+        public static int KnotMultiplicity(this IList<double> knots, double t)
         {
             double tol = double.Epsilon;
             int multiplicity = 0;

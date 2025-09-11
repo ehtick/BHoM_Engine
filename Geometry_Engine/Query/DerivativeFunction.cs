@@ -59,7 +59,7 @@ namespace BH.Engine.Geometry
         [Input("degree", "Degree of the Curve/Surface in the direction of the provided knots.")]
         [Input("t", "The parameter to evaluate.")]
         [Output("basis", "The basis functions of the knot vector for the given parameter in the given span.")]
-        public static List<List<double>> DerivativeFunctions(this IReadOnlyList<double> knots, int span, int degree, int numberOfDerivates, double t)
+        public static List<List<double>> DerivativeFunctions(this IList<double> knots, int span, int degree, int numberOfDerivates, double t)
         {
             double[] left = new double[degree + 1];
             double[] right = new double[degree + 1];

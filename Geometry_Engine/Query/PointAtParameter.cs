@@ -120,6 +120,7 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [PreviousVersion("8.3", "BH.Engine.Geometry.Query.PointAtParameter(BH.oM.Geometry.NurbsCurve, System.Double)")]
         [Description("Gets out the Point at the parameter t on the curve.\n" +
                      "Note that for a general case this does not correspond to a normalised length parameter along the curve.")]
         [Input("curve", "The NurbsCurve to evaluate.")]
@@ -219,6 +220,7 @@ namespace BH.Engine.Geometry
         /**** Public Methods - Surfaces                 ****/
         /***************************************************/
 
+        [PreviousVersion("8.3", "BH.Engine.Geometry.Query.PointAtParameter(BH.oM.Geometry.NurbsSurface, System.Double, System.Double)")]
         [Description("Gets out the Point at the parameters u and v on the surface.")]
         [Input("surface", "The NurbsSurface to evaluate.")]
         [Input("u", "The parameter to evaluate along the u domain. Should be between 0 and 1. For values outside the range, the closest value will be used.")]

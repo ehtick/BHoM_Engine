@@ -47,7 +47,7 @@ namespace BH.Engine.Geometry
         {
             if (curve == null)
             {
-                Base.Compute.RecordError("Curve is null, cannot evaluate area and centroid.");
+                BH.Engine.Base.Compute.RecordError("Can't compute area and centroid of a null curve.");
                 return new Output<Point, double> { Item1 = null, Item2 = double.NaN };
             }
 
@@ -122,6 +122,12 @@ namespace BH.Engine.Geometry
         [MultiOutput(1, "area", "The area of the surface.", typeof(Area))]
         public static Output<Point, double> AreaAndCentroid(this NurbsSurface surface)
         {
+            if (surface == null)
+            {
+                BH.Engine.Base.Compute.RecordError("Can't compute area and centroid of a null surface.");
+                return new Output<Point, double> { Item1 = null, Item2 = double.NaN };
+            }
+
             if (surface.InnerTrims.Count != 0 || surface.OuterTrims.Count != 0)
             {
                 Base.Compute.RecordError("Trimmed surfaces are not supported, cannot evaluate area and centroid.");

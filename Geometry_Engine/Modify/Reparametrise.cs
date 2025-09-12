@@ -39,6 +39,12 @@ namespace BH.Engine.Geometry
         [Output("curve", "The reparametrised NurbsCurve with domain [0,1].")]
         public static NurbsCurve Reparametrise(this NurbsCurve curve)
         {
+            if (curve == null)
+            {
+                BH.Engine.Base.Compute.RecordError("Can't reparametrise a null curve.");
+                return null;
+            }
+
             int degree = curve.Degree();
             double min = curve.Knots[degree - 1];
             double max = curve.Knots[curve.Knots.Count - degree];
@@ -52,6 +58,12 @@ namespace BH.Engine.Geometry
         [Output("surface", "The reparametrised NurbsSurface with U and V domains [0,1].")]
         public static NurbsSurface Reparametrise(this NurbsSurface surface)
         {
+            if (surface == null)
+            {
+                BH.Engine.Base.Compute.RecordError("Can't reparametrise a null surface.");
+                return null;
+            }
+
             List<ICurve> innerTrims2D = surface.InnerTrims.Select(x => x.Curve2d).ToList();
             List<ICurve> outerTrims2D = surface.OuterTrims.Select(x => x.Curve2d).ToList();
 

@@ -38,6 +38,12 @@ namespace BH.Engine.Geometry
         [Output("domain", "The domain of the NURBS curve as an array [min, max].")]
         public static double[] Domain(this NurbsCurve curve)
         {
+            if (curve == null)
+            {
+                BH.Engine.Base.Compute.RecordError("Can't compute domain of a null curve.");
+                return null;
+            }
+
             return curve.Knots.Domain(curve.Degree());
         }
 
@@ -48,6 +54,12 @@ namespace BH.Engine.Geometry
         [Output("domain", "The U domain of the NURBS surface as an array [min, max].")]
         public static double[] UDomain(this NurbsSurface surface)
         {
+            if (surface == null)
+            {
+                BH.Engine.Base.Compute.RecordError("Can't compute domain of a null surface.");
+                return null;
+            }
+
             return surface.UKnots.Domain(surface.UDegree);
         }
 
@@ -58,6 +70,12 @@ namespace BH.Engine.Geometry
         [Output("domain", "The V domain of the NURBS surface as an array [min, max].")]
         public static double[] VDomain(this NurbsSurface surface)
         {
+            if (surface == null)
+            {
+                BH.Engine.Base.Compute.RecordError("Can't compute domain of a null surface.");
+                return null;
+            }
+
             return surface.VKnots.Domain(surface.VDegree);
         }
 

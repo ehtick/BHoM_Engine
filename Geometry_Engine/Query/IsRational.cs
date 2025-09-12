@@ -38,6 +38,12 @@ namespace BH.Engine.Geometry
         [Output("isRational", "True if the curve is rational (has weights different from 1), false otherwise.")]
         public static bool IsRational(this NurbsCurve curve)
         {
+            if (curve == null)
+            {
+                BH.Engine.Base.Compute.RecordError("Can't evaluate rationality of a null curve.");
+                return false;
+            }
+
             return curve.Weights.Any(x => x != 1);
         }
 

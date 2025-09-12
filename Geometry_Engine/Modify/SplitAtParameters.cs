@@ -43,6 +43,12 @@ namespace BH.Engine.Geometry
         [Output("curves", "A list of NurbsCurve segments resulting from splitting the original curve at the specified parameters.")]
         public static List<NurbsCurve> SplitAtParameters(this NurbsCurve curve, List<double> ts, bool normalisedParameter = true, double tolerance = Tolerance.Distance)
         {
+            if (curve == null)
+            {
+                BH.Engine.Base.Compute.RecordError("Can't split a null curve.");
+                return null;
+            }
+
             if (ts.Count == 0)
                 return new List<NurbsCurve> { curve };
 
@@ -132,7 +138,6 @@ namespace BH.Engine.Geometry
 
             return splitCurves;
         }
-
 
         /***************************************************/
     }

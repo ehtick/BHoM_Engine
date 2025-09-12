@@ -185,6 +185,12 @@ namespace BH.Engine.Geometry
         [Output("length", "Length of the input NurbsCurve.")]
         public static double Length(this NurbsCurve curve)
         {
+            if (curve == null)
+            {
+                BH.Engine.Base.Compute.RecordError("Cannot query length of a null curve.");
+                return double.NaN;
+            }
+
             // Level equal to 100 based on empirical testing and discussion with @isaknaslundbh
             int level = 100;
 

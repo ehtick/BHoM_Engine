@@ -176,6 +176,9 @@ namespace BH.Engine.Geometry
         [Output("derivatives", "List of derivative lists, one for each input parameter. Each inner list contains derivatives where the index corresponds to the level of derivation.")]
         public static List<List<Vector>> DerivativesAtParameters(this NurbsCurve curve, int nbDers, List<double> ts, bool normalisedParameter = true)
         {
+            if (curve == null)
+                return new List<List<Vector>>();
+
             int degree = curve.Degree();
             int du = Math.Min(degree, nbDers);
             Output<List<double[]>, bool> cw_isRational = curve.ControlPoints.ToDoubleArray(curve.Weights);

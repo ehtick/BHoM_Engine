@@ -20,15 +20,14 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.oM.Geometry;
-using System.Collections.Generic;
-using System.Linq;
-using System;
 using BH.Engine.Data;
 using BH.oM.Base.Attributes;
-using BH.oM.Base;
-using System.ComponentModel;
+using BH.oM.Geometry;
 using BH.oM.Quantities.Attributes;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 
 namespace BH.Engine.Geometry
 {
@@ -45,6 +44,17 @@ namespace BH.Engine.Geometry
         public static Point Centroid(this PlanarSurface surface, double tolerance = Tolerance.Distance)
         {
             return Centroid(new List<ICurve> { surface.ExternalBoundary }, surface.InternalBoundaries, tolerance);
+        }
+
+        /***************************************************/
+
+        [Description("Queries the centre of area for a NurbsSurface.")]
+        [Input("surface", "The NurbsSurface to get the centre of area of.")]
+        [Input("tolerance", "Distance tolerance used in geometry processing, default set to BH.oM.Geometry.Tolerance.Distance.", typeof(Length))]
+        [Output("centroid", "The Point at the centre of given NurbsSurface.")]
+        public static Point Centroid(this NurbsSurface surface, double tolerance = Tolerance.Distance)
+        {
+            return surface.AreaAndCentroid().Item1;
         }
 
 
@@ -302,6 +312,17 @@ namespace BH.Engine.Geometry
         public static Point Centroid(this Line line, double tolerance = Tolerance.Distance)
         {
             return line.PointAtParameter(0.5);
+        }
+
+        /***************************************************/
+
+        [Description("Queries the centre of area for a NurbsCurve.")]
+        [Input("curve", "The NurbsCurve to get the centre of area of.")]
+        [Input("tolerance", "Distance tolerance used in geometry processing, default set to BH.oM.Geometry.Tolerance.Distance.", typeof(Length))]
+        [Output("centroid", "The Point at the centre of given NurbsCurve.")]
+        public static Point Centroid(this NurbsCurve curve, double tolerance = Tolerance.Distance)
+        {
+            return curve.AreaAndCentroid(tolerance).Item1;
         }
 
 

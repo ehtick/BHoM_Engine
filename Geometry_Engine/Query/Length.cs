@@ -20,13 +20,14 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.oM.Geometry;
+using BH.oM.Base;
 using BH.oM.Base.Attributes;
+using BH.oM.Geometry;
+using BH.oM.Quantities.Attributes;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.ComponentModel;
-using BH.oM.Quantities.Attributes;
+using System.Linq;
 
 namespace BH.Engine.Geometry
 {
@@ -105,7 +106,7 @@ namespace BH.Engine.Geometry
             double a = Math.Max(curve.Radius1, curve.Radius2);
             double b = Math.Min(curve.Radius1, curve.Radius2);
 
-            double h = (a - b)/ (a + b);
+            double h = (a - b) / (a + b);
             h *= h;
 
             //When h is equal to 1, the ellipse is a line
@@ -154,7 +155,7 @@ namespace BH.Engine.Geometry
                 return 4 * hypotenus;
             }
 
-            return length; 
+            return length;
         }
 
         /***************************************************/
@@ -175,6 +176,37 @@ namespace BH.Engine.Geometry
         public static double SquareLength(this Line curve)
         {
             return (curve.Start - curve.End).SquareLength();
+        }
+
+        /***************************************************/
+
+        [Description("Calculates length of a NurbsCurve.")]
+        [Input("curve", "The NurbsCurve to calculate length of.")]
+        [Output("length", "Length of the input NurbsCurve.")]
+        public static double Length(this NurbsCurve curve)
+        {
+            if (curve == null)
+            {
+                BH.Engine.Base.Compute.RecordError("Cannot query length of a null curve.");
+                return double.NaN;
+            }
+
+            // Level equal to 100 based on empirical testing and discussion with @isaknaslundbh
+            int level = 100;
+
+            Output<List<double>, List<double>> gausPairs = curve.Knots.GaussPairs(curve.Degree(), level);
+            List<double> values = gausPairs.Item1;
+            List<double> weights = gausPairs.Item2;
+
+            List<List<Vector>> ders = curve.DerivativesAtParameters(1, values, false);
+
+            double total = 0;
+            for (int i = 0; i < weights.Count; i++)
+            {
+                total += ders[i][1].Length() * weights[i];
+            }
+
+            return total;
         }
 
         /***************************************************/
@@ -212,7 +244,6 @@ namespace BH.Engine.Geometry
 
             return length;
         }
-
 
         /***************************************************/
         /**** Public Methods - Interfaces               ****/

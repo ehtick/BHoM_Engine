@@ -20,14 +20,13 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using BH.oM.Geometry;
 using BH.oM.Base;
 using BH.oM.Base.Attributes;
-using System.ComponentModel;
+using BH.oM.Geometry;
 using BH.oM.Quantities.Attributes;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace BH.Engine.Geometry
 {
@@ -129,7 +128,7 @@ namespace BH.Engine.Geometry
         [Description("Gets out the Tangent Vector at the parameter t on the curve.\n" +
              "Note that for a general case this does not correspond to a normalised length parameter along the curve.")]
         [Input("curve", "The NurbsCurve to evaluate.")]
-        [Input("t", "The parameter to evaluate.")]
+        [Input("t", "The parameter to evaluate. Should be a value between 0 and 1.")]
         [Input("tolerance", "Distance tolerance to be used in the method.", typeof(Length))]
         [Output("tan", "The tangent vector at the provided parameter.")]
         [PreviousInputNames("t", "parameter")]
@@ -138,7 +137,7 @@ namespace BH.Engine.Geometry
             if (curve.IsNull())
                 return null;
 
-            return DerivativeAtParameter(curve, t, 1)?.Normalise();
+            return DerivativesAtParameter(curve, 1, t, true)[1].Normalise();
         }
 
         /***************************************************/
@@ -203,7 +202,7 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
-        [Description("Computes and returns the Tangent Vectors along the NurbsSurface U and V directions at parameters u and v. u and v  should both be between 0 and 1, where 0 is the parameter at the first edge and 1 is the parameter at the oposite edge.\n" + 
+        [Description("Computes and returns the Tangent Vectors along the NurbsSurface U and V directions at parameters u and v. u and v  should both be between 0 and 1, where 0 is the parameter at the first edge and 1 is the parameter at the oposite edge.\n" +
                      "No acound is taken for any surface trims which means the tangents returned could be inside an opening or ouside the outer trim.")]
         [Input("surface", "The NurbsSurface to evaluate.")]
         [Input("u", "Parameter along the first (U) direction of the surface.")]
@@ -216,54 +215,9 @@ namespace BH.Engine.Geometry
             if (surface.IsNull())
                 return null;
 
-            double a = 0;
-            double dua = 0;
-            double dva = 0;
-            Point result = new Point();
-            Point resultU = new Point();
-            Point resultV = new Point();
-
-            var uKnots = surface.UKnots.ToList();
-            var vKnots = surface.VKnots.ToList();
-
-            var uv = surface.UVCount();
-
-            Func<int, int, int> ind = (i,j) => i * uv[1] + j;
-
-            for (int i = 0; i < uv[0]; i++)
-            {
-                for (int j = 0; j < uv[1]; j++)
-                {
-                    double ubasis = BasisFunction(uKnots, i - 1, surface.UDegree, u);
-                    double vbasis = BasisFunction(vKnots, j - 1, surface.VDegree, v);
-                    double basis = ubasis * vbasis * surface.Weights[ind(i, j)];
-
-                    double dubasis = DerivativeFunction(uKnots, i - 1, surface.UDegree, u) *
-                                     vbasis * surface.Weights[ind(i, j)];
-
-                    double dvbasis = DerivativeFunction(vKnots, j - 1, surface.VDegree, v) *
-                                     ubasis * surface.Weights[ind(i, j)];
-
-                    a += basis;
-                    dua += dubasis;
-                    dva += dvbasis;
-
-                    Point pt = surface.ControlPoints[ind(i, j)];
-
-                    result += basis * pt;
-
-                    resultU += dubasis * pt;
-                    resultV += dvbasis * pt;
-                }
-            }
-
-            return new Output<Vector, Vector>()
-            {
-                Item1 = (resultU * a - result * dua).Normalise(),
-                Item2 = (resultV * a - result * dva).Normalise(),
-            };
+            List<List<Vector>> derivatives = surface.DerivativesAtParameter(1, u, v, true);
+            return new Output<Vector, Vector>() { Item1 = derivatives[1][0].Normalise(), Item2 = derivatives[0][1].Normalise() };
         }
-
 
         /***************************************************/
         /**** Public Methods - Interfaces               ****/

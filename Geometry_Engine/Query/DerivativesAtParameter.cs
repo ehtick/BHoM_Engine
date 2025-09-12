@@ -48,17 +48,10 @@ namespace BH.Engine.Geometry
 
             int degree = curve.Degree();
 
-            // Calculate the scaling factor for parameter domain conversion
-            double domainScaling = 1.0;
             if (normalisedParameter)
-            {
-                double min = curve.Knots[degree - 1];
-                double max = curve.Knots[curve.Knots.Count - degree];
-                domainScaling = max - min;
                 t = Convert.ToKnotDomain(t, curve.Knots, degree);
-            }
 
-            //Construct list of homogenous controlpoints as double[] where the the first three values correspond to the coordinates sclaed by the weight and 4th value correspond to the weights
+            //Construct list of homogenous controlpoints as double[] where the the first three values correspond to the coordinates scaled by the weight and 4th value correspond to the weights
             Output<List<double[]>, bool> cw_isRational = curve.ControlPoints.ToDoubleArray(curve.Weights);
             List<double[]> cw = cw_isRational.Item1;
             bool isRational = cw_isRational.Item2;
@@ -66,20 +59,7 @@ namespace BH.Engine.Geometry
             //Compute the derivatives for the homogenous/cartesian coordinates
             List<double[]> cwDers = CurveDerivatives(curve.Knots, degree, cw, numberOfDerivates, t);
 
-            List<Vector> derivatives = cwDers.ToCartesianDerivatesCurve(isRational);
-
-            // Apply chain rule scaling for normalized parameters
-            if (normalisedParameter)
-            {
-                double scalingPower = domainScaling;
-                for (int i = 1; i < derivatives.Count; i++)
-                {
-                    derivatives[i] *= scalingPower;
-                    scalingPower *= domainScaling;
-                }
-            }
-
-            return derivatives;
+            return cwDers.ToCartesianDerivatesCurve(isRational);
         }
 
         /***************************************************/
@@ -96,19 +76,8 @@ namespace BH.Engine.Geometry
             if (surface == null)
                 return new List<List<Vector>>();
 
-            // Calculate the scaling factors for parameter domain conversion
-            double uDomainScaling = 1.0;
-            double vDomainScaling = 1.0;
             if (normalisedParameter)
             {
-                double uMin = surface.UKnots[surface.UDegree - 1];
-                double uMax = surface.UKnots[surface.UKnots.Count - surface.UDegree];
-                uDomainScaling = uMax - uMin;
-
-                double vMin = surface.VKnots[surface.VDegree - 1];
-                double vMax = surface.VKnots[surface.VKnots.Count - surface.VDegree];
-                vDomainScaling = vMax - vMin;
-
                 u = Convert.ToKnotDomain(u, surface.UKnots, surface.UDegree);
                 v = Convert.ToKnotDomain(v, surface.VKnots, surface.VDegree);
             }
@@ -192,27 +161,6 @@ namespace BH.Engine.Geometry
                 }
             }
 
-            // Apply chain rule scaling for normalized parameters
-            if (normalisedParameter)
-            {
-                for (int k = 0; k <= numberOfDerivates; k++)
-                {
-                    double uScalingPower = Math.Pow(uDomainScaling, k);
-                    for (int l = 0; l <= numberOfDerivates - k; l++)
-                    {
-                        if (k == 0 && l == 0) continue; // Skip position (no derivative)
-
-                        double vScalingPower = Math.Pow(vDomainScaling, l);
-                        double totalScaling = uScalingPower * vScalingPower;
-
-                        if (k < surfaceDerivatives.Count && l < surfaceDerivatives[k].Count)
-                        {
-                            surfaceDerivatives[k][l] *= totalScaling;
-                        }
-                    }
-                }
-            }
-
             return surfaceDerivatives;
         }
 
@@ -233,15 +181,8 @@ namespace BH.Engine.Geometry
 
             int dim = isRational ? 4 : 3;
 
-            // Calculate the scaling factor for parameter domain conversion
-            double domainScaling = 1.0;
             if (normalisedParameter)
-            {
-                double min = curve.Knots[degree - 1];
-                double max = curve.Knots[curve.Knots.Count - degree];
-                domainScaling = max - min;
                 ts = ts.Select(t => Convert.ToKnotDomain(t, curve.Knots, curve.Degree())).ToList();
-            }
 
             foreach (double t in ts)
             {
@@ -268,20 +209,7 @@ namespace BH.Engine.Geometry
                     current.Add(new double[dim]);
                 }
 
-                List<Vector> currentDerivatives = current.ToCartesianDerivatesCurve(isRational);
-
-                // Apply chain rule scaling for normalized parameters
-                if (normalisedParameter)
-                {
-                    double scalingPower = domainScaling;
-                    for (int i = 1; i < currentDerivatives.Count; i++)
-                    {
-                        currentDerivatives[i] *= scalingPower;
-                        scalingPower *= domainScaling;
-                    }
-                }
-
-                derivatives.Add(currentDerivatives);
+                derivatives.Add(current.ToCartesianDerivatesCurve(isRational));
             }
 
             return derivatives;
@@ -295,7 +223,6 @@ namespace BH.Engine.Geometry
         [Description("Computes the non vanishing Curve derivatives. Method is c# implementation of method found in the Nurbs Book.")]
         private static List<double[]> CurveDerivatives(this IList<double> knots, int degree, List<double[]> pts, int numberOfDers, double t)
         {
-
             int maxDers = Math.Min(degree, numberOfDers);
 
             int dim = pts[0].Length;
@@ -322,8 +249,8 @@ namespace BH.Engine.Geometry
             {
                 derArrays.Add(new double[dim]);
             }
-            return derArrays;
 
+            return derArrays;
         }
 
         /***************************************************/
@@ -331,7 +258,6 @@ namespace BH.Engine.Geometry
         [Description("Computes the non vanishing Surface derivatives. Method is C# implementation of method found in the Nurbs Book.")]
         private static List<List<double[]>> SurfaceDerivatives(this IList<double> knotsU, IList<double> knotsV, int degreeU, int degreeV, List<List<double[]>> pts, int numberOfDers, double u, double v)
         {
-
             int dim = pts[0][0].Length;
 
             int spanU = KnotSpan(knotsU, degreeU, u);
@@ -354,13 +280,6 @@ namespace BH.Engine.Geometry
 
             int maxU = Math.Min(numberOfDers, degreeU);
             int maxV = Math.Min(numberOfDers, degreeV);
-
-
-            //int vCount = knotsV.Count - degreeV + 1;
-            //int uCount = knotsU.Count - degreeU + 1;
-
-            //int uIndexAddtion = spanU - degreeU + 1;
-            //int vIndexAddtion = spanU - degreeU + 1;
 
             double[][] temp = new double[degreeV + 1][];
 
@@ -387,7 +306,6 @@ namespace BH.Engine.Geometry
             }
 
             return derArrays;
-
         }
 
         /***************************************************/
@@ -404,4 +322,3 @@ namespace BH.Engine.Geometry
         /***************************************************/
     }
 }
-

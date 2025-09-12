@@ -21,8 +21,10 @@
  */
 
 using BH.oM.Base;
+using BH.oM.Base.Attributes;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace BH.Engine.Geometry

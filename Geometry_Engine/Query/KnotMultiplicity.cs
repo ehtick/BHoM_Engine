@@ -30,6 +30,10 @@ namespace BH.Engine.Geometry
         /***************************************************/
         /**** Public Methods                            ****/
         /***************************************************/
+        [Description("Determines the multiplicity of a knot value in a knot vector, i.e., how many times the value appears consecutively.")]
+        [Input("knots", "The knot vector to search in.")]
+        [Input("t", "The knot value to find the multiplicity of.")]
+        [Output("multiplicity", "The number of times the knot value appears in the knot vector.")]
         public static int KnotMultiplicity(this IList<double> knots, double t)
         {
             double tol = double.Epsilon;

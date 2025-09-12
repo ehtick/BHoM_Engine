@@ -39,7 +39,8 @@ namespace BH.Engine.Geometry
         [Description("Computes a set number of points on the curve by dividing the curve domain into equal steps. Note that the points wont be equal distance divided for the general case.")]
         [Input("curve", "The NurbsCurve to divide.")]
         [Input("steps", "The number of divisions.")]
-        [Output("pts", "Points along the curve.")]
+        [MultiOutput(0, "points", "Points along the curve.")]
+        [MultiOutput(1, "parameters", "The parameter values corresponding to each point.")]
         public static Output<List<Point>, List<double>> CurvePointsByParameterStep(this NurbsCurve curve, int steps)
         {
 

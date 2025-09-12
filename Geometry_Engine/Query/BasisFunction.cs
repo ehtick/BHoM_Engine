@@ -39,7 +39,7 @@ namespace BH.Engine.Geometry
         [Input("i", "Index the function is evaluated at. The value of the function is the sum of this functions value for all values of i.")]
         [Input("n", "Degree of the of the basis function. Affects how many adjacent knots control the value.")]
         [Input("t", "Parameter to evaluate the function at. Should be between 0 and 1. For values outside the range, the closest value will be used.")]
-        [Output("Value of the function for the specified index. The full value of the function should be a sum of all possible i's.")]
+        [Output("value", "Value of the function for the specified index. The full value of the function should be a sum of all possible i's.")]
         public static double BasisFunction(this List<double> knots, int i, int n, double t)
         {
             t = t < 0 ? 0 : t > 1 ? 1 : t;
@@ -84,6 +84,12 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Gets all basis functions up to the specified degree for the given knot vector at parameter t in the given span.")]
+        [Input("knots", "The knot vector to evaluate.")]
+        [Input("span", "The span in which the parameter t resides.")]
+        [Input("degree", "Degree of the Curve/Surface in the direction of the provided knots.")]
+        [Input("t", "The parameter to evaluate.")]
+        [Output("bases", "All basis functions from degree 0 up to the specified degree.")]
         public static List<List<double>> AllBasisFunctions(this IList<double> knots, int span, int degree, double t)
         {
             List<List<double>> bases = new List<List<double>>

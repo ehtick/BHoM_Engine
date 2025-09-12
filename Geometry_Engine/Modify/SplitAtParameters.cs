@@ -33,6 +33,12 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
+        [Description("Splits a NurbsCurve at multiple parameter locations, returning a list of curve segments.")]
+        [Input("curve", "The NurbsCurve to split.")]
+        [Input("ts", "The list of parameter values at which to split the curve.")]
+        [Input("normalisedParameter", "If true, the parameters are assumed to be normalised between 0 and 1. If false, parameters are in the curve's knot domain.")]
+        [Input("tolerance", "The tolerance used for geometric calculations.")]
+        [Output("curves", "A list of NurbsCurve segments resulting from splitting the original curve at the specified parameters.")]
         public static List<NurbsCurve> SplitAtParameters(this NurbsCurve curve, List<double> ts, bool normalisedParameter = true, double tolerance = Tolerance.Distance)
         {
             if (ts.Count == 0)

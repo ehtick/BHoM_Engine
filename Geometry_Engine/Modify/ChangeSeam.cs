@@ -33,6 +33,12 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
+        [Description("Changes the seam of a closed NurbsCurve to a specified parameter location. The curve must be closed or periodic for this operation to succeed.")]
+        [Input("curve", "The NurbsCurve to change the seam of. Must be closed or periodic.")]
+        [Input("t", "The parameter at which to place the new seam.")]
+        [Input("normalisedParameter", "If true, the parameter t is assumed to be normalised between 0 and 1. If false, t is in the curve's knot domain.")]
+        [Input("tolerance", "The tolerance used for geometric calculations.")]
+        [Output("curve", "The NurbsCurve with the seam changed to the specified parameter location.")]
         public static NurbsCurve ChangeSeam(this NurbsCurve curve, double t, bool normalisedParameter = true, double tolerance = Tolerance.Distance)
         {
             if (curve == null)

@@ -166,6 +166,12 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Gets the vectors that are the derivatives of the curve at multiple parameter values. This is an optimized method for computing derivatives at multiple points.")]
+        [Input("curve", "Curve to evaluate.")]
+        [Input("nbDers", "Number of derivatives to evaluate at each parameter.")]
+        [Input("ts", "List of parameters to evaluate at.")]
+        [Input("normalisedParameter", "If true, parameters are assumed to be normalised between 0 and 1. If false, parameters are in the curve's knot domain.")]
+        [Output("derivatives", "List of derivative lists, one for each input parameter. Each inner list contains derivatives where the index corresponds to the level of derivation.")]
         public static List<List<Vector>> DerivativesAtParameters(this NurbsCurve curve, int nbDers, List<double> ts, bool normalisedParameter = true)
         {
             int degree = curve.Degree();

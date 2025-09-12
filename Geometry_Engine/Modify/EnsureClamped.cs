@@ -33,6 +33,9 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
+        [Description("Ensures that a NurbsCurve has clamped knot vectors, meaning the first and last knots have multiplicity equal to the degree.")]
+        [Input("curve", "The NurbsCurve to ensure is clamped.")]
+        [Output("curve", "The clamped NurbsCurve with knot multiplicities equal to the degree at the start and end.")]
         public static NurbsCurve EnsureClamped(this NurbsCurve curve)
         {
             var toControlPoints = Convert.ToDoubleArray(curve.ControlPoints, curve.Weights);

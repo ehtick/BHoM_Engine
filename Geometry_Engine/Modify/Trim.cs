@@ -31,6 +31,13 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
+        [Description("Trims a NurbsCurve between two parameter values, returning the portion of the curve between the specified parameters.")]
+        [Input("curve", "The NurbsCurve to trim.")]
+        [Input("t0", "The start parameter for trimming.")]
+        [Input("t1", "The end parameter for trimming.")]
+        [Input("normalisedParameter", "If true, the parameters are assumed to be normalised between 0 and 1. If false, parameters are in the curve's knot domain.")]
+        [Input("tolerance", "The tolerance used for geometric calculations.")]
+        [Output("curve", "The trimmed NurbsCurve between the specified parameter values.")]
         public static NurbsCurve Trim(this NurbsCurve curve, double t0, double t1, bool normalisedParameter = true, double tolerance = Tolerance.Distance)
         {
             if (curve == null)

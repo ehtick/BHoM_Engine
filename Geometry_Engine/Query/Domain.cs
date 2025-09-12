@@ -63,6 +63,10 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Gets the domain from a knot vector and degree.")]
+        [Input("knots", "The knot vector.")]
+        [Input("degree", "The degree of the curve or surface.")]
+        [Output("domain", "The domain as an array [min, max].")]
         public static double[] Domain(this IList<double> knots, int degree)
         {
             return new double[] { knots[degree - 1], knots[knots.Count - degree] };

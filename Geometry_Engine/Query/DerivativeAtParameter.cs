@@ -36,7 +36,7 @@ namespace BH.Engine.Geometry
         [Input("curve", "Curve to evaluate.")]
         [Input("t", "Parameter to evaluate at. Should be between 0 and 1. For values outside the range, the closest value will be used.")]
         [Input("k", "Degree of the derivation.")]
-        [Output("Vector which is the k'th derivative of the curve at the point of t.")]
+        [Output("derivative", "Vector which is the k'th derivative of the curve at the point of t.")]
         public static Vector DerivativeAtParameter(this NurbsCurve curve, double t, int k, bool normalisedParameter = true)
         {
             return curve.DerivativesAtParameter(k + 1, t, normalisedParameter)[k];
@@ -50,7 +50,7 @@ namespace BH.Engine.Geometry
         [Input("v", "Parameter to evaluate at. Should be between 0 and 1. For values outside the range, the closest value will be used.")]
         [Input("k", "Degree of derivative for u.")]
         [Input("l", "Degree of derivative for v.")]
-        [Output("Vector which is the k'th derivative of the surface at the point of t.")]
+        [Output("derivative", "Vector which is the k'th derivative of the surface at the point of u,v.")]
         public static Vector DerivativeAtParameter(this NurbsSurface surface, double u, double v, int k, int l, bool normalisedParameter = true)
         {
             return surface.DerivativesAtParameter(k + l, u, v, normalisedParameter)[k][l];

@@ -31,6 +31,9 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
+        [Description("Determines whether a NurbsCurve is rational by checking if any of its weights are not equal to 1.")]
+        [Input("curve", "The NurbsCurve to check.")]
+        [Output("isRational", "True if the curve is rational (has weights different from 1), false otherwise.")]
         public static bool IsRational(this NurbsCurve curve)
         {
             return curve.Weights.Any(x => x != 1);

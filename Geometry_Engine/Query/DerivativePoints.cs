@@ -33,6 +33,11 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
+        [Description("Computes the derivative control points of a NurbsCurve up to a specified order. These are used in the computation of curve derivatives.")]
+        [Input("curve", "The NurbsCurve to compute derivative control points for.")]
+        [Input("numDers", "The number of derivative orders to compute.")]
+        [MultiOutput(0, "derivativePoints", "Lists of derivative control points for each derivative order.")]
+        [MultiOutput(1, "derivativeWeights", "Lists of derivative weights for each derivative order.")]
         public static Output<List<List<Point>>, List<List<double>>> DerivativePoints(this NurbsCurve curve, int numDers)
         {
             int degree = curve.Degree();
@@ -48,6 +53,12 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Computes the derivative control points from knot vector and control points up to a specified order.")]
+        [Input("knots", "The knot vector.")]
+        [Input("cw", "The control points in homogeneous coordinates.")]
+        [Input("numDers", "The number of derivative orders to compute.")]
+        [Input("degree", "The degree of the curve.")]
+        [Output("derivativePoints", "Lists of derivative control points for each derivative order.")]
         public static List<List<double[]>> DerivativePoints(this IList<double> knots, List<double[]> cw, int numDers, int degree)
         {
             int n = cw.Count;

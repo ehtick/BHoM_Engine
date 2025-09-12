@@ -35,6 +35,11 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
+        [Description("Inserts a knot into a NurbsCurve at a specified parameter location with a given multiplicity. This operation does not change the shape of the curve but increases the number of control points.")]
+        [Input("curve", "The NurbsCurve to insert the knot into.")]
+        [Input("t", "The parameter location where the knot should be inserted.")]
+        [Input("r", "The multiplicity of the knot to insert (number of times to insert the knot).")]
+        [Output("curve", "The NurbsCurve with the knot inserted at the specified parameter location.")]
         public static NurbsCurve InsertKnot(NurbsCurve curve, double t, int r)
         {
             if (curve == null)
@@ -147,9 +152,11 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
-        [Description("")]
-        [Input("", "")]
-        [Output("", "")]
+        [Description("Performs linear interpolation between two double arrays using a parameter value.")]
+        [Input("first", "The first array of values.")]
+        [Input("second", "The second array of values.")]
+        [Input("a", "The interpolation parameter (0 returns first, 1 returns second).")]
+        [Output("result", "The interpolated array of values.")]
         private static double[] Interpolate(double[] first, double[] second, double a)
         {
             double[] ret = new double[first.Length];

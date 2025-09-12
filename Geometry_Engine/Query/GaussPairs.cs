@@ -33,6 +33,12 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
+        [Description("Computes Gauss-Legendre quadrature points and weights for numerical integration over the knot intervals of a NURBS curve or surface.")]
+        [Input("knots", "The knot vector.")]
+        [Input("degree", "The degree of the curve or surface.")]
+        [Input("level", "The number of Gauss points per knot interval.")]
+        [MultiOutput(0, "values", "The parameter values for Gauss quadrature.")]
+        [MultiOutput(1, "weights", "The weights for Gauss quadrature.")]
         public static Output<List<double>, List<double>> GaussPairs(this IList<double> knots, int degree, int level)
         {
             List<double> knotIntervals = knots.KnotIntervals(degree);
@@ -55,6 +61,13 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Computes Gauss-Legendre quadrature points and weights for numerical integration over a specified interval.")]
+        [Input("n", "The number of Gauss points to compute.")]
+        [Input("a", "The start of the integration interval.")]
+        [Input("b", "The end of the integration interval.")]
+        [Input("weightScale", "Scale factor for the weights.")]
+        [MultiOutput(0, "values", "The parameter values for Gauss quadrature.")]
+        [MultiOutput(1, "weights", "The weights for Gauss quadrature.")]
         public static Output<List<double>, List<double>> GaussPairs(int n, double a = -1, double b = 1, double weightScale = 1.0)
         {
             if (n < 1)

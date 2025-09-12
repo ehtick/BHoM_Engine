@@ -31,6 +31,10 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
+        [Description("Extracts the unique knot values that define the parametric intervals of a NURBS curve or surface, excluding repeated knots.")]
+        [Input("knots", "The knot vector.")]
+        [Input("degree", "The degree of the curve or surface.")]
+        [Output("intervals", "The unique knot values defining the parametric intervals.")]
         public static List<double> KnotIntervals(this IList<double> knots, int degree)
         {
             List<double> knotIntervals = new List<double>();

@@ -40,7 +40,7 @@ namespace BH.Engine.Geometry
         [Input("t", "The parameter location where the knot should be inserted.")]
         [Input("r", "The multiplicity of the knot to insert (number of times to insert the knot).")]
         [Output("curve", "The NurbsCurve with the knot inserted at the specified parameter location.")]
-        public static NurbsCurve InsertKnot(NurbsCurve curve, double t, int r)
+        public static NurbsCurve InsertKnot(this NurbsCurve curve, double t, int r)
         {
             if (curve == null)
                 return null;

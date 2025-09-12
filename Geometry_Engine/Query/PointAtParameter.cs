@@ -121,10 +121,10 @@ namespace BH.Engine.Geometry
         /***************************************************/
 
         [PreviousVersion("8.3", "BH.Engine.Geometry.Query.PointAtParameter(BH.oM.Geometry.NurbsCurve, System.Double)")]
-        [Description("Gets out the Point at the parameter t on the curve.\n" +
-                     "Note that for a general case this does not correspond to a normalised length parameter along the curve.")]
+        [Description("Gets out the Point at the parameter t on the curve.")]
         [Input("curve", "The NurbsCurve to evaluate.")]
-        [Input("t", "Parameter to get the Point at. Should be between 0 and 1. For values outside the range, the closest value will be used.")]
+        [Input("t", "Parameter to get the Point at.")]
+        [Input("normalisedParameter", "If true, parameter t is assumed to be normalised between 0 and 1 (for values beyond that range closer edge is picked). If false, t is assumed to be in the knot domain of the curve.")]
         [Output("pt", "The point at the provided parameter.")]
         public static Point PointAtParameter(this NurbsCurve curve, double t, bool normalisedParameter = true)
         {
@@ -223,8 +223,9 @@ namespace BH.Engine.Geometry
         [PreviousVersion("8.3", "BH.Engine.Geometry.Query.PointAtParameter(BH.oM.Geometry.NurbsSurface, System.Double, System.Double)")]
         [Description("Gets out the Point at the parameters u and v on the surface.")]
         [Input("surface", "The NurbsSurface to evaluate.")]
-        [Input("u", "The parameter to evaluate along the u domain. Should be between 0 and 1. For values outside the range, the closest value will be used.")]
-        [Input("v", "The parameter to evaluate along the v domain. Should be between 0 and 1. For values outside the range, the closest value will be used.")]
+        [Input("u", "The parameter to evaluate along the u domain.")]
+        [Input("v", "The parameter to evaluate along the v domain.")]
+        [Input("normalisedParameter", "If true, parameters u, v are assumed to be normalised between 0 and 1 (for values beyond that range closer edge is picked). If false, u, v are assumed to be in the knot domain of the surface.")]
         [Output("pt", "The point at the provided parameters.")]
         public static Point PointAtParameter(this NurbsSurface surface, double u, double v, bool normalisedParameter = true)
         {

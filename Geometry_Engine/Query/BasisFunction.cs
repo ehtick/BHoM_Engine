@@ -82,42 +82,6 @@ namespace BH.Engine.Geometry
             return basis;
         }
 
-        /***************************************************/
-
-        [Description("Gets all basis functions up to the specified degree for the given knot vector at parameter t in the given span.")]
-        [Input("knots", "The knot vector to evaluate.")]
-        [Input("span", "The span in which the parameter t resides.")]
-        [Input("degree", "Degree of the Curve/Surface in the direction of the provided knots.")]
-        [Input("t", "The parameter to evaluate.")]
-        [Output("bases", "All basis functions from degree 0 up to the specified degree.")]
-        public static List<List<double>> AllBasisFunctions(this IList<double> knots, int span, int degree, double t)
-        {
-            List<List<double>> bases = new List<List<double>>
-            {
-                new List<double> { 1.0 }
-            };
-
-            double[] left = new double[degree + 1];
-            double[] right = new double[degree + 1];
-
-            for (int j = 1; j <= degree; j++)
-            {
-                List<double> current = new List<double>();
-                left[j] = t - knots[span + 1 - j];
-                right[j] = knots[span + j] - t;
-                double saved = 0.0;
-                for (int r = 0; r < j; r++)
-                {
-                    double temp = bases[j - 1][r] / (right[r + 1] + left[j - r]);
-                    current.Add(saved + right[r + 1] * temp);
-                    saved = left[j - r] * temp;
-                }
-                current.Add(saved);
-                bases.Add(current);
-            }
-            return bases;
-        }
-
 
         /***************************************************/
         /**** Private Methods                           ****/
@@ -142,6 +106,7 @@ namespace BH.Engine.Geometry
             double linInter1 = LinearKnotInterpelation(knots, i, n, t);
             if (linInter1 != 0)
                 ret += linInter1 * BasisFunctionGlobal(knots, i, n - 1, t);
+
             double linInter2 = 1.0 - LinearKnotInterpelation(knots, i + 1, n, t);
             if (linInter2 != 0)
                 ret += linInter2 * BasisFunctionGlobal(knots, i + 1, n - 1, t);

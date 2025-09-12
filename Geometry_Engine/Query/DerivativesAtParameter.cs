@@ -36,12 +36,13 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Gets the vectors that are the derivatives of the curve at the point of t, where t is a normalised parameter. List index correspond to the derivative, i.e. index 0 is no derivative (position) and index 1 is the 1st derivative.")]
+        [Description("Gets the vectors that are the derivatives of the curve at the point of t. List index correspond to the derivative, i.e. index 0 is no derivative (position) and index 1 is the 1st derivative.")]
         [Input("curve", "Curve to evaluate.")]
-        [Input("t", "Parameter to evaluate at. Should be between 0 and 1. For values outside the range, the closest value will be used.")]
         [Input("numberOfDerivates", "Number of derivatives to evaluate. Will only return non-vanishing derivatives, this is, maximum derivative is the degree of the curve.")]
+        [Input("t", "Parameter to evaluate at.")]
+        [Input("normalisedParameter", "If true, parameter t is assumed to be normalised between 0 and 1 (for values beyond that range closer edge is picked). If false, t is assumed to be in the knot domain of the curve.")]
         [Output("derivatives", "List containing the derivatives where the index correspond to the level of derivation, i.e. index 0 is no derivative (position) and index 1 is the 1st derivative.")]
-        public static List<Vector> DerivativesAtParameter(this NurbsCurve curve, int numberOfDerivates, double t, bool normalisedParameter)
+        public static List<Vector> DerivativesAtParameter(this NurbsCurve curve, int numberOfDerivates, double t, bool normalisedParameter = true)
         {
             if (curve == null)
                 return new List<Vector>();
@@ -64,14 +65,15 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
-        [Description("Gets the vectors that are the derivatives of the surface at the point of u, v, where u and v are normalised parameters.\n"
+        [Description("Gets the vectors that are the derivatives of the surface at the point of u, v.\n"
                     + "Outer list index correspond to the derivative in u direction and inner list index to the derivative in v direction, i.e. index 0,0 is no derivative (position) and index 1,0 is the 1st derivative in u direction.")]
         [Input("surface", "Surface to evaluate.")]
-        [Input("u", "Parameter to evaluate at. Should be between 0 and 1. For values outside the range, the closest value will be used.")]
-        [Input("v", "Parameter to evaluate at. Should be between 0 and 1. For values outside the range, the closest value will be used.")]
         [Input("numberOfDerivates", "Maximum total derivation degree to evaluate. value of 2 will evaluate up to [2,0], [1,1] and [0,2]. Will only return non-vanishing derivatives, this is, maximum derivative is the degree of the curve.")]
+        [Input("u", "Parameter to evaluate at.")]
+        [Input("v", "Parameter to evaluate at.")]
+        [Input("normalisedParameter", "If true, parameters u, v are assumed to be normalised between 0 and 1 (for values beyond that range closer edge is picked). If false, u, v are assumed to be in the knot domain of the surface.")]
         [Output("derivatives", "Nested list of derivative vectors where the outer list index correspond to the derivative in u direction and inner list index to the derivative in v direction, i.e. index 0,0 is no derivative (position) and index 1,0 is the 1st derivative in u direction on no derivative in the v direction.")]
-        public static List<List<Vector>> DerivativesAtParameter(this NurbsSurface surface, int numberOfDerivates, double u, double v, bool normalisedParameter)
+        public static List<List<Vector>> DerivativesAtParameter(this NurbsSurface surface, int numberOfDerivates, double u, double v, bool normalisedParameter = true)
         {
             if (surface == null)
                 return new List<List<Vector>>();
@@ -170,7 +172,7 @@ namespace BH.Engine.Geometry
         [Input("curve", "Curve to evaluate.")]
         [Input("nbDers", "Number of derivatives to evaluate at each parameter.")]
         [Input("ts", "List of parameters to evaluate at.")]
-        [Input("normalisedParameter", "If true, parameters are assumed to be normalised between 0 and 1. If false, parameters are in the curve's knot domain.")]
+        [Input("normalisedParameter", "If true, parameter t is assumed to be normalised between 0 and 1 (for values beyond that range closer edge is picked). If false, t is assumed to be in the knot domain of the curve.")]
         [Output("derivatives", "List of derivative lists, one for each input parameter. Each inner list contains derivatives where the index corresponds to the level of derivation.")]
         public static List<List<Vector>> DerivativesAtParameters(this NurbsCurve curve, int nbDers, List<double> ts, bool normalisedParameter = true)
         {

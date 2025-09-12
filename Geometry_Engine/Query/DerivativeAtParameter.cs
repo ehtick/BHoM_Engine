@@ -33,10 +33,11 @@ namespace BH.Engine.Geometry
         /***************************************************/
 
         [PreviousVersion("8.3", "BH.Engine.Geometry.Query.DerivativeAtParameter(BH.oM.Geometry.NurbsCurve, System.Double, System.Int32)")]
-        [Description("Gets the vector which is the k'th derivative of the curve at the point of t, where t is a normalised parameter.")]
+        [Description("Gets the vector which is the k'th derivative of the curve at the point of t.")]
         [Input("curve", "Curve to evaluate.")]
-        [Input("t", "Parameter to evaluate at. Should be between 0 and 1. For values outside the range, the closest value will be used.")]
+        [Input("t", "Parameter to evaluate at.")]
         [Input("k", "Degree of the derivation.")]
+        [Input("normalisedParameter", "If true, parameter t is assumed to be normalised between 0 and 1 (for values beyond that range closer edge is picked). If false, t is assumed to be in the knot domain of the curve.")]
         [Output("derivative", "Vector which is the k'th derivative of the curve at the point of t.")]
         public static Vector DerivativeAtParameter(this NurbsCurve curve, double t, int k, bool normalisedParameter = true)
         {
@@ -46,19 +47,19 @@ namespace BH.Engine.Geometry
         /***************************************************/
 
         [PreviousVersion("8.3", "BH.Engine.Geometry.Query.DerivativeAtParameter(BH.oM.Geometry.NurbsSurface, System.Double, System.Double, System.Int32, System.Int32)")]
-        [Description("Gets the vector which is the k'th derivative of the surface at the point of u, v, where u and v are normalised parameters.")]
+        [Description("Gets the vector which is the k'th derivative of the surface at the point of u, v.")]
         [Input("surface", "Surface to evaluate.")]
-        [Input("u", "Parameter to evaluate at. Should be between 0 and 1. For values outside the range, the closest value will be used.")]
-        [Input("v", "Parameter to evaluate at. Should be between 0 and 1. For values outside the range, the closest value will be used.")]
+        [Input("u", "Parameter to evaluate at.")]
+        [Input("v", "Parameter to evaluate at.")]
         [Input("k", "Degree of derivative for u.")]
         [Input("l", "Degree of derivative for v.")]
-        [Output("derivative", "Vector which is the k'th derivative of the surface at the point of u,v.")]
+        [Input("normalisedParameter", "If true, parameters u, v are assumed to be normalised between 0 and 1 (for values beyond that range closer edge is picked). If false, u, v are assumed to be in the knot domain of the surface.")]
+        [Output("derivative", "Vector which is the k'th derivative of the surface at the point of u, v.")]
         public static Vector DerivativeAtParameter(this NurbsSurface surface, double u, double v, int k, int l, bool normalisedParameter = true)
         {
             return surface.DerivativesAtParameter(k + l, u, v, normalisedParameter)[k][l];
         }
 
         /***************************************************/
-
     }
 }

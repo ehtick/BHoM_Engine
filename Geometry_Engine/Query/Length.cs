@@ -180,6 +180,9 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Calculates length of a NurbsCurve.")]
+        [Input("curve", "The NurbsCurve to calculate length of.")]
+        [Output("length", "Length of the input NurbsCurve.")]
         public static double Length(this NurbsCurve curve)
         {
             // Level equal to 100 based on empirical testing and discussion with @isaknaslundbh

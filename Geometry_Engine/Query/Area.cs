@@ -316,7 +316,7 @@ namespace BH.Engine.Geometry
         /***************************************************/
 
         [Description("Calculates the area of the provided geometry.")]
-        [Input("pSurf", "The NurbsSurface to get the area of.")]
+        [Input("surface", "The NurbsSurface to get the area of.")]
         [Input("tolerance", "The tolerance to apply to the area calculation.")]
         [Output("area", "The area of the geometry.", typeof(Area))]
         public static double Area(this NurbsSurface surface, double tolerance = Tolerance.Distance)
@@ -357,7 +357,6 @@ namespace BH.Engine.Geometry
         [Input("geometry", "Geometry to get the area of.")]
         [Input("tolerance", "The tolerance to apply to the area calculation.")]
         [Output("area", "The area of the geometry.")]
-
         private static double Area(this IGeometry geometry, double tolerance = Tolerance.Distance)
         {
             if (geometry == null)

@@ -32,48 +32,39 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Gets the precomputed integer Binomal coefficient (n k).")]
-        [Input("n", "Upper term of the binomial cooeficient. Should be larger or equal to 0 and larger than k. A value of 0 is returned if this is not the case.")]
-        [Input("k", "Lower term of the binomial cooeficient. Should be larger or equal to 0 and smaller than n. A value of 0 is returned if this is not the case.")]
-        [Output("bin", "The binomal cooeficient relating to (n k).")]
-        public static int Binomal(int n, int k)
+        [Description("Gets all basis functions up to the specified degree for the given knot vector at parameter t in the given span.")]
+        [Input("knots", "The knot vector to evaluate.")]
+        [Input("span", "The span in which the parameter t resides.")]
+        [Input("degree", "Degree of the Curve/Surface in the direction of the provided knots.")]
+        [Input("t", "The parameter to evaluate.")]
+        [Output("bases", "All basis functions from degree 0 up to the specified degree.")]
+        public static List<List<double>> AllBasisFunctions(this IList<double> knots, int span, int degree, double t)
         {
-            if (k < 0) //k needs to be larger or equal to 0. For negative values 0 is returned
-                return 0;
-
-            if (n < k)  //k is larger than or equal 0, so only need to ensure that n is larger than or equal to k as this implicitly checks that n is larger or equal to 0 as well
-                return 0;
-
-            lock (m_binomalsLock)
+            List<List<double>> bases = new List<List<double>>
             {
-                int i = m_binomals.Count;
+                new List<double> { 1.0 }
+            };
 
-                while (i <= n)
+            double[] left = new double[degree + 1];
+            double[] right = new double[degree + 1];
+
+            for (int j = 1; j <= degree; j++)
+            {
+                List<double> current = new List<double>();
+                left[j] = t - knots[span + 1 - j];
+                right[j] = knots[span + j] - t;
+                double saved = 0.0;
+                for (int r = 0; r < j; r++)
                 {
-                    //Compute the binomal as triangular jagged array as Pascals triangle
-                    //https://en.wikipedia.org/wiki/Binomial_coefficient
-
-                    int[] row = new int[i + 1]; //length as 1 more than current row (due to zero indexing) First row has 1 item, 2nd has 2 etc.
-                    row[0] = 1;         //Edge value always 1
-                    row[i] = 1;         //Edge value always 1
-
-                    for (int j = 1; j < i; j++)
-                    {
-                        row[j] = m_binomals[i - 1][j - 1] + m_binomals[i - 1][j];     //Non edge values sum of the two values "above"
-                    }
-
-                    m_binomals.Add(row);
-                    i++;
+                    double temp = bases[j - 1][r] / (right[r + 1] + left[j - r]);
+                    current.Add(saved + right[r + 1] * temp);
+                    saved = left[j - r] * temp;
                 }
+                current.Add(saved);
+                bases.Add(current);
             }
-            return m_binomals[n][k];
+            return bases;
         }
-
-
-        /***************************************************/
-
-        private static List<int[]> m_binomals = new List<int[]>();
-        private static object m_binomalsLock = new object();
 
         /***************************************************/
     }

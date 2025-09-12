@@ -57,6 +57,7 @@ namespace BH.Engine.Geometry
         [Input("knots", "The knot vector to evaluate.")]
         [Input("span", "The span in which the parameter t resides. The KnotSpan method can be used to identify the span.")]
         [Input("degree", "Degree of the Curve/Surface in the direction of the provided knots.")]
+        [Input("numberOfDerivates", "Number of derivative functions to return.")]
         [Input("t", "The parameter to evaluate.")]
         [Output("basis", "The basis functions of the knot vector for the given parameter in the given span.")]
         public static List<List<double>> DerivativeFunctions(this IList<double> knots, int span, int degree, int numberOfDerivates, double t)

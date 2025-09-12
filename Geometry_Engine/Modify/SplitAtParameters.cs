@@ -21,8 +21,10 @@
  */
 
 using BH.oM.Base;
+using BH.oM.Base.Attributes;
 using BH.oM.Geometry;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace BH.Engine.Geometry
@@ -64,13 +66,13 @@ namespace BH.Engine.Geometry
                     ts.RemoveAt(0);
             }
 
-            var ctrlPts = Convert.ToDoubleArray(curve.ControlPoints, curve.Weights);    //Convert to control points
+            Output<List<double[]>, bool> ctrlPts = Convert.ToDoubleArray(curve.ControlPoints, curve.Weights);    //Convert to control points
             bool isRational = ctrlPts.Item2;
             List<double[]> cw = ctrlPts.Item1;
             List<double> knots = curve.Knots;
 
             //Ensure the curve is clamped
-            var clamped = EnsureClamped(cw, knots, degree);
+            Output<List<double[]>, List<double>> clamped = EnsureClamped(cw, knots, degree);
             cw = clamped.Item1;
             knots = clamped.Item2;
 
@@ -108,7 +110,7 @@ namespace BH.Engine.Geometry
 
                 int endIndex = endSpan - degree + 1;
 
-                var ptsAndWeight = Convert.ToPointAndWeight(cw.GetRange(startPtIndex, endIndex-startPtIndex), isRational);
+                Output<List<Point>, List<double>> ptsAndWeight = Convert.ToPointAndWeight(cw.GetRange(startPtIndex, endIndex - startPtIndex), isRational);
 
                 splitCurves.Add(new NurbsCurve { Knots = tmpKnots, ControlPoints = ptsAndWeight.Item1, Weights = ptsAndWeight.Item2 });
 
@@ -124,7 +126,7 @@ namespace BH.Engine.Geometry
                 tmpKnots.Add(knots[j]);
             }
 
-            var ptsAndWeightEnd = Convert.ToPointAndWeight(cw.GetRange(startPtIndex, cw.Count - startPtIndex), isRational);
+            Output<List<Point>, List<double>> ptsAndWeightEnd = Convert.ToPointAndWeight(cw.GetRange(startPtIndex, cw.Count - startPtIndex), isRational);
 
             splitCurves.Add(new NurbsCurve { Knots = tmpKnots, ControlPoints = ptsAndWeightEnd.Item1, Weights = ptsAndWeightEnd.Item2 });
 

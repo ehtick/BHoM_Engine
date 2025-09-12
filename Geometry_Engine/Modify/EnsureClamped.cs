@@ -21,9 +21,10 @@
  */
 
 using BH.oM.Base;
+using BH.oM.Base.Attributes;
 using BH.oM.Geometry;
 using System.Collections.Generic;
-using System.Linq;
+using System.ComponentModel;
 
 namespace BH.Engine.Geometry
 {
@@ -38,16 +39,16 @@ namespace BH.Engine.Geometry
         [Output("curve", "The clamped NurbsCurve with knot multiplicities equal to the degree at the start and end.")]
         public static NurbsCurve EnsureClamped(this NurbsCurve curve)
         {
-            var toControlPoints = Convert.ToDoubleArray(curve.ControlPoints, curve.Weights);
-            var cw = toControlPoints.Item1;
+            Output<List<double[]>, bool> toControlPoints = Convert.ToDoubleArray(curve.ControlPoints, curve.Weights);
+            List<double[]> cw = toControlPoints.Item1;
             List<double> knots = curve.Knots;
 
             int degree = curve.Degree();
 
-            var clamped = EnsureClamped(cw, knots, degree);
+            Output<List<double[]>, List<double>> clamped = EnsureClamped(cw, knots, degree);
 
-            var ptsAndWeights = Convert.ToPointAndWeight(clamped.Item1, toControlPoints.Item2);
-            return new NurbsCurve {ControlPoints = ptsAndWeights.Item1, Knots = clamped.Item2, Weights = ptsAndWeights.Item2 };
+            Output<List<Point>, List<double>> ptsAndWeights = Convert.ToPointAndWeight(clamped.Item1, toControlPoints.Item2);
+            return new NurbsCurve { ControlPoints = ptsAndWeights.Item1, Knots = clamped.Item2, Weights = ptsAndWeights.Item2 };
         }
 
         /***************************************************/

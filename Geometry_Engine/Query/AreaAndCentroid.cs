@@ -62,9 +62,11 @@ namespace BH.Engine.Geometry
             List<double> values = gausPairs.Item1;
             List<double> weights = gausPairs.Item2;
 
-            for (int i = 0; i < values.Count; i++)
+            List<List<Vector>> ders = curve.DerivativesAtParameters(1, values, false);
+
+            for (int i = 0; i < weights.Count; i++)
             {
-                List<Vector> der = curve.DerivativesAtParameter(1, values[i], false);
+                List<Vector> der = ders[i];
                 Vector v = der[0];
                 Vector v_p = der[1];
                 double w = weights[i];

@@ -20,13 +20,13 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.oM.Base.Attributes;
 using BH.oM.Geometry;
+using BH.oM.Quantities.Attributes;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using BH.oM.Base.Attributes;
 using System.ComponentModel;
-using BH.oM.Quantities.Attributes;
+using System.Linq;
 
 namespace BH.Engine.Geometry
 {
@@ -152,9 +152,9 @@ namespace BH.Engine.Geometry
                 List<Point> intPts1 = curve1.PlaneIntersections(p2, tolerance);
                 List<Point> intPts2 = curve2.PlaneIntersections(p1, tolerance);
 
-                foreach(Point pt1 in intPts1)
+                foreach (Point pt1 in intPts1)
                 {
-                    foreach(Point pt2 in intPts2)
+                    foreach (Point pt2 in intPts2)
                     {
                         if (pt1.SquareDistance(pt2) <= sqTolerance)
                             result.Add((pt1 + pt2) * 0.5);
@@ -286,10 +286,15 @@ namespace BH.Engine.Geometry
         }
 
         /***************************************************/
+        /**** Private Methods - Fallback                ****/
+        /***************************************************/
+
+        private static List<Point> CurveIntersections(this ICurve curve1, ICurve curve2, double tolerance = Tolerance.Distance)
+        {
+            BH.Engine.Base.Compute.RecordError($"Intersection between curves of type {curve1.GetType().Name} and {curve2.GetType().Name} is not implemented.");
+            return new List<Point>();
+        }
+
+        /***************************************************/
     }
 }
-
-
-
-
-

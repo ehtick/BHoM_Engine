@@ -22,7 +22,10 @@
 
 using BH.oM.Geometry;
 using BH.oM.Geometry.CoordinateSystem;
+using BH.oM.Base.Attributes;
+using BH.oM.Quantities.Attributes;
 using System;
+using System.ComponentModel;
 using System.Linq;
 
 namespace BH.Engine.Geometry
@@ -32,6 +35,13 @@ namespace BH.Engine.Geometry
         /***************************************************/
         /**** Public Methods                            ****/
         /***************************************************/
+        
+        [Description("Creates a Cuboid with the specified coordinate system and dimensions.")]
+        [Input("coordinateSystem", "The coordinate system defining the position and orientation of the cuboid.")]
+        [Input("length", "The length of the cuboid.", typeof(Length))]
+        [Input("depth", "The depth of the cuboid.", typeof(Length))]
+        [Input("height", "The height of the cuboid.", typeof(Length))]
+        [Output("cuboid", "The created Cuboid.")]
         public static Cuboid Cuboid(Cartesian coordinateSystem, double length = 0.0, double depth = 0.0, double height = 0.0)
         {
             return new Cuboid
@@ -47,9 +57,3 @@ namespace BH.Engine.Geometry
 
     }
 }
-
-
-
-
-
-

@@ -21,7 +21,10 @@
  */
 
 using System.Collections.Generic;
+using System.ComponentModel;
 using BH.oM.Geometry;
+using BH.oM.Base.Attributes;
+using BH.oM.Quantities.Attributes;
 
 namespace BH.Engine.Geometry
 {
@@ -31,6 +34,9 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
+        [Description("Checks if a NurbsCurve is periodic (closed with continuous derivatives).")]
+        [Input("curve", "The NurbsCurve to check for periodicity.")]
+        [Output("isPeriodic", "True if the curve is periodic, false otherwise.")]
         public static bool IsPeriodic(this NurbsCurve curve)
         {
             int multiplicity = 1;
@@ -43,6 +49,9 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
         
+        [Description("Checks if a NurbsSurface is periodic in either U or V direction.")]
+        [Input("surface", "The NurbsSurface to check for periodicity.")]
+        [Output("isPeriodic", "True if the surface is periodic in either direction, false otherwise.")]
         public static bool IsPeriodic(this NurbsSurface surface)
         {
             int uMultiplicity = 1;
@@ -59,9 +68,3 @@ namespace BH.Engine.Geometry
         /***************************************************/
     }
 }
-
-
-
-
-
-

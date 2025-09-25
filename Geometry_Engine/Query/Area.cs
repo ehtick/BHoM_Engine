@@ -20,14 +20,13 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.Engine.Base;
-using BH.oM.Geometry;
 using BH.oM.Base.Attributes;
-using System.Linq;
-using System.ComponentModel;
+using BH.oM.Geometry;
+using BH.oM.Quantities.Attributes;
 using System;
 using System.Collections.Generic;
-using BH.oM.Quantities.Attributes;
+using System.ComponentModel;
+using System.Linq;
 
 namespace BH.Engine.Geometry
 {
@@ -68,7 +67,7 @@ namespace BH.Engine.Geometry
                 BH.Engine.Base.Compute.RecordError("Cannot query area as the geometry is null.");
                 return double.NaN;
             }
-            
+
             if (curve.IsClosed(tolerance))
                 return Math.PI * curve.Radius * curve.Radius;
             else
@@ -123,6 +122,17 @@ namespace BH.Engine.Geometry
         {
             Base.Compute.RecordWarning("Cannot calculate area for an open curve.");
             return 0;
+        }
+
+        /***************************************************/
+
+        [Description("Calculates the area of the provided geometry.")]
+        [Input("curve", "The NurbsCurve to get the area of.")]
+        [Input("tolerance", "The tolerance to apply to the area calculation.")]
+        [Output("area", "The area of the geometry.", typeof(Area))]
+        public static double Area(this NurbsCurve curve, double tolerance = Tolerance.Distance)
+        {
+            return curve.AreaAndCentroid(tolerance).Item2;
         }
 
         /***************************************************/
@@ -198,7 +208,7 @@ namespace BH.Engine.Geometry
                 BH.Engine.Base.Compute.RecordError("Cannot query area as the geometry is null.");
                 return double.NaN;
             }
-            
+
             if (!curve.IIsClosed(tolerance))
             {
                 Base.Compute.RecordWarning("Cannot calculate area for an open curve.");
@@ -243,7 +253,7 @@ namespace BH.Engine.Geometry
                 BH.Engine.Base.Compute.RecordError("Cannot query area as the geometry is null.");
                 return double.NaN;
             }
-            
+
             Mesh tMesh = mesh.Triangulate();
             double area = 0;
             List<Face> faces = tMesh.Faces;
@@ -275,7 +285,7 @@ namespace BH.Engine.Geometry
                 BH.Engine.Base.Compute.RecordError("Cannot query area as the geometry is null.");
                 return double.NaN;
             }
-            
+
             return pSurf.Surfaces.Sum(x => x.IArea(tolerance));
         }
 
@@ -292,7 +302,7 @@ namespace BH.Engine.Geometry
                 BH.Engine.Base.Compute.RecordError("Cannot query area as the geometry is null.");
                 return double.NaN;
             }
-            
+
             double area = pSurf.ExternalBoundary.IArea(tolerance);
 
             if (pSurf.InternalBoundaries != null)
@@ -301,6 +311,17 @@ namespace BH.Engine.Geometry
             }
 
             return area;
+        }
+
+        /***************************************************/
+
+        [Description("Calculates the area of the provided geometry.")]
+        [Input("surface", "The NurbsSurface to get the area of.")]
+        [Input("tolerance", "The tolerance to apply to the area calculation.")]
+        [Output("area", "The area of the geometry.", typeof(Area))]
+        public static double Area(this NurbsSurface surface, double tolerance = Tolerance.Distance)
+        {
+            return surface.AreaAndCentroid().Item2;
         }
 
 
@@ -320,7 +341,7 @@ namespace BH.Engine.Geometry
                 BH.Engine.Base.Compute.RecordError("Cannot query area as the geometry is null.");
                 return double.NaN;
             }
-            
+
             double area = 0;
             area = Length(CrossProduct(v1, v2)) / 2;
 
@@ -336,7 +357,6 @@ namespace BH.Engine.Geometry
         [Input("geometry", "Geometry to get the area of.")]
         [Input("tolerance", "The tolerance to apply to the area calculation.")]
         [Output("area", "The area of the geometry.")]
-        
         private static double Area(this IGeometry geometry, double tolerance = Tolerance.Distance)
         {
             if (geometry == null)
@@ -344,7 +364,7 @@ namespace BH.Engine.Geometry
                 BH.Engine.Base.Compute.RecordError("Cannot query area as the geometry is null.");
                 return double.NaN;
             }
-            
+
             Base.Compute.RecordError("Area for " + geometry.GetType().Name + " is not implemented.");
             return double.NaN;
         }
@@ -352,7 +372,3 @@ namespace BH.Engine.Geometry
         /***************************************************/
     }
 }
-
-
-
-

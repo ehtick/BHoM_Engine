@@ -21,11 +21,12 @@
  */
 
 using System;
-using BH.oM.Geometry;
- 
 using System.Collections.Generic;
+using System.ComponentModel;
+using BH.oM.Geometry;
 using BH.oM.Base.Attributes;
 using BH.oM.Base;
+using BH.oM.Quantities.Attributes;
 
 namespace BH.Engine.Geometry
 {
@@ -35,6 +36,12 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
+        [Description("Finds the closest points between two Lines.")]
+        [Input("curve1", "The first Line.")]
+        [Input("curve2", "The second Line.")]
+        [Input("tolerance", "Distance tolerance for the proximity calculation.", typeof(Length))]
+        [MultiOutput(0, "point1", "The closest point on the first Line.")]
+        [MultiOutput(1, "point2", "The closest point on the second Line.")]
         public static Output<Point, Point> CurveProximity(this Line curve1, Line curve2, double tolerance = Tolerance.Distance)
         {
             List<Point> cIntersections = curve1.CurveIntersections(curve2);
@@ -76,6 +83,12 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Finds the closest points between a Line and an Arc.")]
+        [Input("curve1", "The Line.")]
+        [Input("curve2", "The Arc.")]
+        [Input("tolerance", "Distance tolerance for the proximity calculation.", typeof(Length))]
+        [MultiOutput(0, "pointOnLine", "The closest point on the Line.")]
+        [MultiOutput(1, "pointOnArc", "The closest point on the Arc.")]
         public static Output<Point, Point> CurveProximity(this Line curve1, Arc curve2, double tolerance = Tolerance.Distance)
         {
             List<Point> cIntersections = curve1.CurveIntersections(curve2);
@@ -165,6 +178,12 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Finds the closest points between a Line and a Circle.")]
+        [Input("curve1", "The Line.")]
+        [Input("curve2", "The Circle.")]
+        [Input("tolerance", "Distance tolerance for the proximity calculation.", typeof(Length))]
+        [MultiOutput(0, "pointOnLine", "The closest point on the Line.")]
+        [MultiOutput(1, "pointOnCircle", "The closest point on the Circle.")]
         public static Output<Point, Point> CurveProximity(this Line curve1, Circle curve2, double tolerance = Tolerance.Distance)
         {
             List<Point> cIntersections = curve1.CurveIntersections(curve2);
@@ -235,6 +254,12 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Finds the closest points between a Line and a PolyCurve.")]
+        [Input("curve1", "The Line.")]
+        [Input("curve2", "The PolyCurve.")]
+        [Input("tolerance", "Distance tolerance for the proximity calculation.", typeof(Length))]
+        [MultiOutput(0, "pointOnLine", "The closest point on the Line.")]
+        [MultiOutput(1, "pointOnPolyCurve", "The closest point on the PolyCurve.")]
         public static Output<Point, Point> CurveProximity(this Line curve1, PolyCurve curve2, double tolerance = Tolerance.Distance)
         {
             Output<Point, Point> result = curve2.CurveProximity(curve1);
@@ -243,6 +268,12 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Finds the closest points between a Line and a Polyline.")]
+        [Input("curve1", "The Line.")]
+        [Input("curve2", "The Polyline.")]
+        [Input("tolerance", "Distance tolerance for the proximity calculation.", typeof(Length))]
+        [MultiOutput(0, "pointOnLine", "The closest point on the Line.")]
+        [MultiOutput(1, "pointOnPolyline", "The closest point on the Polyline.")]
         public static Output<Point, Point> CurveProximity(this Line curve1, Polyline curve2, double tolerance = Tolerance.Distance)
         {
             Output<Point, Point> result = curve2.CurveProximity(curve1);
@@ -251,6 +282,12 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Finds the closest points between an Arc and a Line.")]
+        [Input("curve1", "The Arc.")]
+        [Input("curve2", "The Line.")]
+        [Input("tolerance", "Distance tolerance for the proximity calculation.", typeof(Length))]
+        [MultiOutput(0, "pointOnArc", "The closest point on the Arc.")]
+        [MultiOutput(1, "pointOnLine", "The closest point on the Line.")]
         public static Output<Point, Point> CurveProximity(this Arc curve1, Line curve2, double tolerance = Tolerance.Distance)
         {
             Output<Point, Point> result = curve2.CurveProximity(curve1);
@@ -259,6 +296,12 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Finds the closest points between two Arcs.")]
+        [Input("curve1", "The first Arc.")]
+        [Input("curve2", "The second Arc.")]
+        [Input("tolerance", "Distance tolerance for the proximity calculation.", typeof(Length))]
+        [MultiOutput(0, "point1", "The closest point on the first Arc.")]
+        [MultiOutput(1, "point2", "The closest point on the second Arc.")]
         public static Output<Point, Point> CurveProximity(this Arc curve1, Arc curve2, double tolerance = Tolerance.Distance)
         {
             List<Point> cIntersections = curve1.CurveIntersections(curve2);
@@ -480,6 +523,12 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Finds the closest points between an Arc and a Circle.")]
+        [Input("curve1", "The Arc.")]
+        [Input("curve2", "The Circle.")]
+        [Input("tolerance", "Distance tolerance for the proximity calculation.", typeof(Length))]
+        [MultiOutput(0, "pointOnArc", "The closest point on the Arc.")]
+        [MultiOutput(1, "pointOnCircle", "The closest point on the Circle.")]
         public static Output<Point, Point> CurveProximity(this Arc curve1, Circle curve2, double tolerance = Tolerance.Distance)
         {
             List<Point> cIntersections = curve1.CurveIntersections(curve2);
@@ -630,6 +679,12 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Finds the closest points between an Arc and a PolyCurve.")]
+        [Input("curve1", "The Arc.")]
+        [Input("curve2", "The PolyCurve.")]
+        [Input("tolerance", "Distance tolerance for the proximity calculation.", typeof(Length))]
+        [MultiOutput(0, "pointOnArc", "The closest point on the Arc.")]
+        [MultiOutput(1, "pointOnPolyCurve", "The closest point on the PolyCurve.")]
         public static Output<Point, Point> CurveProximity(this Arc curve1, PolyCurve curve2, double tolerance = Tolerance.Distance)
         {
             Output<Point, Point> result = curve2.CurveProximity(curve1);
@@ -638,6 +693,12 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Finds the closest points between an Arc and a Polyline.")]
+        [Input("curve1", "The Arc.")]
+        [Input("curve2", "The Polyline.")]
+        [Input("tolerance", "Distance tolerance for the proximity calculation.", typeof(Length))]
+        [MultiOutput(0, "pointOnArc", "The closest point on the Arc.")]
+        [MultiOutput(1, "pointOnPolyline", "The closest point on the Polyline.")]
         public static Output<Point, Point> CurveProximity(this Arc curve1, Polyline curve2, double tolerance = Tolerance.Distance)
         {
             Output<Point, Point> result = curve2.CurveProximity(curve1);
@@ -646,6 +707,12 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Finds the closest points between a Circle and a Line.")]
+        [Input("curve1", "The Circle.")]
+        [Input("curve2", "The Line.")]
+        [Input("tolerance", "Distance tolerance for the proximity calculation.", typeof(Length))]
+        [MultiOutput(0, "pointOnCircle", "The closest point on the Circle.")]
+        [MultiOutput(1, "pointOnLine", "The closest point on the Line.")]
         public static Output<Point, Point> CurveProximity(this Circle curve1, Line curve2, double tolerance = Tolerance.Distance)
         {
             Output<Point, Point> result = curve2.CurveProximity(curve1);
@@ -654,6 +721,12 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Finds the closest points between a Circle and an Arc.")]
+        [Input("curve1", "The Circle.")]
+        [Input("curve2", "The Arc.")]
+        [Input("tolerance", "Distance tolerance for the proximity calculation.", typeof(Length))]
+        [MultiOutput(0, "pointOnCircle", "The closest point on the Circle.")]
+        [MultiOutput(1, "pointOnArc", "The closest point on the Arc.")]
         public static Output<Point, Point> CurveProximity(this Circle curve1, Arc curve2, double tolerance = Tolerance.Distance)
         {
             Output<Point, Point> result = curve2.CurveProximity(curve1);
@@ -662,6 +735,12 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Finds the closest points between two Circles.")]
+        [Input("curve1", "The first Circle.")]
+        [Input("curve2", "The second Circle.")]
+        [Input("tolerance", "Distance tolerance for the proximity calculation.", typeof(Length))]
+        [MultiOutput(0, "point1", "The closest point on the first Circle.")]
+        [MultiOutput(1, "point2", "The closest point on the second Circle.")]
         public static Output<Point, Point> CurveProximity(this Circle curve1, Circle curve2, double tolerance = Tolerance.Distance)
         {
             List<Point> cIntersections = curve1.CurveIntersections(curve2);
@@ -819,6 +898,12 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Finds the closest points between a Circle and a PolyCurve.")]
+        [Input("curve1", "The Circle.")]
+        [Input("curve2", "The PolyCurve.")]
+        [Input("tolerance", "Distance tolerance for the proximity calculation.", typeof(Length))]
+        [MultiOutput(0, "pointOnCircle", "The closest point on the Circle.")]
+        [MultiOutput(1, "pointOnPolyCurve", "The closest point on the PolyCurve.")]
         public static Output<Point, Point> CurveProximity(this Circle curve1, PolyCurve curve2, double tolerance = Tolerance.Distance)
         {
             Output<Point, Point> result = curve2.CurveProximity(curve1);
@@ -827,6 +912,12 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Finds the closest points between a Circle and a Polyline.")]
+        [Input("curve1", "The Circle.")]
+        [Input("curve2", "The Polyline.")]
+        [Input("tolerance", "Distance tolerance for the proximity calculation.", typeof(Length))]
+        [MultiOutput(0, "pointOnCircle", "The closest point on the Circle.")]
+        [MultiOutput(1, "pointOnPolyline", "The closest point on the Polyline.")]
         public static Output<Point, Point> CurveProximity(this Circle curve1, Polyline curve2, double tolerance = Tolerance.Distance)
         {
             Output<Point, Point> result = curve2.CurveProximity(curve1);
@@ -835,6 +926,12 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Finds the closest points between a PolyCurve and a Line.")]
+        [Input("curve1", "The PolyCurve.")]
+        [Input("curve2", "The Line.")]
+        [Input("tolerance", "Distance tolerance for the proximity calculation.", typeof(Length))]
+        [MultiOutput(0, "pointOnPolyCurve", "The closest point on the PolyCurve.")]
+        [MultiOutput(1, "pointOnLine", "The closest point on the Line.")]
         public static Output<Point, Point> CurveProximity(this PolyCurve curve1, Line curve2, double tolerance = Tolerance.Distance)
         {
             Output<Point, Point> result = curve2.ICurveProximity(curve1.Curves[0]);
@@ -853,6 +950,12 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Finds the closest points between a PolyCurve and an Arc.")]
+        [Input("curve1", "The PolyCurve.")]
+        [Input("curve2", "The Arc.")]
+        [Input("tolerance", "Distance tolerance for the proximity calculation.", typeof(Length))]
+        [MultiOutput(0, "pointOnPolyCurve", "The closest point on the PolyCurve.")]
+        [MultiOutput(1, "pointOnArc", "The closest point on the Arc.")]
         public static Output<Point, Point> CurveProximity(this PolyCurve curve1, Arc curve2, double tolerance = Tolerance.Distance)
         {
             Output<Point, Point> result = curve2.ICurveProximity(curve1.Curves[0]);
@@ -871,6 +974,12 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Finds the closest points between a PolyCurve and a Circle.")]
+        [Input("curve1", "The PolyCurve.")]
+        [Input("curve2", "The Circle.")]
+        [Input("tolerance", "Distance tolerance for the proximity calculation.", typeof(Length))]
+        [MultiOutput(0, "pointOnPolyCurve", "The closest point on the PolyCurve.")]
+        [MultiOutput(1, "pointOnCircle", "The closest point on the Circle.")]
         public static Output<Point, Point> CurveProximity(this PolyCurve curve1, Circle curve2, double tolerance = Tolerance.Distance)
         {
             Output<Point, Point> result = curve2.ICurveProximity(curve1.Curves[0]);
@@ -889,6 +998,12 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Finds the closest points between a PolyCurve and a Polyline.")]
+        [Input("curve1", "The PolyCurve.")]
+        [Input("curve2", "The Polyline.")]
+        [Input("tolerance", "Distance tolerance for the proximity calculation.", typeof(Length))]
+        [MultiOutput(0, "pointOnPolyCurve", "The closest point on the PolyCurve.")]
+        [MultiOutput(1, "pointOnPolyline", "The closest point on the Polyline.")]
         public static Output<Point, Point> CurveProximity(this PolyCurve curve1, Polyline curve2, double tolerance = Tolerance.Distance)
         {
             List<Line> temp = new List<Line>();
@@ -916,6 +1031,12 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Finds the closest points between two PolyCurves.")]
+        [Input("curve1", "The first PolyCurve.")]
+        [Input("curve2", "The second PolyCurve.")]
+        [Input("tolerance", "Distance tolerance for the proximity calculation.", typeof(Length))]
+        [MultiOutput(0, "point1", "The closest point on the first PolyCurve.")]
+        [MultiOutput(1, "point2", "The closest point on the second PolyCurve.")]
         public static Output<Point, Point> CurveProximity(this PolyCurve curve1, PolyCurve curve2, double tolerance = Tolerance.Distance)
         {
             Output<Point, Point> result = curve2.ICurveProximity(curve1.Curves[0]);
@@ -934,6 +1055,12 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Finds the closest points between a Polyline and a Line.")]
+        [Input("curve1", "The Polyline.")]
+        [Input("curve2", "The Line.")]
+        [Input("tolerance", "Distance tolerance for the proximity calculation.", typeof(Length))]
+        [MultiOutput(0, "pointOnPolyline", "The closest point on the Polyline.")]
+        [MultiOutput(1, "pointOnLine", "The closest point on the Line.")]
         public static Output<Point, Point> CurveProximity(this Polyline curve1, Line curve2, double tolerance = Tolerance.Distance)
         {
             List<Line> temp = new List<Line>();
@@ -958,6 +1085,12 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Finds the closest points between a Polyline and an Arc.")]
+        [Input("curve1", "The Polyline.")]
+        [Input("curve2", "The Arc.")]
+        [Input("tolerance", "Distance tolerance for the proximity calculation.", typeof(Length))]
+        [MultiOutput(0, "pointOnPolyline", "The closest point on the Polyline.")]
+        [MultiOutput(1, "pointOnArc", "The closest point on the Arc.")]
         public static Output<Point, Point> CurveProximity(this Polyline curve1, Arc curve2, double tolerance = Tolerance.Distance)
         {
             List<Line> temp = new List<Line>();
@@ -981,6 +1114,12 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Finds the closest points between a Polyline and a Circle.")]
+        [Input("curve1", "The Polyline.")]
+        [Input("curve2", "The Circle.")]
+        [Input("tolerance", "Distance tolerance for the proximity calculation.", typeof(Length))]
+        [MultiOutput(0, "pointOnPolyline", "The closest point on the Polyline.")]
+        [MultiOutput(1, "pointOnCircle", "The closest point on the Circle.")]
         public static Output<Point, Point> CurveProximity(this Polyline curve1, Circle curve2, double tolerance = Tolerance.Distance)
         {
             List<Line> temp = new List<Line>();
@@ -1005,6 +1144,12 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Finds the closest points between a Polyline and a PolyCurve.")]
+        [Input("curve1", "The Polyline.")]
+        [Input("curve2", "The PolyCurve.")]
+        [Input("tolerance", "Distance tolerance for the proximity calculation.", typeof(Length))]
+        [MultiOutput(0, "pointOnPolyline", "The closest point on the Polyline.")]
+        [MultiOutput(1, "pointOnPolyCurve", "The closest point on the PolyCurve.")]
         public static Output<Point, Point> CurveProximity(this Polyline curve1, PolyCurve curve2, double tolerance = Tolerance.Distance)
         {
             Output<Point, Point> result = curve2.CurveProximity(curve1);
@@ -1013,6 +1158,12 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Finds the closest points between two Polylines.")]
+        [Input("curve1", "The first Polyline.")]
+        [Input("curve2", "The second Polyline.")]
+        [Input("tolerance", "Distance tolerance for the proximity calculation.", typeof(Length))]
+        [MultiOutput(0, "point1", "The closest point on the first Polyline.")]
+        [MultiOutput(1, "point2", "The closest point on the second Polyline.")]
         public static Output<Point, Point> CurveProximity(this Polyline curve1, Polyline curve2, double tolerance = Tolerance.Distance)
         {
             List<Line> temp = new List<Line>();
@@ -1040,6 +1191,12 @@ namespace BH.Engine.Geometry
         /**** Public Methods - Interfaces               ****/
         /***************************************************/
 
+        [Description("Finds the closest points between any two ICurves using dynamic dispatch.")]
+        [Input("curve1", "The first ICurve.")]
+        [Input("curve2", "The second ICurve.")]
+        [Input("tolerance", "Distance tolerance for the proximity calculation.", typeof(Length))]
+        [MultiOutput(0, "point1", "The closest point on the first curve.")]
+        [MultiOutput(1, "point2", "The closest point on the second curve.")]
         public static Output<Point, Point> ICurveProximity(this ICurve curve1, ICurve curve2, double tolerance = Tolerance.Distance)
         {
             Output<Point, Point> result = CurveProximity(curve1 as dynamic, curve2 as dynamic);
@@ -1070,7 +1227,3 @@ namespace BH.Engine.Geometry
         /***************************************************/
     }
 }
-
-
-
-

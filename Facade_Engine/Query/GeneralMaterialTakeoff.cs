@@ -148,8 +148,8 @@ namespace BH.Engine.Facade
 
             if (edge.FrameEdgeProperty == null)
             {
-                Engine.Base.Compute.RecordError($"The {nameof(GeneralMaterialTakeoff)} could not be queried as no {nameof(FrameEdgeProperty)} has been assigned to the {nameof(FrameEdge)}.");
-                return null;
+                Engine.Base.Compute.RecordWarning($"No {nameof(FrameEdgeProperty)} has been assigned to the {nameof(FrameEdge)}. An empty MaterialTakeoff has been returned.");
+                return Matter.Create.GeneralMaterialTakeoff(Matter.Create.VolumetricMaterialTakeoff(new MaterialComposition(new List<Material>(), new List<double>()), 0));
             }
 
             VolumetricMaterialTakeoff volTakeoff = Matter.Create.VolumetricMaterialTakeoff(edge.MaterialComposition(), edge.SolidVolume());

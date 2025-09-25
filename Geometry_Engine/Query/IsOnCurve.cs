@@ -21,10 +21,12 @@
  */
 
 using BH.oM.Geometry;
-using System;
-using System.Linq;
-using System.Collections.Generic;
 using BH.oM.Base.Attributes;
+using BH.oM.Quantities.Attributes;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 
 namespace BH.Engine.Geometry
 {
@@ -34,6 +36,11 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
+        [Description("Checks if a Point lies on a Line within the given tolerance.")]
+        [Input("line", "The Line to check.")]
+        [Input("pt", "The Point to check.")]
+        [Input("tolerance", "The distance tolerance for the check.", typeof(Length))]
+        [Output("isOnCurve", "True if the Point is on the Line, false otherwise.")]
         public static bool IsOnCurve(this Line line, Point pt, double tolerance = Tolerance.Distance)
         {
             double distToStart = Query.Distance(pt, line.Start);
@@ -49,6 +56,11 @@ namespace BH.Engine.Geometry
         /**** Public Methods - Curves                   ****/
         /***************************************************/
 
+        [Description("Checks if a Point lies on an Arc within the given tolerance.")]
+        [Input("point", "The Point to check.")]
+        [Input("curve", "The Arc to check against.")]
+        [Input("tolerance", "The distance tolerance for the check.", typeof(Length))]
+        [Output("isOnCurve", "True if the Point is on the Arc, false otherwise.")]
         public static bool IsOnCurve(this Point point, Arc curve, double tolerance = Tolerance.Distance)
         {
             return point.Distance(curve) < tolerance;
@@ -56,6 +68,11 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Checks if a Point lies on a Circle within the given tolerance.")]
+        [Input("point", "The Point to check.")]
+        [Input("curve", "The Circle to check against.")]
+        [Input("tolerance", "The distance tolerance for the check.", typeof(Length))]
+        [Output("isOnCurve", "True if the Point is on the Circle, false otherwise.")]
         public static bool IsOnCurve(this Point point, Circle curve, double tolerance = Tolerance.Distance)
         {
             return point.Distance(curve) < tolerance;
@@ -63,6 +80,11 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Checks if a Point lies on a Line within the given tolerance.")]
+        [Input("point", "The Point to check.")]
+        [Input("curve", "The Line to check against.")]
+        [Input("tolerance", "The distance tolerance for the check.", typeof(Length))]
+        [Output("isOnCurve", "True if the Point is on the Line, false otherwise.")]
         public static bool IsOnCurve(this Point point, Line curve, double tolerance = Tolerance.Distance)
         {
             return point.Distance(curve) < tolerance;
@@ -70,6 +92,11 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Checks if a Point lies on a PolyCurve within the given tolerance.")]
+        [Input("point", "The Point to check.")]
+        [Input("curve", "The PolyCurve to check against.")]
+        [Input("tolerance", "The distance tolerance for the check.", typeof(Length))]
+        [Output("isOnCurve", "True if the Point is on the PolyCurve, false otherwise.")]
         public static bool IsOnCurve(this Point point, PolyCurve curve, double tolerance = Tolerance.Distance)
         {
             return point.Distance(curve) < tolerance;
@@ -77,6 +104,11 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [Description("Checks if a Point lies on a Polyline within the given tolerance.")]
+        [Input("point", "The Point to check.")]
+        [Input("curve", "The Polyline to check against.")]
+        [Input("tolerance", "The distance tolerance for the check.", typeof(Length))]
+        [Output("isOnCurve", "True if the Point is on the Polyline, false otherwise.")]
         public static bool IsOnCurve(this Point point, Polyline curve, double tolerance = Tolerance.Distance)
         {
             return point.Distance(curve) < tolerance;
@@ -87,6 +119,11 @@ namespace BH.Engine.Geometry
         /**** Public Methods - Interfaces               ****/
         /***************************************************/
 
+        [Description("Checks if a Point lies on any ICurve within the given tolerance.")]
+        [Input("point", "The Point to check.")]
+        [Input("curve", "The ICurve to check against.")]
+        [Input("tolerance", "The distance tolerance for the check.", typeof(Length))]
+        [Output("isOnCurve", "True if the Point is on the curve, false otherwise.")]
         public static bool IIsOnCurve(this Point point, ICurve curve, double tolerance = Tolerance.Distance)
         {
             return IsOnCurve(point, curve as dynamic, tolerance);
@@ -105,9 +142,3 @@ namespace BH.Engine.Geometry
         /***************************************************/
     }
 }
-
-
-
-
-
-

@@ -35,7 +35,7 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Curvature of the NurbsCurve at the parameter t, where t is a normalised parameter. Points towards the center of a fitted circle at the parameter with a magnitude equal to the inverse of the circles radius.")]
+        [Description("Curvature of the NurbsCurve at the parameter t, where t is a normalised parameter. Points towards the centre of a fitted circle at the parameter with a magnitude equal to the inverse of the circles radius.")]
         [Input("curve", "Curve to evaluate.")]
         [Input("t", "Parameter to evaluate at. Should be between 0 and 1. For values outside the range, the closest value will be used.")]
         [Output("curvature", "Curvature of the NurbsCurve at the parameter t.")]
@@ -45,8 +45,9 @@ namespace BH.Engine.Geometry
             // There is however no such luck. But ||C'xC''|| / (||C'||)^3 is the magnitude regardless. 
             // So we set it to that magnitude while correcting the direction through a repeated crossproduct.
 
-            Vector dC = curve.DerivativeAtParameter(t, 1);
-            Vector ddC = curve.DerivativeAtParameter(t, 2);
+            List<Vector> derivatives = curve.DerivativesAtParameter(2, t, true);
+            Vector dC = derivatives[1];
+            Vector ddC = derivatives[2];
 
             Vector orth = dC.CrossProduct(ddC);
 
@@ -81,9 +82,3 @@ namespace BH.Engine.Geometry
 
     }
 }
-
-
-
-
-
-

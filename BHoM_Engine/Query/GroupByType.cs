@@ -35,9 +35,9 @@ namespace BH.Engine.Base
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Groups a list of objects by their type")]
-        [Input("list", "List of objects to group")]
-        [Output("Groups", "List of List of objects. Each inner list will correspond to one object type")]
+        [Description("Groups a list of objects by their type.")]
+        [Input("list", "List of objects to group.")]
+        [Output("Groups", "List of List of objects. Each inner list will correspond to one object type.")]
         public static List<List<T>> GroupByType<T>(this IEnumerable<T> list)
         {
             if (list == null)

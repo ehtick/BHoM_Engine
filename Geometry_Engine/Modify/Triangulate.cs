@@ -21,7 +21,10 @@
  */
 
 using BH.oM.Geometry;
+using BH.oM.Base.Attributes;
+using BH.oM.Quantities.Attributes;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace BH.Engine.Geometry
 {
@@ -31,6 +34,9 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
+        [Description("Triangulates a Mesh by converting all quad faces to triangular faces.")]
+        [Input("mesh", "The Mesh to triangulate.")]
+        [Output("mesh", "The triangulated Mesh with all faces converted to triangles.")]
         public static Mesh Triangulate(this Mesh mesh)
         {
             Mesh tMesh = new Mesh();
@@ -80,9 +86,3 @@ namespace BH.Engine.Geometry
         /***************************************************/
     }
 }
-
-
-
-
-
-

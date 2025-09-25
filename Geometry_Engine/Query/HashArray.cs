@@ -28,9 +28,7 @@ using BH.oM.Geometry.CoordinateSystem;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing.Drawing2D;
 using System.Linq;
-using System.Security.Cryptography.Xml;
 
 namespace BH.Engine.Geometry
 {
@@ -43,7 +41,7 @@ namespace BH.Engine.Geometry
         [Description("Returns a signature of the input geometry, useful for distance-based comparisons and diffing." +
             "\nThe hash is computed as an array representing the coordinate of significant points taken on the geometry." +
             "\nThe number of points is reduced to the minimum essential to determine uniquely any geometry." +
-            "\nAdditionally, the resulting points are transformed based on the source geometry type, to remove or minimize collisions." +
+            "\nAdditionally, the resulting points are transformed based on the source geometry type, to remove or minimise collisions." +
             "\n(Any transformation so performed is translational only, in order to support geometrical tolerance, i.e. numerical distance, when comparing GeometryHashes downstream).")]
         [Input("igeometry", "Geometry you want to compute the hash array for.")]
         [Input("comparisonConfig", "Configurations on how the hash array is computed, with options for numerical approximation, type exceptions and many others.")]
@@ -58,7 +56,7 @@ namespace BH.Engine.Geometry
         [Description("Returns a signature of the input geometry, useful for distance-based comparisons and diffing." +
             "\nThe hash is computed as an array representing the coordinate of significant points taken on the geometry." +
             "\nThe number of points is reduced to the minimum essential to determine uniquely any geometry." +
-            "\nAdditionally, the resulting points are transformed based on the source geometry type, to remove or minimize collisions." +
+            "\nAdditionally, the resulting points are transformed based on the source geometry type, to remove or minimise collisions." +
             "\n(Any transformation so performed is translational only, in order to support geometrical tolerance, i.e. numerical distance, when comparing GeometryHashes downstream).")]
         [Input("igeometry", "Geometry you want to compute the hash array for.")]
         [Input("comparisonConfig", "Configurations on how the hash array is computed, with options for numerical approximation, type exceptions and many others.")]
@@ -469,7 +467,7 @@ namespace BH.Engine.Geometry
 
             translationFactor += (int)TypeTranslationFactor.Mesh;
 
-            var dic = new Dictionary<int, int>();
+            Dictionary<int, int> dic = new Dictionary<int, int>();
             List<double> result = new List<double>();
 
             if (!comparisonConfig?.TypeExceptions?.Any(t => typeof(Face).IsAssignableFrom(t)) ?? true)
@@ -479,7 +477,7 @@ namespace BH.Engine.Geometry
                     if (comparisonConfig?.TypeExceptions?.Any(t => typeof(Point).IsAssignableFrom(t)) ?? false)
                         result.AddRange(obj.Faces[i].FaceIndices().Select<int, double>(n => n));
 
-                    foreach (var faceIndex in obj.Faces[i].FaceIndices())
+                    foreach (int faceIndex in obj.Faces[i].FaceIndices())
                     {
                         if (dic.ContainsKey(faceIndex))
                             dic[faceIndex] += i;
@@ -517,7 +515,7 @@ namespace BH.Engine.Geometry
 
             translationFactor += (int)TypeTranslationFactor.Mesh3D;
 
-            var dic = new Dictionary<int, int>();
+            Dictionary<int, int> dic = new Dictionary<int, int>();
             List<double> result = new List<double>();
 
             if (!comparisonConfig?.TypeExceptions?.Any(t => typeof(Face).IsAssignableFrom(t)) ?? true)
@@ -527,7 +525,7 @@ namespace BH.Engine.Geometry
                     if (comparisonConfig?.TypeExceptions?.Any(t => typeof(Point).IsAssignableFrom(t)) ?? false)
                         result.AddRange(obj.Faces[i].FaceIndices().Select<int, double>(n => n));
 
-                    foreach (var faceIndex in obj.Faces[i].FaceIndices())
+                    foreach (int faceIndex in obj.Faces[i].FaceIndices())
                     {
                         if (dic.ContainsKey(faceIndex))
                             dic[faceIndex] += i;
@@ -611,6 +609,36 @@ namespace BH.Engine.Geometry
         /****  Other methods for "conceptual" geometry  ****/
         /***************************************************/
 
+        [Description("The GeometryHash for a BoundingBox is calculated as the GeometryHash of its Min and Max points.")]
+        private static double[] HashArray(this BoundingBox obj, double translationFactor, BaseComparisonConfig comparisonConfig, string fullName = null)
+        {
+            if (comparisonConfig?.TypeExceptions?.Any(t => typeof(BoundingBox).IsAssignableFrom(t)) ?? false)
+                return default;
+
+            translationFactor += (int)TypeTranslationFactor.BoundingBox;
+
+            double[] min = obj.Min.HashArray(translationFactor, comparisonConfig, fullName.AppendPropertyName($"{nameof(obj.Min)}"));
+            double[] max = obj.Max.HashArray(translationFactor, comparisonConfig, fullName.AppendPropertyName($"{nameof(obj.Max)}"));
+            return min.Concat(max).ToArray();
+        }
+
+        /***************************************************/
+
+        [Description("The GeometryHash for a Plane is calculated as the GeometryHash of its Origin point and Normal vector.")]
+        private static double[] HashArray(this Plane obj, double translationFactor, BaseComparisonConfig comparisonConfig, string fullName = null)
+        {
+            if (comparisonConfig?.TypeExceptions?.Any(t => typeof(Plane).IsAssignableFrom(t)) ?? false)
+                return default;
+
+            translationFactor += (int)TypeTranslationFactor.Plane;
+
+            double[] origin = obj.Origin.HashArray(translationFactor, comparisonConfig, fullName.AppendPropertyName($"{nameof(obj.Origin)}"));
+            double[] normal = obj.Normal.HashArray(translationFactor, comparisonConfig, fullName.AppendPropertyName($"{nameof(obj.Normal)}"));
+            return origin.Concat(normal).ToArray();
+        }
+
+        /***************************************************/
+
         [Description("The GeometryHash for a Vector is given as the concatenated GeometryHash of the single elements composing it.")]
         private static double[] HashArray(this Vector obj, double translationFactor, BaseComparisonConfig comparisonConfig, string fullName = null)
         {
@@ -646,9 +674,9 @@ namespace BH.Engine.Geometry
 
             translationFactor = (double)TypeTranslationFactor.Basis;
 
-            var x = obj.X.HashArray(translationFactor, comparisonConfig, fullName.AppendPropertyName($"{nameof(obj.X)}"));
-            var y = obj.Y.HashArray(translationFactor, comparisonConfig, fullName.AppendPropertyName($"{nameof(obj.Y)}"));
-            var z = obj.Z.HashArray(translationFactor, comparisonConfig, fullName.AppendPropertyName($"{nameof(obj.Z)}"));
+            double[] x = obj.X.HashArray(translationFactor, comparisonConfig, fullName.AppendPropertyName($"{nameof(obj.X)}"));
+            double[] y = obj.Y.HashArray(translationFactor, comparisonConfig, fullName.AppendPropertyName($"{nameof(obj.Y)}"));
+            double[] z = obj.Z.HashArray(translationFactor, comparisonConfig, fullName.AppendPropertyName($"{nameof(obj.Z)}"));
             return x.Concat(y).Concat(z).ToArray();
         }
 
@@ -662,10 +690,10 @@ namespace BH.Engine.Geometry
 
             translationFactor = (double)TypeTranslationFactor.Cartesian;
 
-            var x = obj.X.HashArray(translationFactor, comparisonConfig, fullName.AppendPropertyName($"{nameof(obj.X)}"));
-            var y = obj.Y.HashArray(translationFactor, comparisonConfig, fullName.AppendPropertyName($"{nameof(obj.Y)}"));
-            var z = obj.Z.HashArray(translationFactor, comparisonConfig, fullName.AppendPropertyName($"{nameof(obj.Z)}"));
-            var o = obj.Origin.HashArray(translationFactor, comparisonConfig, fullName.AppendPropertyName($"{nameof(obj.Origin)}"));
+            double[] x = obj.X.HashArray(translationFactor, comparisonConfig, fullName.AppendPropertyName($"{nameof(obj.X)}"));
+            double[] y = obj.Y.HashArray(translationFactor, comparisonConfig, fullName.AppendPropertyName($"{nameof(obj.Y)}"));
+            double[] z = obj.Z.HashArray(translationFactor, comparisonConfig, fullName.AppendPropertyName($"{nameof(obj.Z)}"));
+            double[] o = obj.Origin.HashArray(translationFactor, comparisonConfig, fullName.AppendPropertyName($"{nameof(obj.Origin)}"));
 
             return x.Concat(y).Concat(z).Concat(o).ToArray();
         }
@@ -708,12 +736,12 @@ namespace BH.Engine.Geometry
             if (cc == null || string.IsNullOrWhiteSpace(propFullName))
                 return true;
 
-            // Skip if the property is among the PropertyExceptions.
+            // Skip if the property is amongst the PropertyExceptions.
             if ((cc.PropertyExceptions?.Any(pe => propFullName.EndsWith(pe) || propFullName.WildcardMatch(pe)) ?? false))
                 return false;
 
             // If the PropertiesToConsider contains at least a value, ensure that this property is "compatible" with at least one of them.
-            // Compatible means to check not only that the current propFullName is among the propertiesToInclude;
+            // Compatible means to check not only that the current propFullName is amongst the propertiesToInclude;
             // we need to consider this propFullName ALSO IF there is at least one PropertyToInclude that specifies a property that is a child of the current propFullName.
             if ((cc.PropertiesToConsider?.Any() ?? false) &&
                 !cc.PropertiesToConsider.Any(ptc => ptc.StartsWith(propFullName) || propFullName.StartsWith(ptc))) // we want to make sure that we do not exclude sub-properties to include, hence the OR condition.
@@ -766,7 +794,8 @@ namespace BH.Engine.Geometry
             NurbsSurface = 11 * m_ToleranceMultiplier,
             SurfaceTrim = 12 * m_ToleranceMultiplier,
             Mesh = 13 * m_ToleranceMultiplier,
-            Mesh3D = 14 * m_ToleranceMultiplier
+            Mesh3D = 14 * m_ToleranceMultiplier,
+            BoundingBox = 15 * m_ToleranceMultiplier
         }
     }
 }

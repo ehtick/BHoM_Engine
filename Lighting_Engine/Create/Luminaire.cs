@@ -124,10 +124,10 @@ namespace BH.Engine.Lighting
                 Base.Compute.RecordError("Luminaire Creation is not supported for Nurbs Curves.");
                 return null;
             }
-            
-            double crvLen = crv.ILength();
+
+            double crvLen = Math.Round(crv.ILength(),6);
             if (maxSpacing == 0) return null;
-            int count = (int)Math.Ceiling(crvLen / maxSpacing) + 1;
+            int count = (int)(Math.Round((crvLen / maxSpacing), 6)) + 1;
             return Luminaire(crv, count, target, type, name);
         }
 
@@ -150,7 +150,7 @@ namespace BH.Engine.Lighting
             
             double crvLen = crv.ILength();
             if (maxSpacing == 0) return null;
-            int count = (int)Math.Ceiling(crvLen / maxSpacing) + 1;
+            int count = (int)Math.Ceiling(Math.Round((crvLen / maxSpacing), 6)) + 1;
             return Luminaire(crv, count, dir, type, name);
         }
 

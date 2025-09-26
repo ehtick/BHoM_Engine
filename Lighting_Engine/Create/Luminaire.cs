@@ -66,7 +66,7 @@ namespace BH.Engine.Lighting
             if (exactSpacing == 0) return null;
             if (centered)
             {
-                trimmedCrv = crv.IExtend(-0.5*(crvLen % exactSpacing), -0.5*(crvLen % exactSpacing));
+                trimmedCrv = crv.IExtend(-0.5 * (exactSpacing + crvLen % exactSpacing), -0.5 * (exactSpacing + crvLen % exactSpacing));
             }
             else
             {
@@ -99,7 +99,7 @@ namespace BH.Engine.Lighting
             if (exactSpacing == 0) return null;
             if (centered)
             {
-                trimmedCrv = crv.IExtend(-0.5 * (crvLen % exactSpacing), -0.5 * (crvLen % exactSpacing));
+                trimmedCrv = crv.IExtend(-0.5 * (exactSpacing + crvLen % exactSpacing), -0.5 * (exactSpacing + crvLen % exactSpacing));
             }
             else
             {
@@ -172,7 +172,7 @@ namespace BH.Engine.Lighting
             }
             
             List<Luminaire> luminaires = new List<Luminaire>();
-            List<Point> pts = crv.SamplePoints(count);
+            List<Point> pts = crv.SamplePoints(count - 1);
             for (int i = 0; i < pts.Count; i++)
             {
                 Point pt = pts[i];
@@ -201,7 +201,7 @@ namespace BH.Engine.Lighting
             }
 
             List<Luminaire> luminaires = new List<Luminaire>();
-            List<Point> pts = crv.SamplePoints(count);
+            List<Point> pts = crv.SamplePoints(count - 1);
             for (int i = 0; i < pts.Count; i++)
             {
                 Point pt = pts[i];

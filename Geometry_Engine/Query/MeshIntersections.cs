@@ -35,7 +35,6 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [PreviousVersion("8.3", "BH.Engine.Geometry.Query.MeshIntersection(BH.oM.Geometry.Plane, BH.oM.Geometry.Mesh, System.Double)")]
         [Description("Finds the intersection line between a Plane and a Mesh. Currently not implemented.")]
         [Input("p", "The Plane to intersect with the Mesh.")]
         [Input("mesh", "The Mesh to intersect with the Plane.")]

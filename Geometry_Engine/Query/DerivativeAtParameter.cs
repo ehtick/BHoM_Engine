@@ -32,7 +32,6 @@ namespace BH.Engine.Geometry
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [PreviousVersion("8.3", "BH.Engine.Geometry.Query.DerivativeAtParameter(BH.oM.Geometry.NurbsCurve, System.Double, System.Int32)")]
         [Description("Gets the vector which is the k'th derivative of the curve at the point of t.")]
         [Input("curve", "Curve to evaluate.")]
         [Input("t", "Parameter to evaluate at.")]
@@ -46,7 +45,6 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
-        [PreviousVersion("8.3", "BH.Engine.Geometry.Query.DerivativeAtParameter(BH.oM.Geometry.NurbsSurface, System.Double, System.Double, System.Int32, System.Int32)")]
         [Description("Gets the vector which is the k'th derivative of the surface at the point of u, v.")]
         [Input("surface", "Surface to evaluate.")]
         [Input("u", "Parameter to evaluate at.")]

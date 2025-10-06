@@ -40,9 +40,23 @@ namespace BH.Engine.Geometry
         [Output("angle", "The smallest possible angle between 2 vectors regardless of their directions.", typeof(Angle))]
         public static double AcuteAngle(this Vector vector1, Vector vector2)
         {
-            return Math.Acos(
-                Math.Abs(vector1.DotProduct(vector2))
-                / (vector1.Length() * vector2.Length()));
+            double length1 = vector1.Length();
+            double length2 = vector2.Length();
+
+            // Handle zero-length vectors
+            if (length1 < Tolerance.Distance || length2 < Tolerance.Distance)
+            {
+                Engine.Base.Compute.RecordWarning("One or both vectors have zero or near-zero length. Cannot compute angle.");
+                return double.NaN;
+            }
+
+            double dotProduct = vector1.DotProduct(vector2);
+            double cosAngle = Math.Abs(dotProduct) / (length1 * length2);
+
+            //When vectors are almost identical, cosAngle can slightly exceed 1 due to floating-point precision, causing Math.Acos() to return NaN. Here we clamp cosAngle to valid range [-1, 1] to prevent this.
+            cosAngle = Math.Max(-1.0, Math.Min(1.0, cosAngle));
+
+            return Math.Acos(cosAngle);
         }
 
         /***************************************************/

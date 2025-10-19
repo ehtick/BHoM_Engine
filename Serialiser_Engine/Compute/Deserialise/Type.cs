@@ -27,7 +27,9 @@ using MongoDB.Bson;
 using MongoDB.Bson.IO;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace BH.Engine.Serialiser
@@ -47,6 +49,17 @@ namespace BH.Engine.Serialiser
             else if (bson.IsString)
             {
                 Type type = BH.Engine.Base.Create.Type(bson.AsString, true, true);
+
+                if (type != null)
+                    return type;
+                else
+                {
+                    // If the assembly had to be dynamically loaded, try again
+                    if (MakeSureAssemblyIsLoadedForType(bson.AsString))
+                        type = Create.Type(bson.AsString, true, true);
+                }
+                    
+
                 if (type != null)
                     return type;
                 else
@@ -143,6 +156,8 @@ namespace BH.Engine.Serialiser
             if (string.IsNullOrEmpty(fullName))
                 return null;
 
+            MakeSureAssemblyIsLoadedForType(fullName);
+
             Type type = null;
             if (fullName == "T")
                 return null;
@@ -161,10 +176,47 @@ namespace BH.Engine.Serialiser
             {
                 List<Type> types = Base.Create.AllTypes(fullName, true);
                 if (types.Count > 0)
-                    type = types.OrderBy(x => x.Assembly.FullName).First();
+                    type = types.OrderBy(x => x.Assembly.GetName().Name).First();
             }
 
             return type;
+        }
+
+        /*******************************************/
+
+        private static bool MakeSureAssemblyIsLoadedForType(string type)
+        {
+            if (string.IsNullOrEmpty(type) || !type.StartsWith("BH."))
+                return false;
+
+            string[] parts = type.Split(',');
+            string assemblyName = "";
+
+            if (parts.Length > 1)
+            {
+                // Assembly is alreaady in the type
+                assemblyName = parts[1].Trim();
+            }
+            else if (parts.Length == 1)
+            {
+                // We don't have the assembly registered in the type so we need to deduce it 
+                assemblyName = Base.Query.AssemblyNamePerType(type);
+            }
+
+            if (string.IsNullOrEmpty(assemblyName))
+            {
+                // Something is wrong here, the assembly cannot be found
+                BH.Engine.Base.Compute.RecordError($"The type {type} cannot find the assembly it comes from.");
+                return false;
+            }
+
+            if (!Base.Query.IsAssemblyLoaded(assemblyName))
+            {
+                Assembly assembly = Base.Compute.LoadAssembly(Path.Combine(Base.Query.BHoMFolder(), assemblyName + ".dll"));
+                return assembly != null;
+            }
+
+            return false;   
         }
 
         /*******************************************/

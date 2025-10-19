@@ -21,43 +21,35 @@
  */
 
 using BH.oM.Base.Attributes;
-using System.ComponentModel;
-using System.Reflection;
-using System;
-using System.Text.RegularExpressions;
 using System.Collections.Generic;
-using BH.oM.Base;
+using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 
 namespace BH.Engine.Base
 {
-    public static partial class Compute
+    public static partial class Query
     {
         /***************************************************/
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Attempts to load an assembly under the given path.")]
-        [Input("assemblyPath", "Path from which the assembly is meant to be loaded.")]
-        [Output("assembly", "The assembly under the given path, if it exists and has been loaded to BHoM (at any point in time), otherwise null.")]
-        public static Assembly LoadAssembly(string assemblyPath)
+        [Description("Returns the name of the assembly associated with a specific type.")]
+        [Input("type", "Name of the type, including its full namespace")]
+        [Output("assemblyName", "name of the asssembly associated with the type provided.")]
+        public static string AssemblyNamePerType(this string type)
         {
-            try
-            {
-                string name = AssemblyName.GetAssemblyName(assemblyPath).Name;
-                if (!Global.AllAssemblies.ContainsKey(name))
-                    return Assembly.LoadFrom(assemblyPath);
-                else
-                    return Global.AllAssemblies[name];
-            }
-            catch
-            {
-                RecordWarning("Failed to load assembly " + assemblyPath);
+            if (Global.AssemblyNamePerType.ContainsKey(type))
+                return Global.AssemblyNamePerType[type];
+            else
                 return null;
-            }
         }
+
+        /***************************************************/
     }
 }
+
+
 
 
 

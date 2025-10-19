@@ -87,7 +87,7 @@ namespace BH.Engine.Base
                 if (!silent)
                     Compute.RecordWarning($"Ambiguous match: Multiple types correspond the the name provided:\n{string.Join("\n", types.Select(x => x.FullName))}");
 
-                return types.OrderBy(x => x.Assembly.FullName).First();
+                return types.OrderBy(x => x.Assembly.GetName().Name).First();
             }
             else if (!silent)
                 Compute.RecordError($"Ambiguous match: Multiple types correspond the the name provided:\n{string.Join("\n", types.Select(x => x.FullName))}");

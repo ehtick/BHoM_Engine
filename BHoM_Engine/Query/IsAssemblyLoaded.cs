@@ -23,41 +23,29 @@
 using BH.oM.Base.Attributes;
 using System.ComponentModel;
 using System.Reflection;
-using System;
-using System.Text.RegularExpressions;
-using System.Collections.Generic;
-using BH.oM.Base;
-using System.Linq;
+using System.Xml.Linq;
 
 namespace BH.Engine.Base
 {
-    public static partial class Compute
+    public static partial class Query
     {
         /***************************************************/
-        /**** Public Methods                            ****/
+        /****               Public Method               ****/
         /***************************************************/
 
-        [Description("Attempts to load an assembly under the given path.")]
-        [Input("assemblyPath", "Path from which the assembly is meant to be loaded.")]
-        [Output("assembly", "The assembly under the given path, if it exists and has been loaded to BHoM (at any point in time), otherwise null.")]
-        public static Assembly LoadAssembly(string assemblyPath)
+        [Description("Checks whether a given assembly is a BHoM adapter assembly.")]
+        [Input("assembly", "Assembly to be checked whether it is a BHoM adapter assembly.")]
+        [Output("isAdapter", "True if the input assembly is a BHoM adapter assembly.")]
+        public static bool IsAssemblyLoaded(this string assemblyName)
         {
-            try
-            {
-                string name = AssemblyName.GetAssemblyName(assemblyPath).Name;
-                if (!Global.AllAssemblies.ContainsKey(name))
-                    return Assembly.LoadFrom(assemblyPath);
-                else
-                    return Global.AllAssemblies[name];
-            }
-            catch
-            {
-                RecordWarning("Failed to load assembly " + assemblyPath);
-                return null;
-            }
+            return Global.AllAssemblies.ContainsKey(assemblyName);
         }
+
+        /***************************************************/
     }
 }
+
+
 
 
 

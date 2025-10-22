@@ -20,6 +20,8 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.Engine.Base.Objects;
+using BH.oM.Base;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -59,7 +61,7 @@ namespace BH.Engine.Base
 
         internal static ConcurrentBag<MethodBase> ExternalMethodList { get; set; } = new ConcurrentBag<MethodBase>();
 
-        internal static ConcurrentDictionary<string, string> AssemblyNamePerType { get; set; } = new ConcurrentDictionary<string, string>();
+        internal static IAssemblyResolver AssemblyResolver { get; set; } = null;
 
 
         /***************************************************/
@@ -95,23 +97,10 @@ namespace BH.Engine.Base
             // Dedicated assembly resolution mechanism to minimise issues related with dependency incompatibility
             AppDomain.CurrentDomain.AssemblyResolve += ResolveBHoMAssembly;
 
-            // Collect the relation between types and the assembly they belong to
-            CollectTypeAssemblyRelations();
-
-
-            Stopwatch stopwatch = new Stopwatch();
-            stopwatch.Start();
-
             // Reflect the assemblies that have already been loaded.
-            foreach (Assembly asm in AppDomain.CurrentDomain.GetAssemblies())
-            {
-                Compute.ExtractAssembly(asm);
-            }
+            ExtractLoadedAssemblies();
 
-            stopwatch.Stop();
-            BH.Engine.Base.Compute.RecordNote($"Time to extract all assemblies from current domain: {stopwatch.Elapsed.TotalMilliseconds / 1000} s. Completed at {DateTime.UtcNow}");
-
-            BH.Engine.Base.Compute.RecordNote($"Engine Global initialised at {DateTime.UtcNow}");
+            Compute.RecordNote($"Engine Global initialised at {DateTime.UtcNow}");
         }
 
 
@@ -158,51 +147,16 @@ namespace BH.Engine.Base
 
         /***************************************************/
 
-        private static void CollectTypeAssemblyRelations()
+        public static void ExtractLoadedAssemblies()
         {
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            string assemblyContentFile = Path.Combine(Query.BHoMFolderResources(), "AssemblyContent.tsv");
-            if (File.Exists(assemblyContentFile))
-            {
-                List<string[]> content = File.ReadAllLines(assemblyContentFile)
-                        .Select(x => x.Split('\t'))
-                        .Where(x => x.Length == 4)
-                        .ToList();
-
-                // Add all the oM types
-                Dictionary<string, string> result = content
-                    .Where(x => x[1] == "Type")
-                    .ToDictionary(x => x[2].Trim(), x => x[0].Trim());
-
-                // All the engine types
-                content.Where(x => x[1].StartsWith("Method_") || x[1].EndsWith("Creator"))
-                    .Select(x =>
-                    {
-                        int startIndex = x[3].IndexOf("BH.Engine");
-                        int endIndex = x[3].IndexOf(", Version");
-                        return new Tuple<string, string>(x[3].Substring(startIndex, endIndex - startIndex).Trim(), x[0].Trim());
-                    })
-                    .GroupBy(x => x.Item1)
-                    .ToList()
-                    .ForEach(x => result[x.Key] = x.Select(v => v.Item2).First());
-
-                // Add the adapter types
-                foreach (var item in content.Where(x => x[1] == "AdapterConstructor"))
-                {
-                    string typeName = item[2].Split('(').First().Trim();
-                    int lastIndex = typeName.LastIndexOf(".");
-                    result[typeName.Substring(0, lastIndex)] = item[0].Trim();
-                }
-                    
-
-                AssemblyNamePerType = new ConcurrentDictionary<string, string>(result);
-            }
+            foreach (Assembly asm in AppDomain.CurrentDomain.GetAssemblies())
+                Compute.ExtractAssembly(asm);
 
             stopwatch.Stop();
-            BH.Engine.Base.Compute.RecordNote($"Time to collect all type-assembly relations: {stopwatch.Elapsed.TotalMilliseconds / 1000} s. Completed at {DateTime.UtcNow}");
-
+            Compute.RecordNote($"Time to extract all assemblies from current domain: {stopwatch.Elapsed.TotalMilliseconds / 1000} s.");
         }
 
         /***************************************************/

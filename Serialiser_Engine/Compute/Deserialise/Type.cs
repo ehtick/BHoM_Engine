@@ -21,6 +21,7 @@
  */
 
 using BH.Engine.Base;
+using BH.Engine.Base.Objects;
 using BH.oM.Base;
 using Humanizer;
 using MongoDB.Bson;
@@ -186,37 +187,12 @@ namespace BH.Engine.Serialiser
 
         private static bool MakeSureAssemblyIsLoadedForType(string type)
         {
-            if (string.IsNullOrEmpty(type) || !type.StartsWith("BH."))
+            IAssemblyResolver resolver = BH.Engine.Base.Query.AssemblyResolver();
+
+            if (string.IsNullOrEmpty(type) || resolver == null)
                 return false;
 
-            string[] parts = type.Split(',');
-            string assemblyName = "";
-
-            if (parts.Length > 1)
-            {
-                // Assembly is alreaady in the type
-                assemblyName = parts[1].Trim();
-            }
-            else if (parts.Length == 1)
-            {
-                // We don't have the assembly registered in the type so we need to deduce it 
-                assemblyName = Base.Query.AssemblyNamePerType(type);
-            }
-
-            if (string.IsNullOrEmpty(assemblyName))
-            {
-                // Something is wrong here, the assembly cannot be found
-                BH.Engine.Base.Compute.RecordError($"The type {type} cannot find the assembly it comes from.");
-                return false;
-            }
-
-            if (!Base.Query.IsAssemblyLoaded(assemblyName))
-            {
-                Assembly assembly = Base.Compute.LoadAssembly(Path.Combine(Base.Query.BHoMFolder(), assemblyName + ".dll"));
-                return assembly != null;
-            }
-
-            return false;   
+            return resolver.MakeSureAssemblyIsLoadedForType(type);
         }
 
         /*******************************************/

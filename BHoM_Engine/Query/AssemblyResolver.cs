@@ -20,6 +20,7 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.Engine.Base.Objects;
 using BH.oM.Base.Attributes;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -34,15 +35,11 @@ namespace BH.Engine.Base
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Returns the name of the assembly associated with a specific type.")]
-        [Input("type", "Name of the type, including its full namespace")]
-        [Output("assemblyName", "name of the asssembly associated with the type provided.")]
-        public static string AssemblyNamePerType(this string type)
+        [Description("Access the assembly resolver attached to the engine.")]
+        [Output("resolver", "Assembly resolver attached to the engine.")]
+        public static IAssemblyResolver AssemblyResolver()
         {
-            if (Global.AssemblyNamePerType.ContainsKey(type))
-                return Global.AssemblyNamePerType[type];
-            else
-                return null;
+            return Global.AssemblyResolver;
         }
 
         /***************************************************/

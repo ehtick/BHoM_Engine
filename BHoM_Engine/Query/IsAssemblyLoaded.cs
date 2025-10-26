@@ -33,9 +33,9 @@ namespace BH.Engine.Base
         /****               Public Method               ****/
         /***************************************************/
 
-        [Description("Checks whether a given assembly is a BHoM adapter assembly.")]
-        [Input("assembly", "Assembly to be checked whether it is a BHoM adapter assembly.")]
-        [Output("isAdapter", "True if the input assembly is a BHoM adapter assembly.")]
+        [Description("Checks whether a given assembly is already loaded in memory.")]
+        [Input("assemblyName", "Assembly to be checked.")]
+        [Output("isLoaded", "True if the input assembly is loaded in memory.")]
         public static bool IsAssemblyLoaded(this string assemblyName)
         {
             return Global.AllAssemblies.ContainsKey(assemblyName);

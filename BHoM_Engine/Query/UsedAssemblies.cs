@@ -56,12 +56,12 @@ namespace BH.Engine.Base
                 {
                     IEnumerable<AssemblyName> assemblyNames = assembly.GetReferencedAssemblies();
                     IDictionary<string, Assembly> dic = onlyBHoM ? Global.BHoMAssemblies : Global.AllAssemblies;
-                    return assemblyNames.Where(x => dic.ContainsKey(x.FullName)).Select(x => dic[x.FullName]).ToList();
+                    return assemblyNames.Where(x => dic.ContainsKey(x.Name)).Select(x => dic[x.Name]).ToList();
                 }
             }
             catch (Exception e)
             {
-                Compute.RecordWarning("failed to get the assemblies used by " + assembly.FullName + ".\nError: " + e.ToString());
+                Compute.RecordWarning("failed to get the assemblies used by " + assembly.GetName().Name + ".\nError: " + e.ToString());
                 return new List<Assembly>();
             }
         }
@@ -82,7 +82,7 @@ namespace BH.Engine.Base
             }
 
             List<Assembly> loaded = onlyBHoM ? Base.Query.BHoMAssemblyList() : Base.Query.AllAssemblyList();
-            List<Assembly> assemblies = loaded.Where(x => assemblyNames.Any(y => x.GetName().FullName == y)).ToList();
+            List<Assembly> assemblies = loaded.Where(x => assemblyNames.Any(y => x.GetName().Name == y)).ToList();
 
             if (goDeep)
                 return DeepDependencies(assemblies, onlyBHoM).Select(x => x.Location).ToList();
@@ -106,11 +106,11 @@ namespace BH.Engine.Base
             IDictionary<string, Assembly> dic = onlyBHoM ? Global.BHoMAssemblies : Global.AllAssemblies;
 
             IEnumerable<AssemblyName> assemblyNames = assemblies.SelectMany(x => x.GetReferencedAssemblies())
-                .GroupBy(x => x.FullName).Select(x => x.First())
+                .GroupBy(x => x.Name).Select(x => x.First())
                 .ToList();
 
-            List<Assembly> dependencies = assemblyNames.Where(x => dic.ContainsKey(x.FullName))
-                .Select(x => dic[x.FullName])
+            List<Assembly> dependencies = assemblyNames.Where(x => dic.ContainsKey(x.Name))
+                .Select(x => dic[x.Name])
                 .Except(collected)
                 .ToList();
 

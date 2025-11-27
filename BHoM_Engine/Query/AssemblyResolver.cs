@@ -20,44 +20,33 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.Engine.Base.Objects;
 using BH.oM.Base.Attributes;
-using System.ComponentModel;
-using System.Reflection;
-using System;
-using System.Text.RegularExpressions;
 using System.Collections.Generic;
-using BH.oM.Base;
+using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 
 namespace BH.Engine.Base
 {
-    public static partial class Compute
+    public static partial class Query
     {
         /***************************************************/
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Attempts to load an assembly under the given path.")]
-        [Input("assemblyPath", "Path from which the assembly is meant to be loaded.")]
-        [Output("assembly", "The assembly under the given path, if it exists and has been loaded to BHoM (at any point in time), otherwise null.")]
-        public static Assembly LoadAssembly(string assemblyPath)
+        [Description("Access the assembly resolver attached to the engine.")]
+        [Output("resolver", "Assembly resolver attached to the engine.")]
+        public static IAssemblyResolver AssemblyResolver()
         {
-            try
-            {
-                string name = AssemblyName.GetAssemblyName(assemblyPath).Name;
-                if (!Global.AllAssemblies.ContainsKey(name))
-                    return Assembly.LoadFrom(assemblyPath);
-                else
-                    return Global.AllAssemblies[name];
-            }
-            catch
-            {
-                RecordWarning("Failed to load assembly " + assemblyPath);
-                return null;
-            }
+            return Global.AssemblyResolver;
         }
+
+        /***************************************************/
     }
 }
+
+
 
 
 

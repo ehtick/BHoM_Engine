@@ -20,44 +20,15 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.oM.Base.Attributes;
-using System.ComponentModel;
-using System.Reflection;
-using System;
-using System.Text.RegularExpressions;
-using System.Collections.Generic;
-using BH.oM.Base;
-using System.Linq;
-
-namespace BH.Engine.Base
+namespace BH.Engine.Base.Objects
 {
-    public static partial class Compute
+    public interface IAssemblyResolver
     {
-        /***************************************************/
-        /**** Public Methods                            ****/
-        /***************************************************/
-
-        [Description("Attempts to load an assembly under the given path.")]
-        [Input("assemblyPath", "Path from which the assembly is meant to be loaded.")]
-        [Output("assembly", "The assembly under the given path, if it exists and has been loaded to BHoM (at any point in time), otherwise null.")]
-        public static Assembly LoadAssembly(string assemblyPath)
-        {
-            try
-            {
-                string name = AssemblyName.GetAssemblyName(assemblyPath).Name;
-                if (!Global.AllAssemblies.ContainsKey(name))
-                    return Assembly.LoadFrom(assemblyPath);
-                else
-                    return Global.AllAssemblies[name];
-            }
-            catch
-            {
-                RecordWarning("Failed to load assembly " + assemblyPath);
-                return null;
-            }
-        }
+        bool MakeSureAssemblyIsLoadedForType(string type);
     }
 }
+
+
 
 
 

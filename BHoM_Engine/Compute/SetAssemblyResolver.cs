@@ -28,6 +28,7 @@ using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using BH.oM.Base;
 using System.Linq;
+using BH.Engine.Base.Objects;
 
 namespace BH.Engine.Base
 {
@@ -37,24 +38,11 @@ namespace BH.Engine.Base
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Attempts to load an assembly under the given path.")]
-        [Input("assemblyPath", "Path from which the assembly is meant to be loaded.")]
-        [Output("assembly", "The assembly under the given path, if it exists and has been loaded to BHoM (at any point in time), otherwise null.")]
-        public static Assembly LoadAssembly(string assemblyPath)
+        [Description("Assign the assembly resolver that will be in charge of resolving issues of unloaded assemblies.")]
+        [Input("resolver", "Resolver to assign.")]
+        public static void SetAssemblyResolver(IAssemblyResolver resolver)
         {
-            try
-            {
-                string name = AssemblyName.GetAssemblyName(assemblyPath).Name;
-                if (!Global.AllAssemblies.ContainsKey(name))
-                    return Assembly.LoadFrom(assemblyPath);
-                else
-                    return Global.AllAssemblies[name];
-            }
-            catch
-            {
-                RecordWarning("Failed to load assembly " + assemblyPath);
-                return null;
-            }
+            Global.AssemblyResolver = resolver;
         }
     }
 }

@@ -44,7 +44,7 @@ namespace BH.Engine.Base
         {
             try
             {
-                string name = AssemblyName.GetAssemblyName(assemblyPath).FullName;
+                string name = AssemblyName.GetAssemblyName(assemblyPath).Name;
                 if (!Global.AllAssemblies.ContainsKey(name))
                     return Assembly.LoadFrom(assemblyPath);
                 else

@@ -21,13 +21,16 @@
  */
 
 using BH.Engine.Base;
+using BH.Engine.Base.Objects;
 using BH.oM.Base;
 using Humanizer;
 using MongoDB.Bson;
 using MongoDB.Bson.IO;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace BH.Engine.Serialiser
@@ -47,6 +50,17 @@ namespace BH.Engine.Serialiser
             else if (bson.IsString)
             {
                 Type type = BH.Engine.Base.Create.Type(bson.AsString, true, true);
+
+                if (type != null)
+                    return type;
+                else
+                {
+                    // If the assembly had to be dynamically loaded, try again
+                    if (MakeSureAssemblyIsLoadedForType(bson.AsString))
+                        type = Create.Type(bson.AsString, true, true);
+                }
+                    
+
                 if (type != null)
                     return type;
                 else
@@ -143,6 +157,8 @@ namespace BH.Engine.Serialiser
             if (string.IsNullOrEmpty(fullName))
                 return null;
 
+            MakeSureAssemblyIsLoadedForType(fullName);
+
             Type type = null;
             if (fullName == "T")
                 return null;
@@ -161,10 +177,22 @@ namespace BH.Engine.Serialiser
             {
                 List<Type> types = Base.Create.AllTypes(fullName, true);
                 if (types.Count > 0)
-                    type = types.OrderBy(x => x.Assembly.FullName).First();
+                    type = types.OrderBy(x => x.Assembly.GetName().Name).First();
             }
 
             return type;
+        }
+
+        /*******************************************/
+
+        private static bool MakeSureAssemblyIsLoadedForType(string type)
+        {
+            IAssemblyResolver resolver = BH.Engine.Base.Query.AssemblyResolver();
+
+            if (string.IsNullOrEmpty(type) || resolver == null)
+                return false;
+
+            return resolver.MakeSureAssemblyIsLoadedForType(type);
         }
 
         /*******************************************/

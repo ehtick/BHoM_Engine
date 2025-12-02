@@ -20,10 +20,11 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using System;
-using System.ComponentModel;
 using BH.oM.Base.Attributes;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 
 namespace BH.Engine.Geometry
 {
@@ -38,7 +39,7 @@ namespace BH.Engine.Geometry
         [Input("i", "Index the function is evaluated at. The value of the function is the sum of this functions value for all values of i.")]
         [Input("n", "Degree of the of the basis function. Affects how many adjacent knots control the value.")]
         [Input("t", "Parameter to evaluate the function at. Should be between 0 and 1. For values outside the range, the closest value will be used.")]
-        [Output("Value of the function for the specified index. The full value of the function should be a sum of all possible i's.")]
+        [Output("value", "Value of the function for the specified index. The full value of the function should be a sum of all possible i's.")]
         public static double BasisFunction(this List<double> knots, int i, int n, double t)
         {
             t = t < 0 ? 0 : t > 1 ? 1 : t;
@@ -48,6 +49,37 @@ namespace BH.Engine.Geometry
             t = min + (max - min) * t;
 
             return BasisFunctionGlobal(knots, i, n, t);
+        }
+
+        /***************************************************/
+
+        [Description("Gets the basis functions for the given knot vector for the parameter t in the given span and given degree.")]
+        [Input("knots", "The knot vector to evaluate.")]
+        [Input("span", "The span in which the parameter t resides. The KnotSpan method can be used to identify the span.")]
+        [Input("degree", "Degree of the Curve/Surface in the direction of the provided knots.")]
+        [Input("t", "The parameter to evaluate.")]
+        [Output("basis", "The basis functions of the knot vector for the given parameter in the given span.")]
+        public static List<double> BasisFunctions(this IList<double> knots, int span, int degree, double t)
+        {
+            List<double> basis = Enumerable.Repeat(0.0, degree + 1).ToList();
+            basis[0] = 1.0;
+            double[] left = new double[degree + 1];
+            double[] right = new double[degree + 1];
+
+            for (int j = 1; j <= degree; j++)
+            {
+                left[j] = t - knots[span + 1 - j];
+                right[j] = knots[span + j] - t;
+                double saved = 0.0;
+                for (int r = 0; r < j; r++)
+                {
+                    double temp = basis[r] / (right[r + 1] + left[j - r]);
+                    basis[r] = saved + right[r + 1] * temp;
+                    saved = left[j - r] * temp;
+                }
+                basis[j] = saved;
+            }
+            return basis;
         }
 
 
@@ -69,8 +101,17 @@ namespace BH.Engine.Geometry
                     return t >= sKnot && t < eKnot ? 1 : 0;
             }
 
-            return LinearKnotInterpelation(knots, i, n, t) * BasisFunctionGlobal(knots, i, n - 1, t) +
-                   (1 - LinearKnotInterpelation(knots, i + 1, n, t)) * BasisFunctionGlobal(knots, i + 1, n - 1, t);
+            double ret = 0.0;
+
+            double linInter1 = LinearKnotInterpelation(knots, i, n, t);
+            if (linInter1 != 0)
+                ret += linInter1 * BasisFunctionGlobal(knots, i, n - 1, t);
+
+            double linInter2 = 1.0 - LinearKnotInterpelation(knots, i + 1, n, t);
+            if (linInter2 != 0)
+                ret += linInter2 * BasisFunctionGlobal(knots, i + 1, n - 1, t);
+
+            return ret;
         }
 
         /***************************************************/

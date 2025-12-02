@@ -20,6 +20,8 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.Engine.Base.Objects;
+using BH.oM.Base;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -59,6 +61,8 @@ namespace BH.Engine.Base
 
         internal static ConcurrentBag<MethodBase> ExternalMethodList { get; set; } = new ConcurrentBag<MethodBase>();
 
+        internal static IAssemblyResolver AssemblyResolver { get; set; } = null;
+
 
         /***************************************************/
         /****        Internal properties - locks        ****/
@@ -81,6 +85,8 @@ namespace BH.Engine.Base
 
         static Global()
         {
+            BH.Engine.Base.Compute.RecordNote($"Engine Global initialising at {DateTime.UtcNow}");
+
             OmNamespacePattern = new Regex(@"^BH\.(\w+\.)?oM\.");
             EngineNamespacePattern = new Regex(@"^BH\.(\w+\.)?Engine\.");
             AdapterNamespacePattern = new Regex(@"^BH\.Adapter");
@@ -92,10 +98,9 @@ namespace BH.Engine.Base
             AppDomain.CurrentDomain.AssemblyResolve += ResolveBHoMAssembly;
 
             // Reflect the assemblies that have already been loaded.
-            foreach (Assembly asm in AppDomain.CurrentDomain.GetAssemblies())
-            {
-                Compute.ExtractAssembly(asm);
-            }
+            ExtractLoadedAssemblies();
+
+            Compute.RecordNote($"Engine Global initialised at {DateTime.UtcNow}");
         }
 
 
@@ -138,6 +143,20 @@ namespace BH.Engine.Base
             }
 
             return null;
+        }
+
+        /***************************************************/
+
+        public static void ExtractLoadedAssemblies()
+        {
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+
+            foreach (Assembly asm in AppDomain.CurrentDomain.GetAssemblies())
+                Compute.ExtractAssembly(asm);
+
+            stopwatch.Stop();
+            Compute.RecordNote($"Time to extract all assemblies from current domain: {stopwatch.Elapsed.TotalMilliseconds / 1000} s.");
         }
 
         /***************************************************/

@@ -205,13 +205,11 @@ namespace BH.Engine.Facade
                     BH.Engine.Base.Compute.RecordError($"Opening {opening.BHoM_Guid} has more than one Edge U-value assigned to a FrameEdge.");
                     return null;
                 }
-                // Checks if any edges have no valid UValue. THis is okay if no glass U Value is provided, but indicates invalid data if there is a glass U Value without a corresponding edge UValue.
                 if ((glassUValues.Count == 1) && (frameEdgeUValue == 0))
                 {
                     BH.Engine.Base.Compute.RecordError($"Opening {opening.BHoM_Guid} has a center of Glass U-value without corresponding Edge of Glass u-values assigned.");
                     return null;
                 }
-
                 frameEdgeUValues.Add(frameEdgeUValue);
             }
 

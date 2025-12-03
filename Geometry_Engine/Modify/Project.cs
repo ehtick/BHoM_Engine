@@ -20,7 +20,6 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.Engine.Base;
 using BH.oM.Base.Attributes;
 using BH.oM.Geometry;
 using System;
@@ -284,6 +283,25 @@ namespace BH.Engine.Geometry
         public static Mesh Project(this Mesh mesh, Plane p)
         {
             return new Mesh { Vertices = mesh.Vertices.Select(x => x.Project(p)).ToList(), Faces = mesh.Faces.ToList() };
+        }
+
+        /***************************************************/
+
+        [Description("Projects a bounding box onto the specified plane. For planes not normal to global X, Y or Z returns bounding box of corners projected on that plane.")]
+        [Input("bbox", "Bounding box to project.")]
+        [Input("plane", "Plane to project onto.")]
+        [Output("projected", "Projected bounding box.")]
+        public static BoundingBox Project(this BoundingBox bbox, Plane plane)
+        {
+            List<Point> corners = new List<Point> { bbox.Min, bbox.Max };
+
+            if (plane.Normal.IsParallel(Vector.XAxis) == 0 && plane.Normal.IsParallel(Vector.YAxis) == 0 && plane.Normal.IsParallel(Vector.ZAxis) == 0)
+            {
+                BH.Engine.Base.Compute.RecordError("Input plane is not normal to global X, Y or Z, bounding box of corners projected onto that plane is returned.");
+                corners = bbox.Corners();
+            }
+
+            return corners.Select(x => x.Project(plane)).ToList().Bounds();
         }
 
         /***************************************************/

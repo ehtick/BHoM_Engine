@@ -287,6 +287,7 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
+        [PreviousVersion("9.0", "BH.Engine.Tagging.Modify.Project(BH.oM.Geometry.BoundingBox, BH.oM.Geometry.Plane)")]
         [Description("Projects a bounding box onto the specified plane. For planes not normal to global X, Y or Z returns bounding box of corners projected on that plane.")]
         [Input("bbox", "Bounding box to project.")]
         [Input("plane", "Plane to project onto.")]

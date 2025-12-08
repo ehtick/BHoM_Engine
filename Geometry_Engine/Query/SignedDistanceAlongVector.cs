@@ -32,6 +32,7 @@ namespace BH.Engine.Geometry
         /****              Public methods               ****/
         /***************************************************/
 
+        [PreviousVersion("9.0", "BH.Engine.Tagging.Query.SignedDistanceAlongVector(BH.oM.Geometry.Point, BH.oM.Geometry.Point, BH.oM.Geometry.Vector)")]
         [Description("Calculates a signed distance between two points along a given direction.")]
         [Input("point1", "First point to measure the distance.")]
         [Input("point2", "Second point to measure the distance.")]

@@ -1,4 +1,4 @@
-/*
+﻿/*
  * This file is part of the Buildings and Habitats object Model (BHoM)
  * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
@@ -26,41 +26,22 @@ using System.ComponentModel;
 
 namespace BH.Engine.Geometry
 {
-    public static partial class Modify
+    public static partial class Query
     {
         /***************************************************/
-        /****               Public Methods              ****/
+        /****              Public methods               ****/
         /***************************************************/
 
-        [Description("Returns the projection of a point on the XY plane. This shorthand method should run quicker than BH.Engine.Geometry.Project(this Point, Plane) in performance-sensitive applications.")]
-        [Input("pnt", "A point to project onto the XY plane.")]
-        [Output("pntOnXY", "Projection of the input point on the XY plane.")]
-        public static Point ProjectToXY(this Point pnt)
+        [PreviousVersion("9.0", "BH.Engine.Tagging.Query.DiagonalLength(BH.oM.Geometry.BoundingBox)")]
+        [Description("Returns a diagonal length (distance between Min and Max) of a BoundingBox.")]
+        [Input("bbox", "BoundingBox to query.")]
+        [Output("length", "Diagonal length of the input bounding box.")]
+        public static double DiagonalLength(this BoundingBox bbox)
         {
-            return new Point
-            {
-                X = pnt.X,
-                Y = pnt.Y,
-                Z = 0
-            };
-        }
-
-        /***************************************************/
-
-        [PreviousVersion("9.0", "BH.Engine.Tagging.Modify.ProjectToXY(BH.oM.Geometry.Vector)")]
-        [Description("Returns the projection of a vector on the XY plane. This shorthand method should run quicker than BH.Engine.Geometry.Project(this Point, Plane) in performance-sensitive applications.")]
-        [Input("vector", "A vector to project onto the XY plane.")]
-        [Output("vectorOnXY", "Projection of the input vector on the XY plane.")]
-        public static Vector ProjectToXY(this Vector vector)
-        {
-            return new Vector
-            {
-                X = vector.X,
-                Y = vector.Y,
-                Z = 0.0
-            };
+            return bbox.Min.Distance(bbox.Max);
         }
 
         /***************************************************/
     }
 }
+

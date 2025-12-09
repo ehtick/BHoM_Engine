@@ -1,4 +1,4 @@
-/*
+﻿/*
  * This file is part of the Buildings and Habitats object Model (BHoM)
  * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
@@ -22,42 +22,32 @@
 
 using BH.oM.Base.Attributes;
 using BH.oM.Geometry;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace BH.Engine.Geometry
 {
-    public static partial class Modify
+    public static partial class Query
     {
         /***************************************************/
-        /****               Public Methods              ****/
+        /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Returns the projection of a point on the XY plane. This shorthand method should run quicker than BH.Engine.Geometry.Project(this Point, Plane) in performance-sensitive applications.")]
-        [Input("pnt", "A point to project onto the XY plane.")]
-        [Output("pntOnXY", "Projection of the input point on the XY plane.")]
-        public static Point ProjectToXY(this Point pnt)
+        [Description("Returns a list of 8 corner points of a bounding box.")]
+        [Input("bbox", "Bounding box to query.")]
+        [Output("corners", "Corner points of the input bounding box.")]
+        public static List<Point> Corners(this BoundingBox bbox)
         {
-            return new Point
+            return new List<Point>
             {
-                X = pnt.X,
-                Y = pnt.Y,
-                Z = 0
-            };
-        }
-
-        /***************************************************/
-
-        [PreviousVersion("9.0", "BH.Engine.Tagging.Modify.ProjectToXY(BH.oM.Geometry.Vector)")]
-        [Description("Returns the projection of a vector on the XY plane. This shorthand method should run quicker than BH.Engine.Geometry.Project(this Point, Plane) in performance-sensitive applications.")]
-        [Input("vector", "A vector to project onto the XY plane.")]
-        [Output("vectorOnXY", "Projection of the input vector on the XY plane.")]
-        public static Vector ProjectToXY(this Vector vector)
-        {
-            return new Vector
-            {
-                X = vector.X,
-                Y = vector.Y,
-                Z = 0.0
+                bbox.Min,
+                new Point{ X = bbox.Max.X, Y = bbox.Min.Y, Z = bbox.Min.Z },
+                new Point{ X = bbox.Max.X, Y = bbox.Max.Y, Z = bbox.Min.Z },
+                new Point{ X = bbox.Min.X, Y = bbox.Max.Y, Z = bbox.Min.Z },
+                new Point{ X = bbox.Min.X, Y = bbox.Min.Y, Z = bbox.Max.Z },
+                new Point{ X = bbox.Max.X, Y = bbox.Min.Y, Z = bbox.Max.Z },
+                bbox.Max,
+                new Point{ X = bbox.Min.X, Y = bbox.Max.Y, Z = bbox.Max.Z },
             };
         }
 

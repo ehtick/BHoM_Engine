@@ -35,7 +35,6 @@ using BH.oM.Facade.Results;
  
 using BH.oM.Base.Attributes;
 using System.ComponentModel;
-using Microsoft.Cci;
 
 namespace BH.Engine.Facade
 {
@@ -45,6 +44,7 @@ namespace BH.Engine.Facade
         /****          Public Methods                   ****/
         /***************************************************/
 
+        [PreviousVersion("8.3", "BH.Engine.Facade.OverallUValue(BH.oM.Facade.Elements.Opening)")]
         [Description("Returns effective U-Value of opening calculated using the Area Weighting Method. Requires center of opening U-value, frame U-value and edge U-value as OpeningConstruction and FrameEdgeProperty fragments.")]
         [Input("opening", "Opening to find U-value for.")]
         [Input("isSpandrel", "Represents if the opening is a spandrel, in which case a larger edge width of 10 inches is used as per NFRC 100.")]

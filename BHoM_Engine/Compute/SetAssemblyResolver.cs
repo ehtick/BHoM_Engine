@@ -21,46 +21,32 @@
  */
 
 using BH.oM.Base.Attributes;
-using BH.oM.Geometry;
 using System.ComponentModel;
+using System.Reflection;
+using System;
+using System.Text.RegularExpressions;
+using System.Collections.Generic;
+using BH.oM.Base;
+using System.Linq;
+using BH.Engine.Base.Objects;
 
-namespace BH.Engine.Geometry
+namespace BH.Engine.Base
 {
-    public static partial class Modify
+    public static partial class Compute
     {
         /***************************************************/
-        /****               Public Methods              ****/
+        /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Returns the projection of a point on the XY plane. This shorthand method should run quicker than BH.Engine.Geometry.Project(this Point, Plane) in performance-sensitive applications.")]
-        [Input("pnt", "A point to project onto the XY plane.")]
-        [Output("pntOnXY", "Projection of the input point on the XY plane.")]
-        public static Point ProjectToXY(this Point pnt)
+        [Description("Assign the assembly resolver that will be in charge of resolving issues of unloaded assemblies.")]
+        [Input("resolver", "Resolver to assign.")]
+        public static void SetAssemblyResolver(IAssemblyResolver resolver)
         {
-            return new Point
-            {
-                X = pnt.X,
-                Y = pnt.Y,
-                Z = 0
-            };
+            Global.AssemblyResolver = resolver;
         }
-
-        /***************************************************/
-
-        [PreviousVersion("9.0", "BH.Engine.Tagging.Modify.ProjectToXY(BH.oM.Geometry.Vector)")]
-        [Description("Returns the projection of a vector on the XY plane. This shorthand method should run quicker than BH.Engine.Geometry.Project(this Point, Plane) in performance-sensitive applications.")]
-        [Input("vector", "A vector to project onto the XY plane.")]
-        [Output("vectorOnXY", "Projection of the input vector on the XY plane.")]
-        public static Vector ProjectToXY(this Vector vector)
-        {
-            return new Vector
-            {
-                X = vector.X,
-                Y = vector.Y,
-                Z = 0.0
-            };
-        }
-
-        /***************************************************/
     }
 }
+
+
+
+

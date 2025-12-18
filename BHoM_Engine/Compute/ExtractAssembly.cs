@@ -46,13 +46,13 @@ namespace BH.Engine.Base
 
             lock (Global.AssemblyReflectionLock)
             {
-                if (Global.AllAssemblies.ContainsKey(assembly.FullName))
+                if (Global.AllAssemblies.ContainsKey(assembly.GetName().Name))
                     return;
 
-                Global.AllAssemblies[assembly.FullName] = assembly;
+                Global.AllAssemblies[assembly.GetName().Name] = assembly;
                 if (assembly.IsBHoM())
                 {
-                    Global.BHoMAssemblies[assembly.FullName] = assembly;
+                    Global.BHoMAssemblies[assembly.GetName().Name] = assembly;
                     ExtractTypes(assembly);
                     ExtractMethods(assembly);
                 }

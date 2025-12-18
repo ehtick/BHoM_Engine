@@ -20,47 +20,34 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.Engine.Base.Objects;
 using BH.oM.Base.Attributes;
-using BH.oM.Geometry;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
+using System.Reflection;
 
-namespace BH.Engine.Geometry
+namespace BH.Engine.Base
 {
-    public static partial class Modify
+    public static partial class Query
     {
         /***************************************************/
-        /****               Public Methods              ****/
+        /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Returns the projection of a point on the XY plane. This shorthand method should run quicker than BH.Engine.Geometry.Project(this Point, Plane) in performance-sensitive applications.")]
-        [Input("pnt", "A point to project onto the XY plane.")]
-        [Output("pntOnXY", "Projection of the input point on the XY plane.")]
-        public static Point ProjectToXY(this Point pnt)
+        [Description("Access the assembly resolver attached to the engine.")]
+        [Output("resolver", "Assembly resolver attached to the engine.")]
+        public static IAssemblyResolver AssemblyResolver()
         {
-            return new Point
-            {
-                X = pnt.X,
-                Y = pnt.Y,
-                Z = 0
-            };
-        }
-
-        /***************************************************/
-
-        [PreviousVersion("9.0", "BH.Engine.Tagging.Modify.ProjectToXY(BH.oM.Geometry.Vector)")]
-        [Description("Returns the projection of a vector on the XY plane. This shorthand method should run quicker than BH.Engine.Geometry.Project(this Point, Plane) in performance-sensitive applications.")]
-        [Input("vector", "A vector to project onto the XY plane.")]
-        [Output("vectorOnXY", "Projection of the input vector on the XY plane.")]
-        public static Vector ProjectToXY(this Vector vector)
-        {
-            return new Vector
-            {
-                X = vector.X,
-                Y = vector.Y,
-                Z = 0.0
-            };
+            return Global.AssemblyResolver;
         }
 
         /***************************************************/
     }
 }
+
+
+
+
+
+

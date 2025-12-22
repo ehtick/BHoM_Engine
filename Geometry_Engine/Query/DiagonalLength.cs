@@ -1,4 +1,4 @@
-﻿/*
+/*
  * This file is part of the Buildings and Habitats object Model (BHoM)
  * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
@@ -32,7 +32,6 @@ namespace BH.Engine.Geometry
         /****              Public methods               ****/
         /***************************************************/
 
-        [PreviousVersion("9.0", "BH.Engine.Tagging.Query.DiagonalLength(BH.oM.Geometry.BoundingBox)")]
         [Description("Returns a diagonal length (distance between Min and Max) of a BoundingBox.")]
         [Input("bbox", "BoundingBox to query.")]
         [Output("length", "Diagonal length of the input bounding box.")]

@@ -47,7 +47,6 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
-        [PreviousVersion("9.0", "BH.Engine.Tagging.Modify.ProjectToXY(BH.oM.Geometry.Vector)")]
         [Description("Returns the projection of a vector on the XY plane. This shorthand method should run quicker than BH.Engine.Geometry.Project(this Point, Plane) in performance-sensitive applications.")]
         [Input("vector", "A vector to project onto the XY plane.")]
         [Output("vectorOnXY", "Projection of the input vector on the XY plane.")]

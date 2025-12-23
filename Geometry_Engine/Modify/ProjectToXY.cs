@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2026, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -47,7 +47,6 @@ namespace BH.Engine.Geometry
 
         /***************************************************/
 
-        [PreviousVersion("9.0", "BH.Engine.Tagging.Modify.ProjectToXY(BH.oM.Geometry.Vector)")]
         [Description("Returns the projection of a vector on the XY plane. This shorthand method should run quicker than BH.Engine.Geometry.Project(this Point, Plane) in performance-sensitive applications.")]
         [Input("vector", "A vector to project onto the XY plane.")]
         [Output("vectorOnXY", "Projection of the input vector on the XY plane.")]
@@ -64,3 +63,4 @@ namespace BH.Engine.Geometry
         /***************************************************/
     }
 }
+

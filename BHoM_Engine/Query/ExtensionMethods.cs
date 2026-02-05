@@ -20,11 +20,11 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.Engine.Base.Objects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using BH.oM.Base.Attributes;
 
 namespace BH.Engine.Base
 {
@@ -36,6 +36,12 @@ namespace BH.Engine.Base
 
         public static List<MethodInfo> ExtensionMethods(this Type type, string methodName)
         {
+            // Make sure to load all assemblies that might contain this extension method
+            IAssemblyResolver resolver = Query.AssemblyResolver();
+            if (resolver != null)
+                resolver.MakeSureAssemblyIsLoadedForExtensionMethod(methodName, type);
+
+            // Search for the method itself
             List<MethodInfo> methods = new List<MethodInfo>();
 
             foreach (MethodInfo method in BHoMMethodList().Where(x => x.Name == methodName))

@@ -201,6 +201,12 @@ namespace BH.Engine.Verification
                 return null;
             }
 
+            if (condition.Conditions.Count == 0)
+            {
+                BH.Engine.Base.Compute.RecordNote("Empty logical condition has been skipped.");
+                return true;
+            }
+
             List<bool?> subResults = condition.Conditions.Select(x => obj.IPasses(x)).ToList();
             if (subResults.Any(x => x == null))
                 return null;
@@ -226,6 +232,12 @@ namespace BH.Engine.Verification
             {
                 BH.Engine.Base.Compute.RecordError("Could not check condition because it was null.");
                 return null;
+            }
+
+            if (condition.Conditions.Count == 0)
+            {
+                BH.Engine.Base.Compute.RecordNote("Empty logical condition has been skipped.");
+                return true;
             }
 
             return condition.Conditions.Any(x => obj.IPasses(x) == true);

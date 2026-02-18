@@ -22,8 +22,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
+using BH.Engine.Base.Objects;
 using BH.oM.Base.Attributes;
 
 namespace BH.Engine.Base
@@ -34,8 +36,19 @@ namespace BH.Engine.Base
         /**** Public Methods                            ****/
         /***************************************************/
 
+        [Description("Finds all extension methods with the specified name that can be applied to the given type. \n" +
+            "Automatically loads required assemblies before searching to ensure all relevant extension methods are discovered.")]
+        [Input("type", "The Type to find extension methods for. The method will search for extensions where this type is assignable to the first parameter.")]
+        [Input("methodName", "The name of the extension method to search for.")]
+        [Output("methods", "A list of MethodInfo objects representing all extension methods with the specified name that can be applied to the given type.")]
         public static List<MethodInfo> ExtensionMethods(this Type type, string methodName)
         {
+            // Make sure to load all assemblies that might contain this extension method
+            IAssemblyResolver resolver = Query.AssemblyResolver();
+            if (resolver != null)
+                resolver.MakeSureAssemblyIsLoadedForExtensionMethod(methodName, type);
+
+            // Search for the method itself
             List<MethodInfo> methods = new List<MethodInfo>();
 
             foreach (MethodInfo method in BHoMMethodList().Where(x => x.Name == methodName))

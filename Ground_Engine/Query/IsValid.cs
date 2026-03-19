@@ -81,12 +81,6 @@ namespace BH.Engine.Ground
                 return false;
             }
 
-            if (strata.LogDescription.Trim() == "")
-            {
-                Base.Compute.RecordError("The LogDescription is empty.");
-                return false;
-            }
-
             return true;
         }
 

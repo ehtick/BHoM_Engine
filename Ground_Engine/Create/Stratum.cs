@@ -60,12 +60,6 @@ namespace BH.Engine.Ground
                 return null;
             }
 
-            if (logDescription.Trim() == "")
-            {
-                Base.Compute.RecordError("The LogDescription is empty.");
-                return null;
-            }
-
             return new Stratum()
             {
                 Id = id,

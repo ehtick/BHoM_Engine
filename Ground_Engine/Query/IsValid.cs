@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2026, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -78,12 +78,6 @@ namespace BH.Engine.Ground
             if (strata == null)
             {
                 Base.Compute.RecordError("The stratum is null.");
-                return false;
-            }
-
-            if (strata.LogDescription.Trim() == "")
-            {
-                Base.Compute.RecordError("The LogDescription is empty.");
                 return false;
             }
 
@@ -167,6 +161,7 @@ namespace BH.Engine.Ground
 
     }
 }
+
 
 
 

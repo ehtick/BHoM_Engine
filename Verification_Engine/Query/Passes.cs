@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2026, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -201,6 +201,12 @@ namespace BH.Engine.Verification
                 return null;
             }
 
+            if (condition.Conditions.Count == 0)
+            {
+                BH.Engine.Base.Compute.RecordNote("Empty logical condition has been skipped.");
+                return true;
+            }
+
             List<bool?> subResults = condition.Conditions.Select(x => obj.IPasses(x)).ToList();
             if (subResults.Any(x => x == null))
                 return null;
@@ -226,6 +232,12 @@ namespace BH.Engine.Verification
             {
                 BH.Engine.Base.Compute.RecordError("Could not check condition because it was null.");
                 return null;
+            }
+
+            if (condition.Conditions.Count == 0)
+            {
+                BH.Engine.Base.Compute.RecordNote("Empty logical condition has been skipped.");
+                return true;
             }
 
             return condition.Conditions.Any(x => obj.IPasses(x) == true);
@@ -257,4 +269,5 @@ namespace BH.Engine.Verification
         /***************************************************/
     }
 }
+
 

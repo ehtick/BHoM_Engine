@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2026, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -44,7 +44,6 @@ namespace BH.Engine.Facade
         /****          Public Methods                   ****/
         /***************************************************/
 
-        [PreviousVersion("9.0", "BH.Engine.Facade.Compute.UValueOpeningAW(BH.oM.Facade.Elements.Opening)")]
         [Description("Returns effective U-Value of opening calculated using the Area Weighting Method. Requires center of opening U-value, frame U-value and edge U-value as OpeningConstruction and FrameEdgeProperty fragments.")]
         [Input("opening", "Opening to find U-value for.")]
         [Input("isSpandrel", "Represents if the opening is a spandrel, in which case a larger edge width of 10 inches is used as per NFRC 100.")]
@@ -271,6 +270,7 @@ namespace BH.Engine.Facade
 
     }
 }
+
 
 
 

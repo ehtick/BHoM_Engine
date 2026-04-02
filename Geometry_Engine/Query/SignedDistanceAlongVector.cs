@@ -1,6 +1,6 @@
-﻿/*
+/*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2026, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -32,7 +32,6 @@ namespace BH.Engine.Geometry
         /****              Public methods               ****/
         /***************************************************/
 
-        [PreviousVersion("9.0", "BH.Engine.Tagging.Query.SignedDistanceAlongVector(BH.oM.Geometry.Point, BH.oM.Geometry.Point, BH.oM.Geometry.Vector)")]
         [Description("Calculates a signed distance between two points along a given direction.")]
         [Input("point1", "First point to measure the distance.")]
         [Input("point2", "Second point to measure the distance.")]
@@ -47,3 +46,4 @@ namespace BH.Engine.Geometry
         /***************************************************/
     }
 }
+
